@@ -1,0 +1,99 @@
+<!-- BEGIN_INCLUDE(janrain:auth-info) -->
+    <janrain:auth-info token="myToken" />
+<!-- END_INCLUDE(janrain:auth-info) -->
+
+<!-- BEGIN_INCLUDE(janrain:add-or-update-access-token) -->
+    <janrain:add-or-update-access-token token="myToken" identifier="myIdentifier" />
+<!-- END_INCLUDE(janrain:add-or-update-access-token) -->
+
+<!-- BEGIN_INCLUDE(janrain:analytics-access) -->
+    <janrain:analytics-access start="10/10/2010" end="10/11/2010" />
+<!-- END_INCLUDE(janrain:analytics-access) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-app-settings) -->
+    <janrain:get-app-settings />
+<!-- END_INCLUDE(janrain:get-app-settings) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-available-providers) -->
+    <janrain:get-available-providers />
+<!-- END_INCLUDE(janrain:get-available-providers) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-contacts) -->
+    <janrain:get-contacts identifier="myIdentifier" />
+<!-- END_INCLUDE(janrain:get-contacts) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-user-data) -->
+    <janrain:get-contacts identifier="myIdentifier" />
+<!-- END_INCLUDE(janrain:get-user-data) -->
+
+<!-- BEGIN_INCLUDE(janrain:providers) -->
+    <janrain:providers />
+<!-- END_INCLUDE(janrain:providers) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-app-settings) -->
+    <janrain:set-app-settings />
+<!-- END_INCLUDE(janrain:set-app-settings) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-auth-providers) -->
+    <janrain:set-auth-providers providers="myProviders"/>
+<!-- END_INCLUDE(janrain:set-auth-providers) -->
+
+<!-- BEGIN_INCLUDE(janrain:all-mappings) -->
+    <janrain:all-mappings />
+<!-- END_INCLUDE(janrain:all-mappings) -->
+
+<!-- BEGIN_INCLUDE(janrain:map) -->
+    <janrain:map identifier="myIdentifier" primaryKey="myPrimaryKey" />
+<!-- END_INCLUDE(janrain:map) -->
+
+<!-- BEGIN_INCLUDE(janrain:mappings) -->
+    <janrain:mappings primaryKey="myPrimaryKey" />
+<!-- END_INCLUDE(janrain:mappings) -->
+
+<!-- BEGIN_INCLUDE(janrain:unmap) -->
+    <janrain:unmap identifier="myIdentifier" allIdentifiers="true" unlink="false" primaryKey="myPrimaryKey" />
+<!-- END_INCLUDE(janrain:unmap) -->
+
+<!-- BEGIN_INCLUDE(janrain:broadcast) -->
+    <janrain:broadcast />
+<!-- END_INCLUDE(janrain:broadcast) -->
+
+<!-- BEGIN_INCLUDE(janrain:direct) -->
+    <janrain:direct recipients="myRecipients"/>
+<!-- END_INCLUDE(janrain:direct) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-share-count) -->
+    <janrain:get-share-count url="myUrl" />
+<!-- END_INCLUDE(janrain:get-share-count) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-share-providers) -->
+    <janrain:get-share-providers />
+<!-- END_INCLUDE(janrain:get-share-providers) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-share-providers) -->
+    <janrain:set-share-providers share="myShare" />
+<!-- END_INCLUDE(janrain:set-share-providers) -->
+
+<!-- BEGIN_INCLUDE(janrain:add-domain-patterns) -->
+    <janrain:add-domain-patterns domains="myDomains" />
+<!-- END_INCLUDE(janrain:add-domain-patterns) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-backplane-properties) -->
+    <janrain:get-backplane-properties />
+<!-- END_INCLUDE(janrain:get-backplane-properties) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-domain-patterns) -->
+    <janrain:get-domain-patterns />
+<!-- END_INCLUDE(janrain:get-domain-patterns) -->
+
+<!-- BEGIN_INCLUDE(janrain:lookup-rp) -->
+    <janrain:lookup-rp />
+<!-- END_INCLUDE(janrain:lookup-rp) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-backplane-properties) -->
+    <janrain:set-backplane-properties server="myServer" bus="myBus" username="myUsername" password="myPassword" />
+<!-- END_INCLUDE(janrain:set-backplane-properties) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-domain-patterns) -->
+    <janrain:set-domain-patterns domains="myDomains" />
+<!-- END_INCLUDE(janrain:set-domain-patterns) -->
