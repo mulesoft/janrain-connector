@@ -16,6 +16,10 @@ public class JanrainException extends RuntimeException {
 
     private static final long serialVersionUID = -2262847299350634241L;
 
+    public JanrainException() {
+        super();
+    }
+    
     public JanrainException(String message) {
         super(message);
     }

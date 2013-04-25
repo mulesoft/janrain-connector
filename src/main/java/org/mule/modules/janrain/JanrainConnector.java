@@ -20,10 +20,12 @@ import org.mule.api.annotations.ValidateConnection;
 import org.mule.api.annotations.ConnectionIdentifier;
 import org.mule.api.annotations.Disconnect;
 import org.mule.api.annotations.param.ConnectionKey;
+import org.mule.api.annotations.param.Default;
 import org.mule.api.annotations.param.Optional;
 import org.mule.api.ConnectionException;
 import org.mule.api.annotations.Processor;
 
+import org.mule.modules.janrain.responses.AuthInfos;
 import org.mule.modules.janrain.responses.Backplane;
 import org.mule.modules.janrain.responses.Broadcast;
 import org.mule.modules.janrain.responses.Direct;
@@ -340,7 +342,7 @@ public class JanrainConnector {
      * @return true if the operation is successful
      */
     @Processor
-    public boolean unmap(String identifier, Boolean allIdentifiers, String primaryKey, Boolean unlink) {
+    public boolean unmap(String identifier, @Optional @Default("false") Boolean allIdentifiers, String primaryKey, Boolean unlink) {
         return getJanrainClient().unmap(identifier, allIdentifiers, primaryKey, unlink);
     }
     
@@ -503,7 +505,7 @@ public class JanrainConnector {
      * @return true if the operation is successful
      */
     @Processor
-    public boolean setBackplaneProperties(String server, String bus, @Optional String version, @Optional Boolean remove, 
+    public boolean setBackplaneProperties(String server, String bus, @Optional @Default("v1") String version, @Optional Boolean remove, 
             String username, String password) {
         return getJanrainClient().setBackplaneProperties(server, bus, version, remove, username, password);
     }
@@ -519,6 +521,58 @@ public class JanrainConnector {
     @Processor
     public boolean setDomainPatterns(String domains) {
         return getJanrainClient().setDomainPatterns(domains);
+    }
+    
+    /**
+     * Activity
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:activity}
+     *
+     * @param activity The activity structure, JSON-encoded.
+     * @param identifier The identifier URL or device_token of the user sharing an activity. Do not use the device_token with mobile browsers.
+     * @param deviceToken The identifier URL or device_token of the user sharing an activity. Do not use the device_token with mobile browsers.
+     * @param truncate If true, truncate the activity update text when posting to providers which impose length restrictions (currently Twitter).
+     * @param prependName If true, prepend the user’s name to the action when posting to Facebook (ignored for other providers).
+     * @param urlShortening A boolean indicating whether to provide the entire URL in the post or tweet, or the shortened version. (PRO)
+     * @param source Must be domain or URL. Defines a specific domain or URL as the source page of the sharing activity. Used by analytics to categorize posts by domain.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean activity(String activity, @Optional String identifier, @Optional String deviceToken, 
+            @Optional @Default("true") Boolean truncate, @Optional @Default("true") Boolean prependName, @Optional String urlShortening, @Optional String source) {
+        return getJanrainClient().activity(activity, identifier, deviceToken, truncate, prependName, urlShortening, source);
+    }
+    
+    /**
+     * Auth Infos
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:auth-infos}
+     *
+     * @param tokens The tokens parameter received at your token callback URL as described in Token Callback URL on the Token Callback URL page.
+     * @param extended Returns the extended Simple Registration and HCard data in addition to the normalized Portable Contacts format.
+     * @return data from more than one identity provider
+     */
+    @Processor
+    public AuthInfos authInfos(String tokens, @Optional @Default("false") Boolean extended) {
+        return getJanrainClient().authInfos(tokens, extended);
+    }
+    
+    /**
+     * Set Status
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:set-status}
+     *
+     * @param identifier The identifier returned from the auth_info API call.
+     * @param status The status message to set. Engage does not set a length restriction on this message, however Twitter and LinkedIn limit status length to 140 characters.
+     * @param location This is a string containing location data associated with the content being published. 
+     * @param truncate If true, truncate status when posting to providers that impose status length restrictions (currently Twitter, Yahoo, and LinkedIn).
+     * @param source Must be domain or URL. Defines a specific domain or URL as the source page of the sharing activity. Used by analytics to categorize posts by domain.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean setStatus(String identifier, String status, @Optional String location, @Optional @Default("true") Boolean truncate,
+            @Optional String source) {
+        return getJanrainClient().setStatus(identifier, status, location, truncate, source);
     }
     
     public JanrainClient getJanrainClient() {

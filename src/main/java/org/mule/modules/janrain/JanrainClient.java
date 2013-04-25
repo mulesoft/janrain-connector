@@ -14,6 +14,7 @@ package org.mule.modules.janrain;
 
 import java.util.Map;
 
+import org.mule.modules.janrain.responses.AuthInfos;
 import org.mule.modules.janrain.responses.Backplane;
 import org.mule.modules.janrain.responses.Broadcast;
 import org.mule.modules.janrain.responses.Direct;
@@ -76,5 +77,11 @@ public interface JanrainClient {
     public boolean setBackplaneProperties(String server, String bus, String version, Boolean remove, String username, String password);
     
     public boolean setDomainPatterns(String domains);
+    
+    public boolean activity(String activity, String identifier, String deviceToken, Boolean truncate, Boolean prependName, String urlShortening, String source);
+    
+    public AuthInfos authInfos(String tokens, Boolean extended);
+    
+    public boolean setStatus(String identifier, String status, String location, Boolean truncate, String source);
     
 }

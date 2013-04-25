@@ -15,9 +15,11 @@ package org.mule.modules.janrain;
 import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.mule.api.annotations.param.Optional;
 import org.mule.modules.janrain.exception.JanrainException;
+import org.mule.modules.janrain.responses.AuthInfos;
 import org.mule.modules.janrain.responses.Backplane;
 import org.mule.modules.janrain.responses.Broadcast;
 import org.mule.modules.janrain.responses.Direct;
@@ -34,6 +36,7 @@ import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.ClientResponse.Status;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 @SuppressWarnings("unused")
 public class JanrainClientImpl implements JanrainClient {
@@ -53,311 +56,314 @@ public class JanrainClientImpl implements JanrainClient {
     }
     
     public UserInfo authInfo(String token, Boolean extended, String tokenURL) {
-        WebResource request = apiResource.path("auth_info").queryParam("apiKey", apiKey).queryParam("token", token);
-        
-        if (extended != null) request = request.queryParam("extended", extended.toString());
-        if (tokenURL != null) request = request.queryParam("tokenURL", tokenURL);
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-        
-        return gson.fromJson(response.getEntity(String.class), UserInfo.class);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("token", token);
+        if (extended != null) params.add("extended", extended.toString());
+        if (tokenURL != null) params.add("tokenURL", tokenURL);
+                
+        return gson.fromJson(execute("auth_info", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), UserInfo.class);
     }
     
     public boolean addOrUpdateAccessToken(String token, String identifier) {
-        WebResource request = apiResource.path("add_or_update_access_token").queryParam("apiKey", apiKey).queryParam("token", token).queryParam("identifier", identifier);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("token", token);
+        params.add("identifier", identifier);
         
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
+        execute("add_or_update_access_token", params, MediaType.APPLICATION_JSON_TYPE, "POST");
         
         return true;
     }
     
     public Map<String, String> analyticsAccess(String start, String end) {
-        WebResource request = apiResource.path("analytics_access").queryParam("apiKey", apiKey).queryParam("start", start).queryParam("end", end);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("start", start);
+        params.add("end", end);
         
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-    
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), new TypeToken<Map<String, String>>(){}.getType());
+        return gson.fromJson(execute("analytics_access", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), new TypeToken<Map<String, String>>(){}.getType());
     }
     
     public Map<String, String> getAppSettings() {
-        WebResource request = apiResource.path("get_app_settings").queryParam("apiKey", apiKey);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
 
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-    
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), new TypeToken<Map<String, String>>(){}.getType());
+        return gson.fromJson(execute("get_app_settings", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), new TypeToken<Map<String, String>>(){}.getType());
     }
     
-    public AvailableProviders getAvailableProviders() {
-        WebResource request = apiResource.path("get_available_providers");
-
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-    
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), AvailableProviders.class);
+    public AvailableProviders getAvailableProviders() {    
+        return gson.fromJson(execute("get_available_providers", null, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), AvailableProviders.class);
     }
     
     public Contacts getContacts(String identifier, String contactType, Boolean existingUser) {
-        WebResource request = apiResource.path("get_contacts").queryParam("apiKey", apiKey).queryParam("identifier", identifier).queryParam("contactType", contactType);
-
-        if (existingUser != null) request = request.queryParam("existingUser", existingUser.toString());
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-    
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), Contacts.class);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("identifier", identifier);
+        params.add("contactType", contactType);
+        if (existingUser != null) params.add("existingUser", existingUser.toString());
+            
+        return gson.fromJson(execute("get_contacts", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), Contacts.class);
     }
     
     public UserInfo getUserData(String identifier, Boolean extended) {
-        WebResource request = apiResource.path("get_user_data").queryParam("apiKey", apiKey).queryParam("identifier", identifier);
-
-        if (extended != null) request = request.queryParam("existingUser", extended.toString());
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("identifier", identifier);
+        if (extended != null) params.add("existingUser", extended.toString());
     
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), UserInfo.class);
+        return gson.fromJson(execute("get_user_data", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), UserInfo.class);
     }
     
-    public WidgetProviders providers() {
-        WebResource request = apiResource.path("providers");
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-    
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), WidgetProviders.class);
+    public WidgetProviders providers() {    
+        return gson.fromJson(execute("providers", null, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), WidgetProviders.class);
     }
     
     public boolean setAppSettings(String privacyPolicy, String favicon, String domainRedirect, Boolean postToTokenUrl, Boolean oneTimeUseTokens, Boolean googleProfileUrl) {
-        WebResource request = apiResource.path("set_app_settings").queryParam("apiKey", apiKey);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        if (privacyPolicy != null) params.add("privacyPolicy", privacyPolicy);
+        if (favicon != null) params.add("favicon", favicon);
+        if (domainRedirect != null) params.add("domainRedirect", domainRedirect);
+        if (postToTokenUrl != null) params.add("postToTokenUrl", postToTokenUrl.toString());
+        if (oneTimeUseTokens != null) params.add("oneTimeUseTokens", oneTimeUseTokens.toString());
+        if (googleProfileUrl != null) params.add("googleProfileUrl", googleProfileUrl.toString());
         
-        if (privacyPolicy != null) request = request.queryParam("privacyPolicy", privacyPolicy);
-        if (favicon != null) request = request.queryParam("favicon", favicon);
-        if (domainRedirect != null) request = request.queryParam("domainRedirect", domainRedirect);
-        if (postToTokenUrl != null) request = request.queryParam("postToTokenUrl", postToTokenUrl.toString());
-        if (oneTimeUseTokens != null) request = request.queryParam("oneTimeUseTokens", oneTimeUseTokens.toString());
-        if (googleProfileUrl != null) request = request.queryParam("googleProfileUrl", googleProfileUrl.toString());
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
+        execute("set_app_settings", params, MediaType.APPLICATION_JSON_TYPE, "POST");
         
         return true;
     }
     
     public boolean setAuthProviders(String providers, String deviceType) {
-        WebResource request = apiResource.path("set_auth_providers").queryParam("apiKey", apiKey).queryParam("providers", providers);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("providers", providers);
+        if (deviceType != null) params.add("device_type", deviceType);
         
-        if (deviceType != null) request = request.queryParam("device_type", deviceType);
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
+        execute("set_auth_providers", params, MediaType.APPLICATION_JSON_TYPE, "POST");
         
         return true;
     }
     
     public String allMappings() {
-        WebResource request = apiResource.path("all_mappings").queryParam("apiKey", apiKey);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
         
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-        
-        return response.getEntity(String.class);
+        return execute("all_mappings", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class);
     }
     
     public boolean map(String identifier, String primaryKey, Boolean overwrite) {
-        WebResource request = apiResource.path("map").queryParam("apiKey", apiKey).queryParam("identifier", identifier).queryParam("primaryKey", primaryKey);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("identifier", identifier);
+        params.add("primaryKey", primaryKey);
+        if (overwrite != null) params.add("overwrite", overwrite.toString());
         
-        if (overwrite != null) request = request.queryParam("overwrite", overwrite.toString());
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
+        execute("map", params, MediaType.APPLICATION_JSON_TYPE, "POST");
         
         return true;
     }
     
     public Identifiers mappings(String primaryKey) {
-        WebResource request = apiResource.path("mappings").queryParam("apiKey", apiKey).queryParam("primaryKey", primaryKey);
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-    
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), Identifiers.class);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("primaryKey", primaryKey);
+            
+        return gson.fromJson(execute("mappings", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), Identifiers.class);
     }
     
     public boolean unmap(String identifier, Boolean allIdentifiers, String primaryKey, Boolean unlink) {
-        WebResource request = apiResource.path("unmap").queryParam("apiKey", apiKey).queryParam("identifier", identifier).queryParam("all_identifiers", allIdentifiers.toString()).queryParam("primaryKey", primaryKey).queryParam("unlink", unlink.toString());
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("identifier", identifier);
+        params.add("all_identifiers", allIdentifiers.toString());
+        params.add("primaryKey", primaryKey);
+        params.add("unlink", unlink.toString());
         
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
+        execute("unmap", params, MediaType.APPLICATION_JSON_TYPE, "POST");
         
         return true;   
     }
     
     public Broadcast broadcast(String identifier, String deviceToken, String title, String url, String source, String message, String description, String image, String media, String actionLink, String objectId) {
-        WebResource request = apiResource.path("sharing/broadcast").queryParam("apiKey", apiKey);
-        
         if ((identifier == null && deviceToken == null) || (identifier != null && deviceToken != null)) 
             throw new JanrainException("Broadcast requires either the identifier parameter or the deviceToken parameter.");
         
-        if (identifier != null) request = request.queryParam("identifier", identifier);
-        if (deviceToken != null) request = request.queryParam("device_token", deviceToken);
-        if (title != null) request = request.queryParam("title", title);
-        if (url != null) request = request.queryParam("url", url);
-        if (source != null) request = request.queryParam("source", source);
-        if (message != null) request = request.queryParam("message", message);
-        if (description != null) request = request.queryParam("description", description);
-        if (image != null) request = request.queryParam("image", image);
-        if (media != null) request = request.queryParam("media", media);
-        if (actionLink != null) request = request.queryParam("actionLink", actionLink);
-        if (objectId != null) request = request.queryParam("objectId", objectId);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        if (identifier != null) params.add("identifier", identifier);
+        if (deviceToken != null) params.add("device_token", deviceToken);
+        if (title != null) params.add("title", title);
+        if (url != null) params.add("url", url);
+        if (source != null) params.add("source", source);
+        if (message != null) params.add("message", message);
+        if (description != null) params.add("description", description);
+        if (image != null) params.add("image", image);
+        if (media != null) params.add("media", media);
+        if (actionLink != null) params.add("actionLink", actionLink);
+        if (objectId != null) params.add("objectId", objectId);
         
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-    
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), Broadcast.class);
+        return gson.fromJson(execute("sharing/broadcast", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), Broadcast.class);
     }
     
     public Direct direct(String identifier, String deviceToken, String title, String url, String recipients, String source, String message, String description, String image, String media, String actionLink, String recipientUrls) {
-        WebResource request = apiResource.path("sharing/direct").queryParam("apiKey", apiKey).queryParam("recipients", recipients);
-        
         if ((identifier == null && deviceToken == null) || (identifier != null && deviceToken != null)) 
             throw new JanrainException("Broadcast requires either the identifier parameter or the deviceToken parameter.");
         
-        if (identifier != null) request = request.queryParam("identifier", identifier);
-        if (deviceToken != null) request = request.queryParam("device_token", deviceToken);
-        if (title != null) request = request.queryParam("title", title);
-        if (url != null) request = request.queryParam("url", url);
-        if (source != null) request = request.queryParam("source", source);
-        if (message != null) request = request.queryParam("message", message);
-        if (description != null) request = request.queryParam("description", description);
-        if (image != null) request = request.queryParam("image", image);
-        if (media != null) request = request.queryParam("media", media);
-        if (actionLink != null) request = request.queryParam("actionLink", actionLink);
-        if (recipientUrls != null) request = request.queryParam("recipientUrls", recipientUrls);
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("recipients", recipients);
+        if (identifier != null) params.add("identifier", identifier);
+        if (deviceToken != null) params.add("device_token", deviceToken);
+        if (title != null) params.add("title", title);
+        if (url != null) params.add("url", url);
+        if (source != null) params.add("source", source);
+        if (message != null) params.add("message", message);
+        if (description != null) params.add("description", description);
+        if (image != null) params.add("image", image);
+        if (media != null) params.add("media", media);
+        if (actionLink != null) params.add("actionLink", actionLink);
+        if (recipientUrls != null) params.add("recipientUrls", recipientUrls);
     
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), Direct.class);
+        return gson.fromJson(execute("sharing/direct", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), Direct.class);
     }
     
     public String getShareCount(String url, String callback) {
-        WebResource request = apiResource.path("get_share_count").queryParam("apiKey", apiKey).queryParam("url", url);
-
-        if (callback != null) request = request.queryParam("callback", callback);
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("url", url);
+        if (callback != null) params.add("callback", callback);
     
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return response.getEntity(String.class);
+        return execute("get_share_count", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class);
     }
     
     public ShareProviders getShareProviders() {
-        WebResource request = apiResource.path("get_share_providers");
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-    
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), ShareProviders.class);
+        return gson.fromJson(execute("get_share_providers", null, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), ShareProviders.class);
     }
     
     public boolean setShareProviders(String share, String email) {
-        WebResource request = apiResource.path("set_share_providers").queryParam("apiKey", apiKey).queryParam("share", share);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("share", share);
+        if (email != null) params.add("email", email);
         
-        if (email != null) request = request.queryParam("email", email);
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
+        execute("set_share_providers", params, MediaType.APPLICATION_JSON_TYPE, "POST");
         
         return true;
     }
     
     public boolean addDomainPatterns(String domains) {
-        WebResource request = apiResource.path("add_domain_patterns").queryParam("apiKey", apiKey).queryParam("domains", domains);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("domains", domains);
         
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
+        execute("add_domain_patterns", params, MediaType.APPLICATION_JSON_TYPE, "POST");
         
         return true;
     }
     
     public Backplane getBackplaneProperties() {
-        WebResource request = apiResource.path("get_backplane_properties").queryParam("apiKey", apiKey);
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
     
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), Backplane.class);
+        return gson.fromJson(execute("get_backplane_properties", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), Backplane.class);
     }
     
     public String getDomainPatterns() {
-        WebResource request = apiResource.path("get_domain_patterns").queryParam("apiKey", apiKey);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
         
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-    
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return response.getEntity(String.class);
+        return execute("get_domain_patterns", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class);
     }
     
     public Plugin lookupRp(String pluginName, String pluginVersion) {
-        WebResource request = apiResource.path("lookup_rp").queryParam("apiKey", apiKey);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        if (pluginName != null) params.add("pluginName", pluginName);
+        if (pluginVersion != null) params.add("pluginVersion", pluginVersion);
 
-        if (pluginName != null) request = request.queryParam("pluginName", pluginName);
-        if (pluginVersion != null) request = request.queryParam("pluginVersion", pluginVersion);
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-    
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
-    
-        return gson.fromJson(response.getEntity(String.class), Plugin.class);
+        return gson.fromJson(execute("lookup_rp", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), Plugin.class);
     }
     
     public boolean setBackplaneProperties(String server, String bus, String version, Boolean remove, String username, String password) {
-        WebResource request = apiResource.path("set_backplane_properties").queryParam("apiKey", apiKey).queryParam("server", server).queryParam("bus", bus).queryParam("username", username).queryParam("password", password);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("server", server);
+        params.add("bus", bus);
+        params.add("username", username);
+        params.add("password", password);
+        if (version != null) params.add("version", version);
+        if (remove != null) params.add("remove", remove.toString());
         
-        if (version != null) request = request.queryParam("version", version);
-        if (remove != null) request = request.queryParam("remove", remove.toString());
-        
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
+        execute("set_backplane_properties", params, MediaType.APPLICATION_JSON_TYPE, "POST");
         
         return true;
     }
     
     public boolean setDomainPatterns(String domains) {
-        WebResource request = apiResource.path("set_domain_patterns").queryParam("apiKey", apiKey).queryParam("domains", domains);
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("domains", domains);
         
-        ClientResponse response = request.accept(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class);
-        
-        if (response.getClientResponseStatus() != Status.OK) throw new JanrainException(response.getEntity(String.class));
+        execute("set_domain_patterns", params, MediaType.APPLICATION_JSON_TYPE, "POST");
         
         return true;
+    }
+    
+    public boolean activity(String activity, String identifier, String deviceToken, Boolean truncate, Boolean prependName, String urlShortening, String source) {
+        if ((identifier == null && deviceToken == null) || (identifier != null && deviceToken != null)) 
+            throw new JanrainException("Activity requires either the identifier parameter or the deviceToken parameter.");
+        
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("activity", activity);
+        if (identifier != null) params.add("identifier", identifier);
+        if (deviceToken != null) params.add("device_token", deviceToken);
+        if (truncate != null) params.add("truncate", truncate.toString());
+        if (prependName != null) params.add("prepend_name", prependName.toString());
+        if (urlShortening != null) params.add("url_shortening", urlShortening);
+        if (source != null) params.add("source", source);
+        
+        execute("activity", params, MediaType.APPLICATION_JSON_TYPE, "POST");
+        
+        return true;
+    }
+    
+    public AuthInfos authInfos(String tokens, Boolean extended) {
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("tokens", tokens);
+        if (extended != null) params.add("extended", extended.toString());
+        
+        return gson.fromJson(execute("auth_infos", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), AuthInfos.class);
+    }
+        
+    public boolean setStatus(String identifier, String status, String location, Boolean truncate, String source) {
+        MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+        params.add("apiKey", apiKey);
+        params.add("identifier", identifier);
+        params.add("status", status);
+        if (location != null) params.add("location", location);
+        if (truncate != null) params.add("truncate", truncate.toString());
+        if (source != null) params.add("source", source);
+        
+        execute("set_status", params, MediaType.APPLICATION_JSON_TYPE, "POST");
+        
+        return true;
+    }
+    
+    private ClientResponse execute(String path, MultivaluedMap<String, String> params, MediaType type, String method) {
+        ClientResponse response;
+        
+        if (params != null) 
+            response = apiResource.path(path).queryParams(params).accept(type).method(method, ClientResponse.class);
+        else
+            response = apiResource.path(path).accept(type).method(method, ClientResponse.class);
+        
+        if (response.getClientResponseStatus() != Status.OK) 
+            throw new JanrainException(response.getEntity(String.class));
+        else 
+            return response;
     }
 
 }

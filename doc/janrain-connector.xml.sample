@@ -97,3 +97,15 @@
 <!-- BEGIN_INCLUDE(janrain:set-domain-patterns) -->
     <janrain:set-domain-patterns domains="myDomains" />
 <!-- END_INCLUDE(janrain:set-domain-patterns) -->
+
+<!-- BEGIN_INCLUDE(janrain:activity) -->
+    <janrain:activity identifier="myIdentifier" activity="myActivity" />
+<!-- END_INCLUDE(janrain:activity) -->
+
+<!-- BEGIN_INCLUDE(janrain:auth-infos) -->
+    <janrain:auth-infos tokens="token1, token2" />
+<!-- END_INCLUDE(janrain:auth-infos) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-status) -->
+    <janrain:set-status identifier="myIdentifier" status="myStatus" />
+<!-- END_INCLUDE(janrain:set-status) -->
