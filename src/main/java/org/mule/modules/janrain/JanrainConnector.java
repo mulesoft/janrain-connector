@@ -25,23 +25,31 @@ import org.mule.api.annotations.param.Optional;
 import org.mule.api.ConnectionException;
 import org.mule.api.annotations.Processor;
 
-import org.mule.modules.janrain.responses.AuthInfos;
-import org.mule.modules.janrain.responses.Backplane;
-import org.mule.modules.janrain.responses.Broadcast;
-import org.mule.modules.janrain.responses.Direct;
-import org.mule.modules.janrain.responses.Identifiers;
-import org.mule.modules.janrain.responses.Plugin;
-import org.mule.modules.janrain.responses.ShareProviders;
-import org.mule.modules.janrain.responses.UserInfo;
-import org.mule.modules.janrain.responses.Contacts;
-import org.mule.modules.janrain.responses.AvailableProviders;
-import org.mule.modules.janrain.responses.WidgetProviders;
+import org.mule.modules.janrain.client.JanrainEngageClient;
+import org.mule.modules.janrain.client.JanrainEngageClientImpl;
+import org.mule.modules.janrain.client.JanrainPartnerClient;
+import org.mule.modules.janrain.client.JanrainPartnerClientImpl;
+import org.mule.modules.janrain.engage.AuthInfos;
+import org.mule.modules.janrain.engage.AvailableProviders;
+import org.mule.modules.janrain.engage.Backplane;
+import org.mule.modules.janrain.engage.Broadcast;
+import org.mule.modules.janrain.engage.Contacts;
+import org.mule.modules.janrain.engage.Direct;
+import org.mule.modules.janrain.engage.Identifiers;
+import org.mule.modules.janrain.engage.Plugin;
+import org.mule.modules.janrain.engage.ShareProviders;
+import org.mule.modules.janrain.engage.UserInfo;
+import org.mule.modules.janrain.engage.WidgetProviders;
+import org.mule.modules.janrain.partner.Admins;
+import org.mule.modules.janrain.partner.AppInfo;
+import org.mule.modules.janrain.partner.Apps;
+import org.mule.modules.janrain.partner.Invites;
+import org.mule.modules.janrain.partner.Permissions;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
@@ -52,7 +60,7 @@ import com.sun.jersey.core.impl.provider.entity.MimeMultipartProvider;
 import com.sun.jersey.multipart.impl.MultiPartWriter;
 
 /**
- * Janrain Engage Cloud Connector for API V2.
+ * Janrain Cloud Connector for API V2.
  *
  * @author MuleSoft, Inc.
  */
@@ -74,21 +82,21 @@ public class JanrainConnector {
      * The Api Key
      */
     private String apiKey;
+            
+    /**
+     * Janrain Engage Client
+     */
+    private JanrainEngageClient janrainEngageClient;
     
     /**
-     * The Api's url
+     * Janrain Partner Client
      */
-    private final static String APIURL = ".rpxnow.com/api/v2/";
-        
-    /**
-     * Janrain Client
-     */
-    private JanrainClient janrainClient;
+    private JanrainPartnerClient janrainPartnerClient;
     
     /**
-     * The Api Resources
+     * Jersey Client
      */
-    private WebResource apiResource;
+    private Client jerseyClient;
     
     /**
      * Gson Parser
@@ -117,7 +125,7 @@ public class JanrainConnector {
         this.setApiKey(apiKey);
         this.setAppName(appName);
         this.gson = new GsonBuilder().create();
-        this.setApiResource(Client.create(clientConfig).resource("https://" + appName + APIURL));
+        this.setJerseyClient(Client.create(clientConfig));
     }
 
     /**
@@ -125,7 +133,9 @@ public class JanrainConnector {
      */
     @Disconnect
     public void disconnect() {
-        this.janrainClient = null;
+        this.jerseyClient = null;
+        this.janrainEngageClient = null;
+        this.janrainPartnerClient = null;
     }
 
     /**
@@ -133,7 +143,7 @@ public class JanrainConnector {
      */
     @ValidateConnection
     public boolean isConnected() {
-        return (this.janrainClient != null);
+        return (this.jerseyClient != null && this.janrainEngageClient != null && this.janrainPartnerClient != null);
     }
 
     /**
@@ -157,7 +167,7 @@ public class JanrainConnector {
      */
     @Processor
     public UserInfo authInfo(String token, @Optional Boolean extended, @Optional String tokenURL) {
-        return getJanrainClient().authInfo(token, extended, tokenURL);
+        return getJanrainEngageClient().authInfo(token, extended, tokenURL);
     }
     
     /**
@@ -172,7 +182,7 @@ public class JanrainConnector {
      */
     @Processor
     public boolean addOrUpdateAccessToken(String token, String identifier) {
-        return getJanrainClient().addOrUpdateAccessToken(token, identifier);
+        return getJanrainEngageClient().addOrUpdateAccessToken(token, identifier);
     }
     
     /**
@@ -186,7 +196,7 @@ public class JanrainConnector {
      */
     @Processor
     public Map<String, String> analyticsAccess(String start, String end) {
-        return getJanrainClient().analyticsAccess(start, end);
+        return getJanrainEngageClient().analyticsAccess(start, end);
     }
     
     /**
@@ -198,7 +208,7 @@ public class JanrainConnector {
      */
     @Processor
     public Map<String, String> getAppSettings() {
-        return getJanrainClient().getAppSettings();
+        return getJanrainEngageClient().getAppSettings();
     }
     
     /**
@@ -210,7 +220,7 @@ public class JanrainConnector {
      */
     @Processor
     public AvailableProviders getAvailableProviders() {
-        return getJanrainClient().getAvailableProviders();
+        return getJanrainEngageClient().getAvailableProviders();
     }
     
     /**
@@ -227,7 +237,7 @@ public class JanrainConnector {
      */
     @Processor
     public Contacts getContacts(String identifier, @Optional String contactType, @Optional Boolean existingUser) {
-        return getJanrainClient().getContacts(identifier, contactType, existingUser);
+        return getJanrainEngageClient().getContacts(identifier, contactType, existingUser);
     }
     
     /**
@@ -242,7 +252,7 @@ public class JanrainConnector {
      */
     @Processor
     public UserInfo getUserData(String identifier, @Optional Boolean extended) {
-        return getJanrainClient().getUserData(identifier, extended);
+        return getJanrainEngageClient().getUserData(identifier, extended);
     }
     
     /**
@@ -254,7 +264,7 @@ public class JanrainConnector {
      */
     @Processor
     public WidgetProviders providers() {
-        return getJanrainClient().providers();
+        return getJanrainEngageClient().providers();
     }
     
     /**
@@ -273,7 +283,7 @@ public class JanrainConnector {
     @Processor
     public boolean setAppSettings(@Optional String privacyPolicy, @Optional String favicon, @Optional String domainRedirect, 
             @Optional Boolean postToTokenUrl, @Optional Boolean oneTimeUseTokens, @Optional Boolean googleProfileUrl) {
-        return getJanrainClient().setAppSettings(privacyPolicy, favicon, domainRedirect, postToTokenUrl, oneTimeUseTokens, googleProfileUrl);
+        return getJanrainEngageClient().setAppSettings(privacyPolicy, favicon, domainRedirect, postToTokenUrl, oneTimeUseTokens, googleProfileUrl);
     }
     
     /**
@@ -287,7 +297,7 @@ public class JanrainConnector {
      */
     @Processor
     public boolean setAuthProviders(String providers, @Optional String deviceType) {
-        return getJanrainClient().setAuthProviders(providers, deviceType);
+        return getJanrainEngageClient().setAuthProviders(providers, deviceType);
     }
     
     /**
@@ -299,7 +309,7 @@ public class JanrainConnector {
      */
     @Processor
     public String allMappings() {
-        return getJanrainClient().allMappings();
+        return getJanrainEngageClient().allMappings();
     }
     
     /**
@@ -314,7 +324,7 @@ public class JanrainConnector {
      */
     @Processor
     public boolean map(String identifier, String primaryKey, @Optional Boolean overwrite) {
-        return getJanrainClient().map(identifier, primaryKey, overwrite);
+        return getJanrainEngageClient().map(identifier, primaryKey, overwrite);
     }
     
     /**
@@ -327,7 +337,7 @@ public class JanrainConnector {
      */
     @Processor
     public Identifiers mappings(String primaryKey) {
-        return getJanrainClient().mappings(primaryKey);
+        return getJanrainEngageClient().mappings(primaryKey);
     }
     
     /**
@@ -343,7 +353,7 @@ public class JanrainConnector {
      */
     @Processor
     public boolean unmap(String identifier, @Optional @Default("false") Boolean allIdentifiers, String primaryKey, Boolean unlink) {
-        return getJanrainClient().unmap(identifier, allIdentifiers, primaryKey, unlink);
+        return getJanrainEngageClient().unmap(identifier, allIdentifiers, primaryKey, unlink);
     }
     
     /**
@@ -369,7 +379,7 @@ public class JanrainConnector {
     public Broadcast broadcast(@Optional String identifier, @Optional String deviceToken, @Optional String title, 
             @Optional String url, @Optional String source, @Optional String message, @Optional String description, 
             @Optional String image, @Optional String media, @Optional String actionLink, @Optional String objectId) {
-        return getJanrainClient().broadcast(identifier, deviceToken, title, url, source, message, description, image, media, actionLink, objectId);
+        return getJanrainEngageClient().broadcast(identifier, deviceToken, title, url, source, message, description, image, media, actionLink, objectId);
     }
     
     /**
@@ -396,7 +406,7 @@ public class JanrainConnector {
     public Direct direct(@Optional String identifier, @Optional String deviceToken, @Optional String title, 
             @Optional String url, String recipients, @Optional String source, @Optional String message, @Optional String description, 
             @Optional String image, @Optional String media, @Optional String actionLink, @Optional String recipientUrls) {
-        return getJanrainClient().direct(identifier, deviceToken, title, url, recipients, source, message, description, image, media, actionLink, recipientUrls);
+        return getJanrainEngageClient().direct(identifier, deviceToken, title, url, recipients, source, message, description, image, media, actionLink, recipientUrls);
     }
     
     /**
@@ -410,7 +420,7 @@ public class JanrainConnector {
      */
     @Processor
     public String getShareCount(String url, @Optional String callback) {
-        return getJanrainClient().getShareCount(url, callback);
+        return getJanrainEngageClient().getShareCount(url, callback);
     }
     
     /**
@@ -422,7 +432,7 @@ public class JanrainConnector {
      */
     @Processor
     public ShareProviders getShareProviders() {
-        return getJanrainClient().getShareProviders();
+        return getJanrainEngageClient().getShareProviders();
     }
     
     /**
@@ -436,7 +446,7 @@ public class JanrainConnector {
      */
     @Processor
     public boolean setShareProviders(String share, @Optional String email) {
-        return getJanrainClient().setShareProviders(share, email);
+        return getJanrainEngageClient().setShareProviders(share, email);
     }
     
     /**
@@ -449,7 +459,7 @@ public class JanrainConnector {
      */
     @Processor
     public boolean addDomainPatterns(String domains) {
-        return getJanrainClient().addDomainPatterns(domains);
+        return getJanrainEngageClient().addDomainPatterns(domains);
     }
     
     /**
@@ -461,7 +471,7 @@ public class JanrainConnector {
      */
     @Processor
     public Backplane getBackplaneProperties() {
-        return getJanrainClient().getBackplaneProperties();
+        return getJanrainEngageClient().getBackplaneProperties();
     }
     
     /**
@@ -473,7 +483,7 @@ public class JanrainConnector {
      */
     @Processor
     public String getDomainPatterns() {
-        return getJanrainClient().getDomainPatterns();
+        return getJanrainEngageClient().getDomainPatterns();
     }
     
     /**
@@ -487,7 +497,7 @@ public class JanrainConnector {
      */
     @Processor
     public Plugin lookupRp(@Optional String pluginName, @Optional String pluginVersion) {
-        return getJanrainClient().lookupRp(pluginName, pluginVersion);
+        return getJanrainEngageClient().lookupRp(pluginName, pluginVersion);
     }
     
     /**
@@ -507,7 +517,7 @@ public class JanrainConnector {
     @Processor
     public boolean setBackplaneProperties(String server, String bus, @Optional @Default("v1") String version, @Optional Boolean remove, 
             String username, String password) {
-        return getJanrainClient().setBackplaneProperties(server, bus, version, remove, username, password);
+        return getJanrainEngageClient().setBackplaneProperties(server, bus, version, remove, username, password);
     }
     
     /**
@@ -520,7 +530,7 @@ public class JanrainConnector {
      */
     @Processor
     public boolean setDomainPatterns(String domains) {
-        return getJanrainClient().setDomainPatterns(domains);
+        return getJanrainEngageClient().setDomainPatterns(domains);
     }
     
     /**
@@ -540,7 +550,7 @@ public class JanrainConnector {
     @Processor
     public boolean activity(String activity, @Optional String identifier, @Optional String deviceToken, 
             @Optional @Default("true") Boolean truncate, @Optional @Default("true") Boolean prependName, @Optional String urlShortening, @Optional String source) {
-        return getJanrainClient().activity(activity, identifier, deviceToken, truncate, prependName, urlShortening, source);
+        return getJanrainEngageClient().activity(activity, identifier, deviceToken, truncate, prependName, urlShortening, source);
     }
     
     /**
@@ -554,7 +564,7 @@ public class JanrainConnector {
      */
     @Processor
     public AuthInfos authInfos(String tokens, @Optional @Default("false") Boolean extended) {
-        return getJanrainClient().authInfos(tokens, extended);
+        return getJanrainEngageClient().authInfos(tokens, extended);
     }
     
     /**
@@ -572,23 +582,284 @@ public class JanrainConnector {
     @Processor
     public boolean setStatus(String identifier, String status, @Optional String location, @Optional @Default("true") Boolean truncate,
             @Optional String source) {
-        return getJanrainClient().setStatus(identifier, status, location, truncate, source);
+        return getJanrainEngageClient().setStatus(identifier, status, location, truncate, source);
     }
     
-    public JanrainClient getJanrainClient() {
-        if (janrainClient != null) {
-            return janrainClient;
+    /**
+     * Add Bp Bus
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:add-bp-bus}
+     *
+     * @param partnerKey Enter your partnerKey.
+     * @return The response includes the name of the new bus, and the name of the application with which it is associated.
+     */
+    @Processor
+    public Map<String, String> addBpBus(String partnerKey) {
+        return getJanrainPartnerClient().addBpBus(partnerKey);
+    }
+    
+    /**
+     * Apps
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:apps}
+     *
+     * @param partnerKey Enter your partnerKey.
+     * @return List of applications managed by the partner. 
+     */
+    @Processor
+    public Apps apps(String partnerKey) {
+        return getJanrainPartnerClient().apps(partnerKey);
+    }
+    
+    /**
+     * Add Admin
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:add-admin}
+     *
+     * @param partnerKey You Engage partner key, which you can find on the dashboard.
+     * @param email The email address of the admin user to be added.
+     * @param verify Indicates whether a verification email is sent out, requiring the user to click on it before they get access to the website.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean addAdmin(String partnerKey, String email, @Optional @Default("true") Boolean verify) {
+        return getJanrainPartnerClient().addAdmin(partnerKey, email, verify);
+    }
+    
+    /**
+     * Delete Admin
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:delete-admin}
+     *
+     * @param partnerKey You Engage partner key, which you can find on the dashboard.
+     * @param email The email address of the admin user to be added.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean deleteAdmin(String partnerKey, String email) {
+        return getJanrainPartnerClient().deleteAdmin(partnerKey, email);
+    }
+    
+    /**
+     * Get Admins
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-admins}
+     *
+     * @param partnerKey You Engage partner key, which you can find on the dashboard.
+     * @return This call returns all admin users currently assigned to the RP.
+     */
+    @Processor
+    public Admins getAdmins(String partnerKey) {
+        return getJanrainPartnerClient().getAdmins(partnerKey);
+    }
+    
+    /**
+     * Add Domain
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:add-domain}
+     *
+     * @param partnerKey Engage partner key, which you can find on the dashboard.
+     * @param engageApiKey Engage API Key, which you can find on the dashboard.
+     * @param domain The domain to add.
+     * @return true if the operation is successful.
+     */
+    @Processor
+    public boolean addDomain(String partnerKey, String engageApiKey, String domain) {
+        return getJanrainPartnerClient().addDomain(partnerKey, engageApiKey, domain);
+    }
+    
+    /**
+     * Create App
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:create-app}
+     *
+     * @param partnerKey Engage partner key, which you can find on the dashboard.
+     * @param email The administrative email address to be associated with your new Engage application.
+     * @param displayName The display name for your new Engage application.
+     * @param domain The fully-qualified domain for your new Engage application.
+     * @return This call creates a new Engage application. 
+     */
+    @Processor
+    public AppInfo createApp(String partnerKey, String email, String displayName, String domain) {
+        return getJanrainPartnerClient().createApp(partnerKey, email, displayName, domain);
+    }
+    
+    /**
+     * Create Invite
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:create-invite}
+     *
+     * @param engageApiKey Engage API Key, which you can find on the dashboard.
+     * @param partnerKey Engage partner key, which you can find on the dashboard.
+     * @param email The administrative email address to be associated with your new Engage application.
+     * @return This call generates an email invitation for administrative access to an existing application.
+     */
+    @Processor
+    public String createInvite(String engageApiKey, String partnerKey, String email) {
+        return getJanrainPartnerClient().createInvite(engageApiKey, partnerKey, email);
+    }
+    
+    /**
+     * Delete App
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:delete-app}
+     *
+     * @param engageApiKey The Engage apiKey for the application to be deleted.
+     * @param partnerKey The Engage partnerKey for the application that created the app referenced by apiKey.
+     * @return true if the operation is successful.
+     */
+    @Processor
+    public boolean deleteApp(String engageApiKey, String partnerKey) {
+        return getJanrainPartnerClient().deleteApp(engageApiKey, partnerKey);
+    }
+    
+    /**
+     * Get Pending Invites
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-pending-invites}
+     *
+     * @param engageApiKey Engage API key for the application for which to return pending invites.
+     * @param partnerKey The Engage partner key for the application that created the app referenced by the apiKey parameter.
+     * @return the pending invites.
+     */
+    @Processor
+    public Invites getPendingInvites(String engageApiKey, String partnerKey) {
+        return getJanrainPartnerClient().getPendingInvites(engageApiKey, partnerKey);
+    }
+    
+    /**
+     * Get Properties
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-properties}
+     *
+     * @param partnerKey The Engage partner key for the application that created the app referenced by the apiKey parameter.
+     * @param engageApiKey Engage API key for the application for which to return pending invites.
+     * @param provider The name of the provider whose properties you want to return. 
+     * @return the app properties.
+     */
+    @Processor
+    public Map<String, String> getProperties(String partnerKey, String engageApiKey, String provider) {
+        return getJanrainPartnerClient().getProperties(engageApiKey, partnerKey, provider);
+    }
+    
+    /**
+     * Get Provider Permissions
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-provider-permissions}
+     *
+     * @param partnerKey The Engage partner key for the application that created the app referenced by the apiKey parameter.
+     * @param engageApiKey Engage API key for the application for which to return pending invites.
+     * @param provider The name of the provider whose properties you want to return. 
+     * @return the provider permission.
+     */
+    @Processor
+    public Permissions getProviderPermissions(String partnerKey, String engageApiKey, String provider) {
+        return getJanrainPartnerClient().getProviderPermissions(engageApiKey, partnerKey, provider);
+    }
+    
+    /**
+     * Reset Api Key
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:reset-api-key}
+     *
+     * @param rpAppId The application identifier of the RP application for which you want to reset the API key.
+     * @param partnerKey The Engage partner key for the application that created the app referenced by the apiKey parameter.
+     * @return the new api key.
+     */
+    @Processor
+    public String resetApiKey(String rpAppId, String partnerKey) {
+        return getJanrainPartnerClient().resetApiKey(rpAppId, partnerKey);
+    }
+    
+    /**
+     * Set Properties
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:set-properties}
+     *
+     * @param engageApiKey The Engage API Key of the application to configure.
+     * @param partnerKey Your Engage partner key, which you can find on the dashboard.
+     * @param provider The name of the provider to configure.
+     * @param fbAppID Facebook only: The Application Id for the user’s Facebook application.
+     * @param fbSecret Facebook Only: The Application Secret for the user’s Facebook application.
+     * @param emailPerm Facebook only: Set to true if this application needs email to receive end-user email addresses.
+     * @param uninstallURL Facebook only: This is the URL that is invoked when the user uninstalls the Facebook application.
+     * @param consumerKey This is the Consumer Key for the user’s application. 
+     * @param secret The consumer secret the user’s application.
+     * @param paypalDisplayName PayPal only: The display name for the user’s Paypal application.
+     * @param email PayPal only: enter a valid email address that is already registered with a PayPal account.
+     * @param liveidAppID Windows Live only: The Application ID for the user’s Windows Live application.
+     * @param liveidSecret Windows Live only: The Secret Key for the user’s Windows Live application.
+     * @param liveidPrivacyPolicyUrl Windows Live only: The URL for the Windows Live application’s privacy policy.
+     * @param yahooAppID Yahoo only: The Application ID for the user’s Yahoo application.
+     * @param activityScopesSet Yahoo only: Set to true if the user’s Yahoo application has read and write permissions for “Status” and “Updates.”
+     * @param contactsScopeSet Yahoo only: Set to true if the user’s Yahoo application has read permission for “Contacts.”
+     * @return true if the operation is successful.
+     */
+    @Processor
+    public boolean setProperties(String engageApiKey, String partnerKey, String provider, @Optional String fbAppID, @Optional String fbSecret,
+            @Optional Boolean emailPerm, @Optional String uninstallURL, String consumerKey, String secret, @Optional String paypalDisplayName,
+            @Optional String email, @Optional String liveidAppID, @Optional String liveidSecret, @Optional String liveidPrivacyPolicyUrl, 
+            @Optional String yahooAppID, @Optional Boolean activityScopesSet, @Optional Boolean contactsScopeSet) {
+        return getJanrainPartnerClient().setProperties(engageApiKey, partnerKey, provider, fbAppID, fbSecret, emailPerm, uninstallURL, 
+                consumerKey, secret, paypalDisplayName, email, liveidAppID, liveidSecret, liveidPrivacyPolicyUrl, yahooAppID, 
+                activityScopesSet, contactsScopeSet);
+    }
+    
+    /**
+     * Set Provider Permissions
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:set-provider-permissions}
+     *
+     * @param engageApiKey The Engage API Key of the application to configure.
+     * @param partnerKey Your Engage partner key, which you can find on the dashboard.
+     * @param provider The name of the provider to configure.
+     * @param permissions A comma-separated list of permissions to set.
+     * @return true if the operation is successful.
+     */
+    @Processor
+    public boolean setProviderPermissions(String engageApiKey, String partnerKey, String provider, String permissions) {
+        return getJanrainPartnerClient().setProviderPermissions(engageApiKey, partnerKey, provider, permissions);
+    }
+    
+    /**
+     * Verify Domain
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:verify-domain}
+     *
+     * @param engageApiKey The Engage API Key of the application to configure.
+     * @param partnerKey Your Engage partner key, which you can find on the dashboard.
+     * @param provider The name of the provider to configure.
+     * @param code This is the Google-supplied META tag value that will be created on the domain.
+     * @param filename This is the Yahoo-supplied filename that will be created on the domain. 
+     * @return true if the operation is successful.
+     */
+    @Processor
+    public boolean verifyDomain(String engageApiKey, String partnerKey, String provider, @Optional String code, @Optional String filename) {
+        return getJanrainPartnerClient().verifyDomain(engageApiKey, partnerKey, provider, code, filename);
+    }
+    
+    public JanrainEngageClient getJanrainEngageClient() {
+        if (janrainEngageClient != null) {
+            return janrainEngageClient;
         }
-        janrainClient = new JanrainClientImpl(appName, appId, apiKey, apiResource, gson);
-        return janrainClient;
+        janrainEngageClient = new JanrainEngageClientImpl(appName, appId, apiKey, jerseyClient, gson);
+        return janrainEngageClient;
     }
     
-    public WebResource getApiResource() {
-        return apiResource;
+    public JanrainPartnerClient getJanrainPartnerClient() {
+        if (janrainPartnerClient != null) {
+            return janrainPartnerClient;
+        }
+        janrainPartnerClient = new JanrainPartnerClientImpl(appName, appId, apiKey, jerseyClient, gson);
+        return janrainPartnerClient;
+    }
+    
+    public Client getJerseyClient() {
+        return jerseyClient;
     }
 
-    public void setApiResource(WebResource apiResource) {
-        this.apiResource = apiResource;
+    public void setJerseyClient(Client jerseyClient) {
+        this.jerseyClient = jerseyClient;
     }
 
     public String getAppName() {

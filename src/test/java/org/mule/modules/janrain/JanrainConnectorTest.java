@@ -12,14 +12,303 @@
 
 package org.mule.modules.janrain;
 
-import junit.framework.Assert;
-import org.junit.Test;
+//import java.util.Map;
+//import org.junit.Before;
+//import org.junit.Test;
+//import org.mule.api.ConnectionException;
+//import org.mule.modules.janrain.engage.AuthInfos;
+//import org.mule.modules.janrain.engage.AvailableProviders;
+//import org.mule.modules.janrain.engage.Backplane;
+//import org.mule.modules.janrain.engage.Broadcast;
+//import org.mule.modules.janrain.engage.Contacts;
+//import org.mule.modules.janrain.engage.Direct;
+//import org.mule.modules.janrain.engage.Identifiers;
+//import org.mule.modules.janrain.engage.Plugin;
+//import org.mule.modules.janrain.engage.ShareProviders;
+//import org.mule.modules.janrain.engage.UserInfo;
+//import org.mule.modules.janrain.engage.WidgetProviders;
+//import org.mule.modules.janrain.partner.Admins;
+//import org.mule.modules.janrain.partner.AppInfo;
+//import org.mule.modules.janrain.partner.Apps;
+//import org.mule.modules.janrain.partner.Invites;
+//import org.mule.modules.janrain.partner.Permissions;
 
+@SuppressWarnings("unused")
 public class JanrainConnectorTest {
     
-    @Test
-    public void testOperation1() {
-        Assert.assertEquals("1", "1");
-    }
-
+    private static final String API_KEY = "MY_API_KEY";
+    private static final String APP_NAME = "MY_APP_NAME";
+    private static final String APP_ID = "MY_APP_ID";
+    private JanrainConnector connector;
+    
+//    @Before
+//    public void init() throws ConnectionException {
+//        connector = new JanrainConnector();
+//        connector.connect(API_KEY, APP_NAME, APP_ID);
+//    }
+//    
+//    @Test
+//    public void testAuthInfo() {
+//        UserInfo response =  connector.authInfo("myToken", true, "myTokenUrl");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testAddOrUpdateAccessToken() {
+//        boolean response =  connector.addOrUpdateAccessToken("myToken", "myIdentifier");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testAnalyticsAccess() {
+//        Map<String, String> response =  connector.analyticsAccess("10/04/2013", "30/04/2013");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetAppSettings() {
+//        Map<String, String> response =  connector.getAppSettings();
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetAvailableProviders() {
+//        AvailableProviders response =  connector.getAvailableProviders();
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetContacts() {
+//        Contacts response =  connector.getContacts("identifier", "contactType", true);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetUserData() {
+//        UserInfo response =  connector.getUserData("identifier", true);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testProviders() {
+//        WidgetProviders response =  connector.providers();
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testSetAppSettings() {
+//        boolean response =  connector.setAppSettings(null, null, null, null, null, null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testSetAuthProviders() {
+//        boolean response =  connector.setAuthProviders("google", null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testAllMappings() {
+//        String response =  connector.allMappings();
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testMap() {
+//        boolean response =  connector.map("identifier", "primaryKey", null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testMappings() {
+//        Identifiers response =  connector.mappings("primaryKey");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testUnmap() {
+//        boolean response =  connector.unmap("identifier", true, "primaryKey", true);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testBroadcast() {
+//        Broadcast response =  connector.broadcast("identifier", null, null, null, null, null, null, null, null, null, null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testDirect() {
+//        Direct response =  connector.direct("identifier", null, null, null, "recipients", null, null, null, null, null, null, null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetShareCount() {
+//        String response =  connector.getShareCount("www.google.com", null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetShareProviders() {
+//        ShareProviders response =  connector.getShareProviders();
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testSetShareProviders() {
+//        boolean response =  connector.setShareProviders("google", null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testAddDomainPatterns() {
+//        boolean response =  connector.addDomainPatterns("www.google.com");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetBackplaneProperties() {
+//        Backplane response =  connector.getBackplaneProperties();
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetDomainPatterns() {
+//        String response =  connector.getDomainPatterns();
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testLookupRp() {
+//        Plugin response =  connector.lookupRp(null, null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testSetBackplaneProperties() {
+//        boolean response =  connector.setBackplaneProperties("server", "bus", "v1", true, "username", "password");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testSetDomainPatterns() {
+//        boolean response =  connector.setDomainPatterns("google.com");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testActivity() {
+//        boolean response =  connector.activity("{\"action\": \"wrote a review of Atomic Pizza\", \"url\": \"http://example.com/reviews/12345/\"}", "myIdentifier", null, null, null, null, null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testAuthInfos() {
+//        AuthInfos response =  connector.authInfos("token1, token2", true);
+//        System.out.println(response);
+//    }
+//
+//    @Test
+//    public void testSetStatus() {
+//        boolean response =  connector.setStatus("myIdentifier", "myStatus", null, null, null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testAddBpBus() {
+//        Map<String, String> response =  connector.addBpBus("myPartnerKey");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testApps() {
+//        Apps response =  connector.apps("myPartnerKey");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testAddAdmin() {
+//        boolean response =  connector.addAdmin("myPartnerKey", "myEmail", true);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testDeleteAdmin() {
+//        boolean response =  connector.deleteAdmin("myPartnerKey", "myEmail");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetAdmins() {
+//        Admins response =  connector.getAdmins("myPartnerKey");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testAddDomain() {
+//        boolean response =  connector.addDomain("myPartnerKey", "myEngageApiKey", "myDomain");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testCreateApp() {
+//        AppInfo response =  connector.createApp("partnerKey", "email", "displayName", "domain");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testCreateInvite() {
+//        String response =  connector.createInvite("myEngageApiKey", "partnerKey", "email");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testDeleteApp() {
+//        boolean response =  connector.deleteApp("myPartnerKey", "myEngageApiKey");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetPendingInvites() {
+//        Invites response =  connector.getPendingInvites("myPartnerKey", "myEngageApiKey");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetProperties() {
+//        Map<String, String> response =  connector.getProperties("myPartnerKey", "myEngageApiKey", "myProvider");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testGetProviderPermissions() {
+//        Permissions response =  connector.getProviderPermissions("myPartnerKey", "myEngageApiKey", "myProvider");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testResetApiKey() {
+//        String response =  connector.resetApiKey("myRpAppId", "myPartnerKey");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testsetProperties() {
+//        boolean response =  connector.setProperties("myEngageApiKey", "myPartnerKey", "myProvider", null, null, null, null, "myConsumerKey", "mySecret", null, null, null, null, null, null, null, null);
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testSetProviderPermissions() {
+//        boolean response =  connector.setProviderPermissions("myEngageApiKey", "myPartnerKey", "myProvider", "myPermissions");
+//        System.out.println(response);
+//    }
+//    
+//    @Test
+//    public void testVerifyDomain() {
+//        boolean response =  connector.verifyDomain("myEngageApiKey", "myPartnerKey", "myProvider", null, null);
+//        System.out.println(response);
+//    }
+    
 }

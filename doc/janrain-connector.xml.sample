@@ -109,3 +109,67 @@
 <!-- BEGIN_INCLUDE(janrain:set-status) -->
     <janrain:set-status identifier="myIdentifier" status="myStatus" />
 <!-- END_INCLUDE(janrain:set-status) -->
+
+<!-- BEGIN_INCLUDE(janrain:add-bp-bus) -->
+    <janrain:add-bp-bus partnerKey="myPartnerKey" />
+<!-- END_INCLUDE(janrain:add-bp-bus) -->
+
+<!-- BEGIN_INCLUDE(janrain:apps) -->
+    <janrain:apps partnerKey="myPartnerKey" />
+<!-- END_INCLUDE(janrain:apps) -->
+
+<!-- BEGIN_INCLUDE(janrain:add-admin) -->
+    <janrain:add-admin partnerKey="myPartnerKey" email="myEmail" verify="true"/>
+<!-- END_INCLUDE(janrain:add-admin) -->
+
+<!-- BEGIN_INCLUDE(janrain:delete-admin) -->
+    <janrain:delete-admin partnerKey="myPartnerKey" email="myEmail"/>
+<!-- END_INCLUDE(janrain:delete-admin) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-admins) -->
+    <janrain:get-admins partnerKey="myPartnerKey"/>
+<!-- END_INCLUDE(janrain:get-admins) -->
+
+<!-- BEGIN_INCLUDE(janrain:add-domain) -->
+    <janrain:add-domain partnerKey="myPartnerKey" engageApiKey="myEngageApiKey" domain="myDomain" />
+<!-- END_INCLUDE(janrain:add-domain) -->
+
+<!-- BEGIN_INCLUDE(janrain:create-app) -->
+    <janrain:create-app partnerKey="myPartnerKey" email="myEmail" displayName="myDisplayName" domain="myDomain" />
+<!-- END_INCLUDE(janrain:create-app) -->
+
+<!-- BEGIN_INCLUDE(janrain:create-invite) -->
+    <janrain:create-invite engageApiKey="myEngageApiKey" partnerKey="myPartnerKey" email="myEmail" />
+<!-- END_INCLUDE(janrain:create-invite) -->
+
+<!-- BEGIN_INCLUDE(janrain:delete-app) -->
+    <janrain:delete-app engageApiKey="myEngageApiKey" partnerKey="myPartnerKey" />
+<!-- END_INCLUDE(janrain:delete-app) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-pending-invites) -->
+    <janrain:get-pending-invites engageApiKey="myEngageApiKey" partnerKey="myPartnerKey" />
+<!-- END_INCLUDE(janrain:get-pending-invites) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-properties) -->
+    <janrain:get-properties partnerKey="myPartnerKey" engageApiKey="myEngageApiKey" provider="myProvider" />
+<!-- END_INCLUDE(janrain:get-properties) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-provider-permissions) -->
+    <janrain:get-provider-permissions partnerKey="myPartnerKey" engageApiKey="myEngageApiKey" provider="myProvider" />
+<!-- END_INCLUDE(janrain:get-provider-permissions) -->
+
+<!-- BEGIN_INCLUDE(janrain:reset-api-key) -->
+    <janrain:reset-api-key rpAppId="myRpAppId" partnerKey="myPartnerKey" />
+<!-- END_INCLUDE(janrain:reset-api-key) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-properties) -->
+    <janrain:set-properties engageApiKey="myEngageApiKey" partnerKey="myPartnerKey" provider="myProvider" consumerKey="myConsumerKey" secret="mySecret" />
+<!-- END_INCLUDE(janrain:set-properties) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-provider-permissions) -->
+    <janrain:set-provider-permissions engageApiKey="myEngageApiKey" partnerKey="myPartnerKey" provider="myProvider" permissions="myPermissions" />
+<!-- END_INCLUDE(janrain:set-provider-permissions) -->
+
+<!-- BEGIN_INCLUDE(janrain:verify-domain) -->
+    <janrain:verify-domain engageApiKey="myEngageApiKey" partnerKey="myPartnerKey" provider="myProvider"/>
+<!-- END_INCLUDE(janrain:verify-domain) -->
