@@ -25,6 +25,10 @@ import org.mule.api.annotations.param.Optional;
 import org.mule.api.ConnectionException;
 import org.mule.api.annotations.Processor;
 
+import org.mule.modules.janrain.capture.BulkResponse;
+import org.mule.modules.janrain.capture.ClientInfo;
+import org.mule.modules.janrain.client.JanrainCaptureClient;
+import org.mule.modules.janrain.client.JanrainCaptureClientImpl;
 import org.mule.modules.janrain.client.JanrainEngageClient;
 import org.mule.modules.janrain.client.JanrainEngageClientImpl;
 import org.mule.modules.janrain.client.JanrainPartnerClient;
@@ -94,6 +98,11 @@ public class JanrainConnector {
     private JanrainPartnerClient janrainPartnerClient;
     
     /**
+     * Janrain Capture Client
+     */
+    private JanrainCaptureClient janrainCaptureClient;
+    
+    /**
      * Jersey Client
      */
     private Client jerseyClient;
@@ -136,6 +145,7 @@ public class JanrainConnector {
         this.jerseyClient = null;
         this.janrainEngageClient = null;
         this.janrainPartnerClient = null;
+        this.janrainCaptureClient = null;
     }
 
     /**
@@ -143,7 +153,7 @@ public class JanrainConnector {
      */
     @ValidateConnection
     public boolean isConnected() {
-        return (this.jerseyClient != null && this.janrainEngageClient != null && this.janrainPartnerClient != null);
+        return (this.jerseyClient != null && this.janrainEngageClient != null && this.janrainPartnerClient != null && this.janrainCaptureClient != null);
     }
 
     /**
@@ -838,6 +848,893 @@ public class JanrainConnector {
         return getJanrainPartnerClient().verifyDomain(engageApiKey, partnerKey, provider, code, filename);
     }
     
+    /**
+     * Add Client
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:add-client}
+     *
+     * @param client_id The client identifier of the owner client.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param description A string description of the client.
+     * @param features A JSON array of feature names that the client has; defaults to the empty list.
+     * @return the created client
+     */
+    @Processor
+    public ClientInfo addClient(String client_id, String client_secret, String description, @Optional String features) {
+        return getJanrainCaptureClient().addClient(client_id, client_secret, description, features);
+    }
+    
+    /**
+     * Clear Whitelist
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:clear-whitelist}
+     *
+     * @param client_id The client identifier of the owner client.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param for_client_id The client_id whose whitelist will be cleared.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean clearWhitelist(String client_id, String client_secret, @Optional String for_client_id) {
+        return getJanrainCaptureClient().clearWhitelist(client_id, client_secret, for_client_id);
+    }
+    
+    /**
+     * Delete Client
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:delete-client}
+     *
+     * @param client_id The client identifier of the owner client.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param client_id_for_deletion The client_id to delete.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean deleteClient(String client_id, String client_secret, String client_id_for_deletion) {
+        return getJanrainCaptureClient().deleteClient(client_id, client_secret, client_id_for_deletion);
+    }
+    
+    /**
+     * List Clients
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:list-clients}
+     *
+     * @param client_id The client identifier of the owner client.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param has_features A JSON array features names; only clients which have at least one of the features in the array will be displayed.
+     * @return the clients
+     */
+    @Processor
+    public ClientInfo listClients(String client_id, String client_secret, @Optional String has_features) {
+        return getJanrainCaptureClient().listClients(client_id, client_secret, has_features);
+    }
+    
+    /**
+     * Set Description
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:set-description}
+     *
+     * @param client_id The client identifier of the owner client.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param for_client_id The client id of the client having it’s description changed.
+     * @param description The new description for the target client.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean setDescription(String client_id, String client_secret, @Optional String for_client_id, String description) {
+        return getJanrainCaptureClient().setDescription(client_id, client_secret, for_client_id, description);
+    }
+    
+    /**
+     * Set Features
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:set-features}
+     *
+     * @param client_id The client identifier of the owner client.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param for_client_id The client id of the client having it’s description changed.
+     * @param features A JSON array of feature names to assign to the client. 
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean setFeatures(String client_id, String client_secret, @Optional String for_client_id, String features) {
+        return getJanrainCaptureClient().setFeatures(client_id, client_secret, for_client_id, features);
+    }
+    
+    /**
+     * Set Whitelist
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:set-whitelist}
+     *
+     * @param client_id The client identifier of the owner client.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param for_client_id The client id of the client having it’s description changed.
+     * @param whitelist A JSON array of CIDR addresses that make up the new whitelist for the client, each one in the x.x.x.x/x format.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean setWhitelist(String client_id, String client_secret, @Optional String for_client_id, String whitelist) {
+        return getJanrainCaptureClient().setWhitelist(client_id, client_secret, for_client_id, whitelist);
+    }
+    
+    /**
+     * Retrieve Entity
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:retrieve-entity}
+     *
+     * @param client_secret Required when authenticating with client settings. 
+     * @param client_id Required when authenticating with client settings.
+     * @param access_token Required when authenticating with an OAuth access_token. 
+     * @param uuid Required when not using id or key_attribute paramaters. 
+     * @param id Required when not using key_attribute or uuid parameters. 
+     * @param key_attribute Required when not using id or uuid.
+     * @param key_value Required when using key_attribute. 
+     * @param password_attribute Entity can be used to validate user passwords. 
+     * @param password_value A plaintext value that will be matched against the password attribute specified in the password_attribute parameter. 
+     * @param type_name The entityType of the entity.
+     * @param attribute_name This is a schema path to an individual attribute.
+     * @param attributes This is a JSON array of attributes.
+     * @param created Timestamps are generated when an entity is created.
+     * @param last_updated Timestamps are generated when an entity is updated.
+     * @return Retrieve an entity of entityType user by id.
+     */
+    @Processor
+    public String retrieveEntity(@Optional String client_secret, @Optional String client_id, @Optional String access_token,
+            @Optional String uuid, @Optional String id, @Optional String key_attribute, @Optional String key_value,
+            @Optional String password_attribute, @Optional String password_value, String type_name, @Optional String attribute_name,
+            @Optional String attributes, @Optional String created, @Optional String last_updated) {
+        return getJanrainCaptureClient().retrieveEntity(client_secret, client_id, access_token, uuid, id, key_attribute, key_value, 
+                password_attribute, password_value, type_name, attribute_name, attributes, created, last_updated);
+    }
+    
+    /**
+     * Entity Adopt
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-adopt}
+     *
+     * @param client_id The client identifier of the owner client.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param type_name The entityType of the entity.
+     * @param id The identifier of the entity.
+     * @param access_token Required when authenticating with an OAuth access_token.
+     * @param attribute_name The value path to the plural that is to adopt the orphan. 
+     * @param child_id The id of the orphaned plural element to be adopted.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean entityAdopt(@Optional String client_secret, @Optional String client_id, String type_name, String id,
+            @Optional String access_token, String attribute_name, String child_id) {
+        return getJanrainCaptureClient().entityAdopt(client_secret, client_id, type_name, id, access_token, attribute_name, child_id);
+    }
+    
+    /**
+     * Entity Bulk Create
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-bulk-create}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param type_name The entityType of the entity.
+     * @param all_attributes The attribute names and values (as JSON) for the entity.
+     * @return the bulk response
+     */
+    @Processor
+    public BulkResponse entityBulkCreate(String client_id, String client_secret, String type_name, String all_attributes) {
+        return getJanrainCaptureClient().entityBulkCreate(client_id, client_secret, type_name, all_attributes);
+    }
+    
+    /**
+     * Entity Count
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-count}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param type_name The entityType of the entity.
+     * @param filter The expression to use to filter the results.
+     * @return the entity count
+     */
+    @Processor
+    public String entityCount(String client_id, String client_secret, String type_name, @Optional String filter) {
+        return getJanrainCaptureClient().entityCount(client_id, client_secret, type_name, filter);
+    }
+    
+    /**
+     * Entity Create
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-create}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param type_name The entityType of the entity.
+     * @param attributes The attribute names and values (as JSON) for the entity.
+     * @param include_record When true, a result field is added to the response containing the data of the newly created entity record.
+     * @return the entity created
+     */
+    @Processor
+    public Map<String,String> entityCreate(String client_id, String client_secret, @Optional String type_name, String attributes, @Optional Boolean include_record) {
+        return getJanrainCaptureClient().entityCreate(client_id, client_secret, type_name, attributes, include_record);
+    }
+    
+    /**
+     * Entity Delete
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-delete}
+     *
+     * @param client_secret Required when authenticating with client settings. 
+     * @param client_id Required when authenticating with client settings.
+     * @param access_token Required when authenticating with an OAuth access_token. 
+     * @param uuid Required when not using id or key_attribute paramaters. 
+     * @param id Required when not using key_attribute or uuid parameters. 
+     * @param key_attribute Required when not using id or uuid.
+     * @param key_value Required when using key_attribute. 
+     * @param type_name The entityType of the entity.
+     * @param attribute_name This is a schema path to an individual attribute.
+     * @param created Timestamps are generated when an entity is created.
+     * @param last_updated Timestamps are generated when an entity is updated.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean entityDelete(@Optional String client_secret, @Optional String client_id, @Optional String access_token,
+            @Optional String uuid, @Optional String id, @Optional String key_attribute, @Optional String key_value,
+            String type_name, @Optional String attribute_name, @Optional String created, @Optional String last_updated) {
+        return getJanrainCaptureClient().entityDelete(client_secret, client_id, access_token, uuid, id, key_attribute, key_value, 
+                type_name, attribute_name, created, last_updated);
+    }
+    
+    /**
+     * Entity Bulk Delete
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-bulk-delete}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param type_name The entityType of the entity.
+     * @param filter The expression used to filter the results.
+     * @param commit When the parameter is present, will not delete any records unless the value is true.
+     * @return the count of the deleted entities
+     */
+    @Processor
+    public String entityBulkDelete(String client_id, String client_secret, String type_name, String filter, @Optional Boolean commit) {
+        return getJanrainCaptureClient().entityBulkDelete(client_id, client_secret, type_name, filter, commit);
+    }
+    
+    /**
+     * Entity Purge
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-purge}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param type_name The entityType of the entity.
+     * @param commit When the parameter is present, will not delete any records unless the value is true.
+     * @return the resulted state of the action
+     */
+    @Processor
+    public String entityPurge(String client_id, String client_secret, String type_name, Boolean commit) {
+        return getJanrainCaptureClient().entityPurge(client_id, client_secret, type_name, commit);
+    }
+    
+    /**
+     * Entity Replace
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-replace}
+     *
+     * @param client_secret Required when authenticating with client settings. 
+     * @param client_id Required when authenticating with client settings.
+     * @param access_token Required when authenticating with an OAuth access_token. 
+     * @param uuid Required when not using id or key_attribute paramaters. 
+     * @param id Required when not using key_attribute or uuid parameters. 
+     * @param key_attribute Required when not using id or uuid.
+     * @param key_value Required when using key_attribute. 
+     * @param type_name The entityType of the entity.
+     * @param value The JSON value to assign by attribute_name. 
+     * @param attribute_name This is a schema path to an individual attribute.
+     * @param created Timestamps are generated when an entity is created.
+     * @param last_updated Timestamps are generated when an entity is updated.
+     * @param include_record When true, a result field is added to the response, containing the data of the newly updated entity record.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean entityReplace(@Optional String client_secret, @Optional String client_id, @Optional String access_token,
+            @Optional String uuid, @Optional String id, @Optional String key_attribute, @Optional String key_value,
+            String type_name, String value, @Optional String attribute_name, @Optional String created, @Optional String last_updated,
+            @Optional Boolean include_record) {
+        return getJanrainCaptureClient().entityReplace(client_secret, client_id, access_token, uuid, id, key_attribute, key_value, 
+                type_name, value, attribute_name, created, last_updated, include_record);
+    }
+    
+    /**
+     * Entity Update
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-update}
+     *
+     * @param client_secret Required when authenticating with client settings. 
+     * @param client_id Required when authenticating with client settings.
+     * @param access_token Required when authenticating with an OAuth access_token. 
+     * @param uuid Required when not using id or key_attribute paramaters. 
+     * @param id Required when not using key_attribute or uuid parameters. 
+     * @param key_attribute Required when not using id or uuid.
+     * @param key_value Required when using key_attribute. 
+     * @param type_name The entityType of the entity.
+     * @param value The JSON value to assign by attribute_name. 
+     * @param attribute_name This is a schema path to an individual attribute.
+     * @param created Timestamps are generated when an entity is created.
+     * @param last_updated Timestamps are generated when an entity is updated.
+     * @param include_record When true, a result field is added to the response, containing the data of the newly updated entity record.
+     * @param attributes A value paramete
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean entityUpdate(@Optional String client_secret, @Optional String client_id, @Optional String access_token,
+            @Optional String uuid, @Optional String id, @Optional String key_attribute, @Optional String key_value,
+            String type_name, String value, @Optional String attribute_name, @Optional String created, @Optional String last_updated,
+            @Optional Boolean include_record, String attributes) {
+        return getJanrainCaptureClient().entityUpdate(client_secret, client_id, access_token, uuid, id, key_attribute, key_value, 
+                type_name, value, attribute_name, created, last_updated, include_record, attributes);
+    }
+    
+    /**
+     * Entity Find
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-find}
+     *
+     * @param client_secret Required when authenticating with client settings. 
+     * @param client_id Required when authenticating with client settings.
+     * @param type_name The entityType of the entity.
+     * @param filter The expression used to filter the results. The default is to match all records.
+     * @param max_results The maximum number of results to be returned. 
+     * @param first_result Changes the first result displayed by the list to the next number specified.
+     * @param show_total_count This includes a total_count in the result that shows the total number of records that matched the filter. 
+     * @param sort_on A JSON array of attributes to sort by.
+     * @param attributes A JSON array of attributes to return in the result set.
+     * @return the results
+     */
+    @Processor
+    public String entityFind(String client_secret, String client_id, String type_name, @Optional String filter,
+            @Optional String max_results, @Optional String first_result, @Optional Boolean show_total_count, @Optional String sort_on, 
+            @Optional String attributes) {
+        return getJanrainCaptureClient().entityFind(client_secret, client_id, type_name, filter, max_results, 
+                first_result, show_total_count, sort_on, attributes);
+    }
+    
+    /**
+     * Delete Settings
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:delete-settings}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param key The key to delete from the client settings.
+     * @param for_client_id The client identifier whose key will be deleted.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean deleteSettings(String client_id, String client_secret, String key, String for_client_id) {
+        return getJanrainCaptureClient().deleteSettings(client_id, client_secret, key, for_client_id);
+    }
+    
+    /**
+     * Delete Default
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:delete-default}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param key The key to delete from the client settings.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean deleteDefault(String client_id, String client_secret, String key) {
+        return getJanrainCaptureClient().deleteDefault(client_id, client_secret, key);
+    }
+    
+    /**
+     * Get Settings
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-settings}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param key The key to delete from the client settings.
+     * @param for_client_id The client identifier whose key will be deleted.
+     * @return the settings
+     */
+    @Processor
+    public String getSettings(String client_id, String client_secret, String key, String for_client_id) {
+        return getJanrainCaptureClient().getSettings(client_id, client_secret, key, for_client_id);
+    }
+    
+    /**
+     * Get MultiSettings
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-multisettings}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param key The key to delete from the client settings.
+     * @param for_client_id The client identifier whose key will be deleted.
+     * @return the settings
+     */
+    @Processor
+    public String getMultisettings(String client_id, String client_secret, String key, String for_client_id) {
+        return getJanrainCaptureClient().getMultisettings(client_id, client_secret, key, for_client_id);
+    }
+    
+    /**
+     * Get Items
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-items}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param for_client_id The client identifier whose key will be deleted.
+     * @return the items
+     */
+    @Processor
+    public String getItems(String client_id, String client_secret, String for_client_id) {
+        return getJanrainCaptureClient().getItems(client_id, client_secret, for_client_id);
+    }
+    
+    /**
+     * Get Keys
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-keys}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param for_client_id The client identifier whose key will be deleted.
+     * @return the keys
+     */
+    @Processor
+    public String getKeys(String client_id, String client_secret, String for_client_id) {
+        return getJanrainCaptureClient().getKeys(client_id, client_secret, for_client_id);
+    }
+    
+    /**
+     * Set Settings
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:set-settings}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param key The key to delete from the client settings.
+     * @param value The value to assign to the key.
+     * @param for_client_id The client identifier whose key will be deleted.
+     * @return the settings
+     */
+    @Processor
+    public String setSettings(String client_id, String client_secret, String key, String value, String for_client_id) {
+        return getJanrainCaptureClient().setSettings(client_id, client_secret, key, value, for_client_id);
+    }
+    
+    /**
+     * Get Default
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-default}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param key The key to delete from the client settings.
+     * @return the default setting
+     */
+    @Processor
+    public String getDefault(String client_id, String client_secret, String key) {
+        return getJanrainCaptureClient().getDefault(client_id, client_secret, key);
+    }
+    
+    /**
+     * Set Default
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:set-default}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param key The key to delete from the client settings.
+     * @param value The value to assign to the key.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean setDefault(String client_id, String client_secret, String key, String value) {
+        return getJanrainCaptureClient().setDefault(client_id, client_secret, key, value);
+    }
+    
+    /**
+     * Set MultiSettings
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:set-multisettings}
+     *
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param items A JSON object containing the key-value pairs to set for the client identifier.
+     * @param for_client_id The client identifier whose key will be deleted.
+     * @return the settings
+     */
+    @Processor
+    public String setMultisettings(String client_id, String client_secret, String items, String for_client_id) {
+        return getJanrainCaptureClient().setMultisettings(client_id, client_secret, items, for_client_id);
+    }
+    
+    /**
+     * Entity Versions
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:entity-versions}
+     *
+     * @param type_name The entityType of the entity.
+     * @param id The primary key of the parent object.
+     * @param timestamp The date and time to search for. Capture retrieves the value of the record as it existed at that timestamp.
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @return the versions
+     */
+    @Processor
+    public String entityVersions(String type_name, String id, String timestamp, String client_id, String client_secret) {
+        return getJanrainCaptureClient().entityVersions(type_name, id, timestamp, client_id, client_secret);
+    }
+    
+    /**
+     * Get Entity Type
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-entity-type}
+     *
+     * @param type_name The entityType of the entity.
+     * @param timestamp The date and time to search for. Capture retrieves the value of the record as it existed at that timestamp.
+     * @param client_id The client identifier.
+     * @param client_secret The shared secret paired with the client_id.
+     * @return the versions
+     */
+    @Processor
+    public String getEntityType(String type_name, String timestamp, String client_id, String client_secret) {
+        return getJanrainCaptureClient().getEntityType(type_name, timestamp, client_id, client_secret);
+    }
+    
+    /**
+     * Get Access Token
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-access-token}
+     *
+     * @param uuid Required when not using the id or key_attribute and key_value paramaters. 
+     * @param id Required when not using the uuid or key_attribute and key_value paramaters. 
+     * @param key_attribute Required when not using id or uuid parameters. 
+     * @param key_value Required when using key_attribute. 
+     * @param client_id The client identifier, which you can find on your dashboard.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param type_name The name of the entityType.
+     * @param for_client_id The client_id for which to retrieve an accessToken.
+     * @return Access Token
+     */
+    @Processor
+    public String getAccessToken(@Optional String uuid, @Optional String id, @Optional String key_attribute, @Optional String key_value,
+            String client_id, String client_secret, String type_name, @Optional String for_client_id) {
+        return getJanrainCaptureClient().getAccessToken(uuid, id, key_attribute, key_value, client_id, client_secret, type_name, for_client_id);
+    }
+    
+    /**
+     * Get Authorization Code
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-authorization-code}
+     *
+     * @param uuid Required when not using the id or key_attribute and key_value paramaters. 
+     * @param id Required when not using the uuid or key_attribute and key_value paramaters. 
+     * @param key_attribute Required when not using id or uuid parameters. 
+     * @param key_value Required when using key_attribute. 
+     * @param client_id The client identifier, which you can find on your dashboard.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param redirect_uri The redirect URI. This is the address used by CaptureUI to make the redirect.
+     * @param type_name The name of the entityType.
+     * @param transaction_state A JSON object that will be associated with the authorization code and returned when it is exchanged for an access_token and a refresh token.
+     * @param lifetime The number of seconds for which the code is valid. The default value is 30 seconds.
+     * @param for_client_id The client_id for which to retrieve an accessToken.
+     * @return Authorization Code
+     */
+    @Processor
+    public String getAuthorizationCode(@Optional String uuid, @Optional String id, @Optional String key_attribute, @Optional String key_value,
+            String client_id, String client_secret, String redirect_uri, String type_name, @Optional String transaction_state, @Optional String lifetime, 
+            @Optional String for_client_id) {
+        return getJanrainCaptureClient().getAuthorizationCode(uuid, id, key_attribute, key_value, client_id, client_secret, redirect_uri, type_name, 
+                transaction_state, lifetime, for_client_id);
+    }
+    
+    /**
+     * Get Creation Token
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-creation-token}
+     *
+     * @param client_id The client identifier, which you can find on your dashboard.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param type_name The name of the entityType.
+     * @param lifetime The number of seconds for which the code is valid. The default value is 30 seconds.
+     * @param for_client_id The client_id for which to retrieve an accessToken.
+     * @return Creation Token
+     */
+    @Processor
+    public String getCreationToken(String client_id, String client_secret, String type_name, String lifetime, String for_client_id) {
+        return getJanrainCaptureClient().getCreationToken(client_id, client_secret, type_name, lifetime, for_client_id);
+    }
+    
+    /**
+     * Get Verification Code
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-verification-code}
+     *
+     * @param uuid Required when not using id or the key_attribute and key_value parameters.
+     * @param id The id number associated with the user record.
+     * @param key_attribute Required when not using the id or uuid parameters.
+     * @param key_value Required when using the key_attribute
+     * @param client_id The client identifier, which you can find on your dashboard.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param type_name The name of the entityType.
+     * @param attribute_name The name of the attribute to update when using the verification code.
+     * @param lifetime The number of seconds for which the code is valid. The default value is 30 seconds.
+     * @return Verification Code
+     */
+    @Processor
+    public String getVerificationCode(@Optional String uuid, @Optional String id, @Optional String key_attribute, @Optional String key_value,
+            String client_id, String client_secret, String type_name, String attribute_name, String lifetime) {
+        return getJanrainCaptureClient().getVerificationCode(uuid, id, key_attribute, key_value, client_id, client_secret, type_name, attribute_name, lifetime);
+    }
+    
+    /**
+     * Use Verification Code
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:use-verification-code}
+     *
+     * @param verification_code The verification code obtained in a previous call to access/getVerificationCode.
+     * @return true if the operation is successful
+     */
+    @Processor
+    public boolean useVerificationCode(String verification_code) {
+        return getJanrainCaptureClient().useVerificationCode(verification_code);
+    }
+    
+    /**
+     * Webhooks Add
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:webhooks-add}
+     *
+     * @param client_id The client identifier of the target Capture application, available in the dashboard.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param attributes This is only applicable when event_type is update. 
+     * @param callback The URL address where the webhook message is to be delivered and processed. 
+     * @param event_type The type of change that triggers the webhook. 
+     * @param entity_type The schema where the attribute is defined. Most of the time, this will be the default schema user.
+     * @return the created webhook
+     */
+    @Processor
+    public String webhooksAdd(String client_id, String client_secret, @Optional String attributes, String callback, String event_type, String entity_type) {
+        return getJanrainCaptureClient().webhooksAdd(client_id, client_secret, attributes, callback, event_type, entity_type);
+    }
+    
+    /**
+     * Webhooks Delete
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:webhooks-delete}
+     *
+     * @param client_id The client identifier of the target Capture application, available in the dashboard.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param uuid This is the uuid of the webhook.  
+     * @return the deleted webhook
+     */
+    @Processor
+    public String webhooksDelete(String client_id, String client_secret, String uuid) {
+        return getJanrainCaptureClient().webhooksDelete(client_id, client_secret, uuid);
+    }
+    
+    /**
+     * Webhooks Find
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:webhooks-find}
+     *
+     * @param client_id The client identifier of the target Capture application, available in the dashboard.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param uuid This is the uuid of the webhook.  
+     * @return the found webhook
+     */
+    @Processor
+    public String webhooksFind(String client_id, String client_secret, String uuid) {
+        return getJanrainCaptureClient().webhooksFind(client_id, client_secret, uuid);
+    }
+    
+    /**
+     * Webhooks List
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:webhooks-list}
+     *
+     * @param client_id The client identifier of the target Capture application, available in the dashboard.
+     * @param client_secret The shared secret paired with the client_id.  
+     * @return the list of webhooks
+     */
+    @Processor
+    public String webhooksList(String client_id, String client_secret) {
+        return getJanrainCaptureClient().webhooksList(client_id, client_secret);
+    }
+    
+    /**
+     * Webhooks Update
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:webhooks-update}
+     *
+     * @param client_id The client identifier of the target Capture application, available in the dashboard.
+     * @param client_secret The shared secret paired with the client_id.
+     * @param callback The URL address where the webhook message is to be delivered and processed.
+     * @param event_type The type of change that triggers the webhook.
+     * @param entity_type The schema where the attribute is defined. Most of the time, this will be the default schema user.
+     * @param attributes This is applicable only when event_type is update.
+     * @param uuid This is the uuid of the webhook.
+     * @return the updated webhook
+     */
+    @Processor
+    public String webhooksUpdate(String client_id, String client_secret, @Optional String callback, @Optional String event_type, 
+            @Optional String entity_type, @Optional String attributes, String uuid) {
+        return getJanrainCaptureClient().webhooksUpdate(client_id, client_secret, callback, event_type, entity_type, attributes, uuid);
+    }
+    
+    /**
+     * Auth Native
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:auth-native}
+     *
+     * @param client_id The client identifier for your application.
+     * @param locale The user’s flow locale for your application. 
+     * @param response_type You must enter one of code, token, or code_and_token.
+     * @param redirect_uri The value of the redirect_uri that was passed in to provision the authorization code, which Capture matches for security.
+     * @param token A token for rpx.
+     * @param thin_registration If true this endpoint will create nonexistent users. If it is false, you’ll need to do two-step registration using /oauth/register_native.
+     * @param merge_token If you have had a previous call to /oauth/auth_native fail with code 380 email_address_in_use, you can merge the two accounts by passing a merge_token parameter while authorizing as the existing user.
+     * @param flow_name The name of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_name.
+     * @param flow_version The version number of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_version.
+     * @return A standard, mobile, native authorization. 
+     */
+    @Processor
+    public String authNative(String client_id, String locale, String response_type, String redirect_uri, String token, 
+            @Optional String thin_registration, @Optional String merge_token, @Optional String flow_name, @Optional String flow_version) {
+        return getJanrainCaptureClient().authNative(client_id, locale, response_type, redirect_uri, token, thin_registration, merge_token, flow_name, flow_version);
+    }
+    
+    /**
+     * Auth Native Traditional
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:auth-native-traditional}
+     *
+     * @param client_id The client identifier for your application.
+     * @param locale The user’s flow locale for your application. 
+     * @param response_type You must enter one of code, token, or code_and_token.
+     * @param redirect_uri The value of the redirect_uri that was passed in to provision the authorization code, which Capture matches for security.
+     * @param email The parameter name is the traditional-registration email address field name in your flow, so this varies from application to application.
+     * @param password The parameter name is the traditional-registration password field name in your flow, so this varies from application to application.
+     * @param form The name of the login form in your flow.
+     * @param flow_name The name of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_name.
+     * @param flow_version The version number of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_version.
+     * @return A standard, mobile, native authorization.
+     */
+    @Processor
+    public String authNativeTraditional(String client_id, String locale, String response_type, String redirect_uri, String email,
+            String password, String form, @Optional String flow_name, @Optional String flow_version) {
+        return getJanrainCaptureClient().authNativeTraditional(client_id, locale, response_type, redirect_uri, email, password, form, flow_name, flow_version);
+    }
+    
+    /**
+     * Forgot Password Native
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:forgot-password-native}
+     *
+     * @param client_id The client identifier for your application.
+     * @param locale The user’s flow locale for your application. 
+     * @param response_type You must enter one of code, token, or code_and_token.
+     * @param redirect_uri The value of the redirect_uri that was passed in to provision the authorization code, which Capture matches for security.
+     * @param form The name of the form in your flow where you store the recover password logic..
+     * @param email The email address for which you want to recover the password.
+     * @param flow_name The name of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_name.
+     * @param flow_version The version number of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_version.
+     * @return the forgotten password 
+     */
+    @Processor
+    public String forgotPasswordNative(String client_id, String locale, String response_type, String redirect_uri, String form, 
+            String email, @Optional String flow_name, @Optional String flow_version) {
+        return getJanrainCaptureClient().forgotPasswordNative(client_id, locale, response_type, redirect_uri, form, email, flow_name, flow_version);
+    }
+    
+    /**
+     * Link Account Native
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:link-account-native}
+     *
+     * @param client_id The client identifier for your application.
+     * @param locale The user’s flow locale for your application. 
+     * @param response_type You must enter one of code, token, or code_and_token.
+     * @param redirect_uri The value of the redirect_uri that was passed in to provision the authorization code, which Capture matches for security.
+     * @param token The access token from a previous call to /oauth/auth_native or oauth/auth_native_traditional.
+     * @param flow_name The name of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_name.
+     * @param flow_version The version number of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_version.
+     * @return A linked account
+     */
+    @Processor
+    public String linkAccountNative(String client_id, String locale, String response_type, String redirect_uri, String token, 
+           @Optional String flow_name, @Optional String flow_version) {
+        return getJanrainCaptureClient().linkAccountNative(client_id, locale, response_type, redirect_uri, token, flow_name, flow_version);
+    }
+    
+    /**
+     * Register Native
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:register-native}
+     *
+     * @param client_id The client identifier for your application.
+     * @param locale The user’s flow locale for your application. 
+     * @param response_type You must enter one of code, token, or code_and_token.
+     * @param redirect_uri The value of the redirect_uri that was passed in to provision the authorization code, which Capture matches for security.
+     * @param token The access token from a previous call to /oauth/auth_native or oauth/auth_native_traditional.
+     * @param flow_name The name of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_name.
+     * @param flow_version The version number of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_version.
+     * @return A linked account
+     */
+    @Processor
+    public String registerNative(String client_id, String locale, String response_type, String redirect_uri, String token, 
+           @Optional String flow_name, @Optional String flow_version) {
+        return getJanrainCaptureClient().registerNative(client_id, locale, response_type, redirect_uri, token, flow_name, flow_version);
+    }
+    
+    /**
+     * Verify Email Native
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:verify-email-native}
+     *
+     * @param client_id The client identifier for your application.
+     * @param locale The user’s flow locale for your application. 
+     * @param response_type You must enter one of code, token, or code_and_token.
+     * @param redirect_uri The value of the redirect_uri that was passed in to provision the authorization code, which Capture matches for security.
+     * @param form The name of the form in your flow where you store the verify email logic.
+     * @param email The email address you want to verify.
+     * @param flow_name The name of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_name.
+     * @param flow_version The version number of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_version.
+     * @return A linked account
+     */
+    @Processor
+    public String verifyEmailNative(String client_id, String locale, String response_type, String redirect_uri, String form, String email, 
+           @Optional String flow_name, @Optional String flow_version) {
+        return getJanrainCaptureClient().verifyEmailNative(client_id, locale, response_type, redirect_uri, form, email, flow_name, flow_version);
+    }
+    
+    /**
+     * Get Token
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:get-token}
+     *
+     * @param client_id The client identifier for your application
+     * @param client_secret The shared secret paired with the client_id.
+     * @param grant_type The access grant type included in the request. Available values are authorization_code and refresh_token. 
+     * @param code The authorization code received from the authorization server. 
+     * @param redirect_uri The redirection URI used in the initial request. CaptureUI uses this address to implement the redirect.
+     * @param refresh_token The token for refreshing the
+     * @return A token
+     */
+    @Processor
+    public String getToken(String client_id, String client_secret, String grant_type, String code, String redirect_uri, @Optional String refresh_token) {
+        return getJanrainCaptureClient().getToken(client_id, client_secret, grant_type, code, redirect_uri, refresh_token);
+    }
+    
+    /**
+     * Register Native Traditional
+     *
+     * {@sample.xml ../../../doc/janrain-connector.xml.sample janrain:register-native-traditional}
+     *
+     * @param client_id The client identifier for your application.
+     * @param locale The user’s flow locale for your application. 
+     * @param response_type You must enter one of code, token, or code_and_token.
+     * @param redirect_uri The value of the redirect_uri that was passed in to provision the authorization code, which Capture matches for security.
+     * @param password The password of the person who is registering. Note: The actual name of this parameter is defined by your flow file. password is the default, but you might choose to change it.
+     * @param password_confirm The confirmation for the user’s password and must match the password parameter.
+     * @param email The email address you want to verify.
+     * @param flow_name The name of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_name.
+     * @param flow_version The version number of the flow you want to use for this user. If you do not enter a value, Capture uses default_flow_version.
+     * @return A linked account
+     */
+    @Processor
+    public String registerNativeTraditional(String client_id, String locale, String response_type, String redirect_uri, String password, String password_confirm,
+            String email, @Optional String flow_name, @Optional String flow_version) {
+        return getJanrainCaptureClient().registerNativeTraditional(client_id, locale, response_type, redirect_uri, password, password_confirm, email, flow_name, flow_version);
+    }
+    
     public JanrainEngageClient getJanrainEngageClient() {
         if (janrainEngageClient != null) {
             return janrainEngageClient;
@@ -852,6 +1749,14 @@ public class JanrainConnector {
         }
         janrainPartnerClient = new JanrainPartnerClientImpl(appName, appId, apiKey, jerseyClient, gson);
         return janrainPartnerClient;
+    }
+    
+    public JanrainCaptureClient getJanrainCaptureClient() {
+        if (janrainCaptureClient != null) {
+            return janrainCaptureClient;
+        }
+        janrainCaptureClient = new JanrainCaptureClientImpl(appName, appId, apiKey, jerseyClient, gson);
+        return janrainCaptureClient;
     }
     
     public Client getJerseyClient() {

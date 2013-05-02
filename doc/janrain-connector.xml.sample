@@ -173,3 +173,195 @@
 <!-- BEGIN_INCLUDE(janrain:verify-domain) -->
     <janrain:verify-domain engageApiKey="myEngageApiKey" partnerKey="myPartnerKey" provider="myProvider"/>
 <!-- END_INCLUDE(janrain:verify-domain) -->
+
+<!-- BEGIN_INCLUDE(janrain:add-client) -->
+    <janrain:add-client client_id="myClient_id" client_secret="myClient_secret" description="myDescription"/>
+<!-- END_INCLUDE(janrain:add-client) -->
+
+<!-- BEGIN_INCLUDE(janrain:clear-whitelist) -->
+    <janrain:clear-whitelist client_id="myClient_id" client_secret="myClient_secret" for_client_id="myFor_client_id"/>
+<!-- END_INCLUDE(janrain:clear-whitelist) -->
+
+<!-- BEGIN_INCLUDE(janrain:delete-client) -->
+    <janrain:delete-client client_id="myClient_id" client_secret="myClient_secret" client_id_for_deletion="myClient_id_for_deletion"/>
+<!-- END_INCLUDE(janrain:delete-client) -->
+
+<!-- BEGIN_INCLUDE(janrain:list-clients) -->
+    <janrain:list-clients client_id="myClient_id" client_secret="myClient_secret" has_features="myHas_features"/>
+<!-- END_INCLUDE(janrain:list-clients) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-description) -->
+    <janrain:set-description client_id="myClient_id" client_secret="myClient_secret" description="myDescription"/>
+<!-- END_INCLUDE(janrain:set-description) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-features) -->
+    <janrain:set-features client_id="myClient_id" client_secret="myClient_secret" features="myFeatures"/>
+<!-- END_INCLUDE(janrain:set-features) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-whitelist) -->
+    <janrain:set-whitelist client_id="myClient_id" client_secret="myClient_secret" whitelist="myWhitelist"/>
+<!-- END_INCLUDE(janrain:set-whitelist) -->
+
+<!-- BEGIN_INCLUDE(janrain:retrieve-entity) -->
+    <janrain:retrieve-entity type_name="myType_name"/>
+<!-- END_INCLUDE(janrain:retrieve-entity) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-adopt) -->
+    <janrain:entity-adopt type_name="myType_name" attribute_name="myAttribute_name" child_id="myChild_id" id="my_Id"/>
+<!-- END_INCLUDE(janrain:entity-adopt) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-bulk-create) -->
+    <janrain:entity-bulk-create client_id="client_id" client_secret="client_secret" type_name="type_name" all_attributes="all_attributes"/>
+<!-- END_INCLUDE(janrain:entity-bulk-create) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-count) -->
+    <janrain:entity-count client_id="client_id" client_secret="client_secret" type_name="type_name" filter="filter"/>
+<!-- END_INCLUDE(janrain:entity-count) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-create) -->
+    <janrain:entity-create client_id="client_id" client_secret="client_secret" attributes="attributes"/>
+<!-- END_INCLUDE(janrain:entity-create) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-delete) -->
+    <janrain:entity-delete access_token="access_token" uuid="uuid" type_name="type_name"/>
+<!-- END_INCLUDE(janrain:entity-delete) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-bulk-delete) -->
+    <janrain:entity-bulk-delete client_id="client_id" client_secret="client_secret" type_name="type_name" filter="filter"/>
+<!-- END_INCLUDE(janrain:entity-bulk-delete) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-purge) -->
+    <janrain:entity-purge client_id="client_id" client_secret="client_secret" type_name="type_name" commit="true"/>
+<!-- END_INCLUDE(janrain:entity-purge) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-replace) -->
+    <janrain:entity-replace access_token="access_token" uuid="uuid" type_name="type_name" value="value"/>
+<!-- END_INCLUDE(janrain:entity-replace) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-update) -->
+    <janrain:entity-update access_token="access_token" uuid="uuid" type_name="type_name" value="value" attributes="attributes"/>
+<!-- END_INCLUDE(janrain:entity-update) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-find) -->
+    <janrain:entity-find client_secret="client_secret" client_id="client_id" type_name="type_name"/>
+<!-- END_INCLUDE(janrain:entity-find) -->
+
+<!-- BEGIN_INCLUDE(janrain:delete-settings) -->
+    <janrain:delete-settings client_secret="client_secret" client_id="client_id" key="key" for_client_id="for_client_id"/>
+<!-- END_INCLUDE(janrain:delete-settings) -->
+
+<!-- BEGIN_INCLUDE(janrain:delete-default) -->
+    <janrain:delete-default client_secret="client_secret" client_id="client_id" key="key"/>
+<!-- END_INCLUDE(janrain:delete-default) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-settings) -->
+    <janrain:get-settings client_secret="client_secret" client_id="client_id" key="key" for_client_id="for_client_id"/>
+<!-- END_INCLUDE(janrain:get-settings) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-settings) -->
+    <janrain:set-settings client_secret="client_secret" client_id="client_id" key="key" value="value" for_client_id="for_client_id"/>
+<!-- END_INCLUDE(janrain:set-settings) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-multisettings) -->
+    <janrain:get-multisettings client_secret="client_secret" client_id="client_id" key="key" for_client_id="for_client_id"/>
+<!-- END_INCLUDE(janrain:get-multisettings) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-items) -->
+    <janrain:get-items client_secret="client_secret" client_id="client_id" for_client_id="for_client_id"/>
+<!-- END_INCLUDE(janrain:get-items) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-keys) -->
+    <janrain:get-keys client_secret="client_secret" client_id="client_id" for_client_id="for_client_id"/>
+<!-- END_INCLUDE(janrain:get-keys) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-default) -->
+    <janrain:get-default client_secret="client_secret" client_id="client_id" key="key"/>
+<!-- END_INCLUDE(janrain:get-default) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-default) -->
+    <janrain:set-default client_secret="client_secret" client_id="client_id" key="key" value="value"/>
+<!-- END_INCLUDE(janrain:set-default) -->
+
+<!-- BEGIN_INCLUDE(janrain:set-multisettings) -->
+    <janrain:set-multisettings client_secret="client_secret" client_id="client_id" items="items" for_client_id="for_client_id"/>
+<!-- END_INCLUDE(janrain:set-multisettings) -->
+
+<!-- BEGIN_INCLUDE(janrain:entity-versions) -->
+    <janrain:entity-versions client_secret="client_secret" client_id="client_id" id="id" timestamp="timestamp" type_name="type_name"/>
+<!-- END_INCLUDE(janrain:entity-versions) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-entity-type) -->
+    <janrain:get-entity-type client_secret="client_secret" client_id="client_id" timestamp="timestamp" type_name="type_name"/>
+<!-- END_INCLUDE(janrain:get-entity-type) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-access-token) -->
+    <janrain:get-access-token client_secret="client_secret" client_id="client_id" type_name="type_name"/>
+<!-- END_INCLUDE(janrain:get-access-token) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-authorization-code) -->
+    <janrain:get-authorization-code client_secret="client_secret" client_id="client_id" redirect_uri="redirect_uri" type_name="type_name"/>
+<!-- END_INCLUDE(janrain:get-authorization-code) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-creation-token) -->
+    <janrain:get-creation-token client_secret="client_secret" client_id="client_id" lifetime="lifetime" type_name="type_name" for_client_id="for_client_id"/>
+<!-- END_INCLUDE(janrain:get-creation-token) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-verification-code) -->
+    <janrain:get-verification-code client_secret="client_secret" client_id="client_id" lifetime="lifetime" type_name="type_name" attribute_name="attribute_name"/>
+<!-- END_INCLUDE(janrain:get-verification-code) -->
+
+<!-- BEGIN_INCLUDE(janrain:use-verification-code) -->
+    <janrain:use-verification-code verification_code="verification_code"/>
+<!-- END_INCLUDE(janrain:use-verification-code) -->
+
+<!-- BEGIN_INCLUDE(janrain:webhooks-add) -->
+    <janrain:webhooks-add client_id="client_id" client_secret="client_secret" callback="callback" event_type="event_type" entity_type="entity_type"/>
+<!-- END_INCLUDE(janrain:webhooks-add) -->
+
+<!-- BEGIN_INCLUDE(janrain:webhooks-delete) -->
+    <janrain:webhooks-delete client_id="client_id" client_secret="client_secret" uuid="uuid"/>
+<!-- END_INCLUDE(janrain:webhooks-delete) -->
+
+<!-- BEGIN_INCLUDE(janrain:webhooks-find) -->
+    <janrain:webhooks-find client_id="client_id" client_secret="client_secret" uuid="uuid"/>
+<!-- END_INCLUDE(janrain:webhooks-find) -->
+
+<!-- BEGIN_INCLUDE(janrain:webhooks-list) -->
+    <janrain:webhooks-list client_id="client_id" client_secret="client_secret"/>
+<!-- END_INCLUDE(janrain:webhooks-list) -->
+
+<!-- BEGIN_INCLUDE(janrain:webhooks-update) -->
+    <janrain:webhooks-update client_id="client_id" client_secret="client_secret" uuid="uuid"/>
+<!-- END_INCLUDE(janrain:webhooks-update) -->
+
+<!-- BEGIN_INCLUDE(janrain:auth-native) -->
+    <janrain:auth-native client_id="client_id" locale="locale" response_type="response_type" redirect_uri="redirect_uri" token="token"/>
+<!-- END_INCLUDE(janrain:auth-native) -->
+
+<!-- BEGIN_INCLUDE(janrain:auth-native-traditional) -->
+    <janrain:auth-native-traditional client_id="client_id" locale="locale" response_type="response_type" redirect_uri="redirect_uri" email="email" password="password" form="form"/>
+<!-- END_INCLUDE(janrain:auth-native-traditional) -->
+
+<!-- BEGIN_INCLUDE(janrain:forgot-password-native) -->
+    <janrain:forgot-password-native client_id="client_id" locale="locale" response_type="response_type" redirect_uri="redirect_uri" email="email" form="form"/>
+<!-- END_INCLUDE(janrain:forgot-password-native) -->
+
+<!-- BEGIN_INCLUDE(janrain:link-account-native) -->
+    <janrain:link-account-native client_id="client_id" locale="locale" response_type="response_type" redirect_uri="redirect_uri" token="token"/>
+<!-- END_INCLUDE(janrain:link-account-native) -->
+
+<!-- BEGIN_INCLUDE(janrain:register-native) -->
+    <janrain:register-native client_id="client_id" locale="locale" response_type="response_type" redirect_uri="redirect_uri" token="token"/>
+<!-- END_INCLUDE(janrain:register-native) -->
+
+<!-- BEGIN_INCLUDE(janrain:verify-email-native) -->
+    <janrain:verify-email-native client_id="client_id" locale="locale" response_type="response_type" redirect_uri="redirect_uri" email="email" form="form"/>
+<!-- END_INCLUDE(janrain:verify-email-native) -->
+
+<!-- BEGIN_INCLUDE(janrain:get-token) -->
+    <janrain:get-token client_id="client_id" client_secret="client_secret" grant_type="grant_type" code="code" redirect_uri="redirect_uri"/>
+<!-- END_INCLUDE(janrain:get-token) -->
+
+<!-- BEGIN_INCLUDE(janrain:register-native-traditional) -->
+    <janrain:register-native-traditional client_id="client_id" locale="locale" response_type="response_type" redirect_uri="redirect_uri" password="password" password_confirm="password_confirm" email="email"/>
+<!-- END_INCLUDE(janrain:register-native-traditional) -->
