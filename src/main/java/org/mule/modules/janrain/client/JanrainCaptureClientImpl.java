@@ -26,11 +26,9 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class JanrainCaptureClientImpl extends JanrainClientImpl implements JanrainCaptureClient {
     
-    private final static String API_CAPTURE_URL =  ".com/";
-    
-    public JanrainCaptureClientImpl(String appName, String appId, String apiKey, Client jerseyClient, Gson gson) {
-        super(appName, appId, apiKey, gson);
-        setApiResource(jerseyClient.resource("https://" + appName + API_CAPTURE_URL));
+    public JanrainCaptureClientImpl(String engageHost, String appId, String apiKey, Client jerseyClient, Gson gson) {
+        super(engageHost, appId, apiKey, gson);
+        setApiResource(jerseyClient.resource(engageHost));
     }
     
     public ClientInfo addClient(String client_id, String client_secret, String description, String features) {

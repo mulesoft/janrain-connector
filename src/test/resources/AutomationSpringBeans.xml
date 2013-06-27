@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>automation-credentials.properties</value>
+		</property>
+	</bean>
+	
+	<util:map id="addClient_Client" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="client_id" value="123456789" />
+		<entry key="client_secret" value="AAABBB111222" />
+		<entry key="description" value="Im an added client" />
+		<entry key="features" value="[&quot;direct_access&quot;]" />
+	</util:map>
+	
+	<util:map id="analyticsAccess" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="date_start" value="01/01/2013" />
+		<entry key="date_end" value="12/01/2013" />
+	</util:map>
+	
+	<util:map id="setAuthProviders" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="providers" value="yahoo,google,openid,aol,twitter" />
+	</util:map>
+	
+	<util:map id="mappings" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="primarykey" value="Im the key" />
+	</util:map>
+</beans>
