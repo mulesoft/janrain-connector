@@ -14,17 +14,16 @@ package org.mule.modules.janrain;
 
 import java.util.Map;
 
-import org.mule.api.annotations.Connector;
+import org.mule.api.ConnectionException;
 import org.mule.api.annotations.Connect;
-import org.mule.api.annotations.ValidateConnection;
 import org.mule.api.annotations.ConnectionIdentifier;
+import org.mule.api.annotations.Connector;
 import org.mule.api.annotations.Disconnect;
+import org.mule.api.annotations.Processor;
+import org.mule.api.annotations.ValidateConnection;
 import org.mule.api.annotations.param.ConnectionKey;
 import org.mule.api.annotations.param.Default;
 import org.mule.api.annotations.param.Optional;
-import org.mule.api.ConnectionException;
-import org.mule.api.annotations.Processor;
-
 import org.mule.modules.janrain.capture.BulkResponse;
 import org.mule.modules.janrain.capture.ClientInfo;
 import org.mule.modules.janrain.client.JanrainCaptureClient;
@@ -52,7 +51,6 @@ import org.mule.modules.janrain.partner.Permissions;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -81,6 +79,11 @@ public class JanrainConnector {
      * The App ID
      */
     private String appId;
+    
+    /**
+     * The engage host
+     */
+    private String engageHost;
     
     /**
      * The Api Key
@@ -115,13 +118,14 @@ public class JanrainConnector {
     /**
      * Connect
      *
-     * @param apiKey the api Key
-     * @param appName the app Name
-     * @param appId the app Id
+     * @param apiKey The "API key (secret)" provided in the "Application Info"
+     * @param appName The name of your application. In "Application Domain" -> https://[appName].rpxnow.com/
+     * @param appId The "App ID" provided in the "Application Info"
+     * @param engageHost The host that you will using for your engage API. It might be the same as "Application Domain" or you can personalize this one
      * @throws ConnectionException
      */
     @Connect
-    public void connect(@ConnectionKey String apiKey, String appName, String appId) throws ConnectionException {
+    public void connect(@ConnectionKey String apiKey, String appName, String appId, String engageHost) throws ConnectionException {
         ClientConfig clientConfig = new DefaultClientConfig();
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         clientConfig.getClasses().add(MultiPartWriter.class);
@@ -133,6 +137,7 @@ public class JanrainConnector {
         this.setAppId(appId);
         this.setApiKey(apiKey);
         this.setAppName(appName);
+        this.setEngageHost(engageHost);
         this.gson = new GsonBuilder().create();
         this.setJerseyClient(Client.create(clientConfig));
     }
@@ -1755,7 +1760,7 @@ public class JanrainConnector {
         if (janrainCaptureClient != null) {
             return janrainCaptureClient;
         }
-        janrainCaptureClient = new JanrainCaptureClientImpl(appName, appId, apiKey, jerseyClient, gson);
+        janrainCaptureClient = new JanrainCaptureClientImpl(engageHost, appId, apiKey, jerseyClient, gson);
         return janrainCaptureClient;
     }
     
@@ -1790,5 +1795,14 @@ public class JanrainConnector {
     public void setAppId(String appId) {
         this.appId = appId;
     }
-        
+
+	public String getEngageHost() {
+		return engageHost;
+	}
+
+	public void setEngageHost(String engageHost) {
+		this.engageHost = engageHost;
+	}
+
+    
 }

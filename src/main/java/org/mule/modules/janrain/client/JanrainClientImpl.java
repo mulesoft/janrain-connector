@@ -15,14 +15,18 @@ package org.mule.modules.janrain.client;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mule.modules.janrain.exception.JanrainException;
 
 import com.google.gson.Gson;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.ClientResponse.Status;
+import com.sun.jersey.api.client.WebResource;
 
 public class JanrainClientImpl {
+	
+	static final private Log logger = LogFactory.getLog(JanrainClientImpl.class);
     
     private Gson gson;
     private String appId;
@@ -40,10 +44,13 @@ public class JanrainClientImpl {
     protected ClientResponse execute(String path, MultivaluedMap<String, String> params, MediaType type, String method) {
         ClientResponse response;
         
-        if (params != null) 
-            response = getApiResource().path(path).queryParams(params).accept(type).method(method, ClientResponse.class);
-        else
+        if (params != null) {
+        	WebResource wr = getApiResource().path(path).queryParams(params);
+        	logger.debug("Calling url: " + wr.toString());
+            response = wr.accept(type).method(method, ClientResponse.class);
+        } else {
             response = getApiResource().path(path).accept(type).method(method, ClientResponse.class);
+        }
         
         if (response.getClientResponseStatus() != Status.OK) 
             throw new JanrainException(response.getEntity(String.class));
