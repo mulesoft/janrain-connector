@@ -7,9 +7,9 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases;
+package org.mule.modules.janrain.automation.testcases.engage.general;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -18,41 +18,46 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mule.api.MuleEvent;
 import org.mule.api.processor.MessageProcessor;
-import org.mule.modules.janrain.capture.ClientInfo;
+import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
+import org.mule.modules.janrain.automation.testcases.RegressionTests;
 
-public class AddClientTestCase extends JanrainTestParent {
-	
+public class SetAppSettingsTestCases extends JanrainTestParent {
+
 	@Before
 	public void setUp() {
 		
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Category({SmokeTests.class, RegressionTests.class})
+	@Category({RegressionTests.class})
 	@Test
-	public void testAddClient() {
+	public void testSetAppSettings() {
 		
 		// Prevent deletion if it was initialized in the @Before
 		if (testObjects == null) {
-			testObjects = (Map<String,Object>) context.getBean("addClient_Client");
+			testObjects =  new HashMap<String, Object>();
 		}
 		
-		MessageProcessor flow = lookupFlowConstruct("add-client");
+		// Load context beans here!...
+		// context.getBean("setAppSettings");
 		
-		try {
+		MessageProcessor flow = lookupFlowConstruct("set-app-settings");
+		
+		try {			
 			MuleEvent response = flow.process(getTestEvent(testObjects));
-			ClientInfo payload = (ClientInfo) response.getMessage().getPayload();
-			int i = 0;
-			// Assertions here!...
+			Boolean payload = (Boolean) response.getMessage().getPayload();
+			
+			Assert.assertTrue(payload);
 			
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Assert.fail();
 		}
+		
 	}
 	
 	@After
 	public void tearDown() {
 		
 	}
+
 }

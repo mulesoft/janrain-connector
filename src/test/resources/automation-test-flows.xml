@@ -7,27 +7,53 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 		http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-		http://www.mulesoft.org/schema/mule/janrain http://www.mulesoft.org/schema/mule/janrain/2.0/mule-janrain.xsd">
+		http://www.mulesoft.org/schema/mule/janrain http://www.mulesoft.org/schema/mule/janrain/current/mule-janrain.xsd">
 	
 	<context:property-placeholder location="automation-credentials.properties" />
 	
-	<janrain:config name="janrain_config" apiKey="${janrain.apikey}" appName="${janrain.appname}" appId="${janrain.appid}">
-		<janrain:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW" />
+	<janrain:config name="janrain_config" apiKey="${janrain.apikey}" appName="${janrain.appname}" appId="${janrain.appid}" engageHost="${janrain.engagehost}">
+		<janrain:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
 	</janrain:config>
-	
-	<flow name="get-app-settings">
-		<janrain:get-app-settings config-ref="janrain_config"  doc:name="Janrain"/>
-	</flow>
 	
 	<flow name="add-client">
 		<janrain:add-client config-ref="janrain_config"  doc:name="Janrain" client_id="#[payload.client_id]" client_secret="#[payload.client_secret]" description="#[payload.description]"  features="#[payload.features]"/>
 	</flow>
 	
-	<flow name="providers">
-		<janrain:providers config-ref="janrain_config"  doc:name="Janrain" />
-	</flow>
+	<!-- Engage - Common -->
 	
+	<flow name="get-app-settings">
+		<janrain:get-app-settings config-ref="janrain_config"  doc:name="Janrain"/>
+	</flow>
 	<flow name="analytics-access">
 		<janrain:analytics-access config-ref="janrain_config"  doc:name="Janrain" end="#[payload.date_end]" start="#[payload.date_start]" />
+	</flow>	
+	<flow name="get-available-providers">
+		<janrain:get-available-providers config-ref="janrain_config" doc:name="Janrain"/>
+	</flow>	
+	<flow name="providers">
+		<janrain:providers config-ref="janrain_config" doc:name="Janrain"  />
+	</flow>
+	<flow name="set-app-settings">
+		<janrain:set-app-settings config-ref="janrain_config" doc:name="Janrain" />
+	</flow>
+	<flow name="set-auth-providers">
+		<janrain:set-auth-providers config-ref="janrain_config" doc:name="Janrain" providers="#[payload.providers]"/>
+	</flow>
+	
+	<!--  Engage - Mapping -->
+	<flow name="all-mappings">
+		<janrain:all-mappings config-ref="janrain_config" doc:name="Janrain"  />
+	</flow>	
+	
+	<!-- Engage - Share -->
+	<flow name="get-share-providers">
+		<janrain:get-share-providers config-ref="janrain_config" doc:name="Janrain"  />
+	</flow>
+	
+	<flow name="set-share-providers">
+		<janrain:set-share-providers config-ref="janrain_config" doc:name="Janrain" share="#[payload.share]"/>
+	</flow>
+	<flow name="mappings">
+		<janrain:mappings config-ref="janrain_config" doc:name="Janrain" primaryKey="#[payload.primarykey]"/>
 	</flow>
 </mule>

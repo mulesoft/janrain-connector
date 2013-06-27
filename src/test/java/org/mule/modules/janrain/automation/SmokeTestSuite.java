@@ -13,16 +13,14 @@ import org.junit.experimental.categories.Categories;
 import org.junit.experimental.categories.Categories.IncludeCategory;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite.SuiteClasses;
-import org.mule.modules.janrain.automation.testcases.AddClientTestCase;
-import org.mule.modules.janrain.automation.testcases.GetAppSettingsTestCase;
 import org.mule.modules.janrain.automation.testcases.SmokeTests;
+import org.mule.modules.janrain.automation.testcases.engage.sharing.GetShareProvidersTestCases;
 
 @RunWith(Categories.class)
 @IncludeCategory(SmokeTests.class)
 
 @SuiteClasses({
-	GetAppSettingsTestCase.class,
-	AddClientTestCase.class
+	GetShareProvidersTestCases.class
 		})
 
 public class SmokeTestSuite {

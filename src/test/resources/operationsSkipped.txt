@@ -1,0 +1,8 @@
+Engage
+  Others
+    auth_info		// requires the auth_token that is obtained making the manual login
+    get-contacts	// requires the auth_token that is obtained making the manual login
+    get-user-data   // requires the auth_token that is obtained making the manual login
+  Mapping
+    map 			// requires the auth_token that is obtained making the manual login
+     

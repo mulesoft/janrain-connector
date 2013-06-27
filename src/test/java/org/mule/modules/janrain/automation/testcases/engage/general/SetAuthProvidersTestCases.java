@@ -7,9 +7,8 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases;
+package org.mule.modules.janrain.automation.testcases.engage.general;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.After;
@@ -19,38 +18,36 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mule.api.MuleEvent;
 import org.mule.api.processor.MessageProcessor;
+import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
+import org.mule.modules.janrain.automation.testcases.RegressionTests;
 
-public class GetContactsTestCase extends JanrainTestParent {
+public class SetAuthProvidersTestCases extends JanrainTestParent {
 
 	@Before
 	public void setUp() {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Category({RegressionTests.class})
 	@Test
-	public void testGetAppSettings() {
+	public void testSetAuthProviders() {
 		
 		// Prevent deletion if it was initialized in the @Before
 		if (testObjects == null) {
-			testObjects =  new HashMap<String,Object>();
+			testObjects =  (Map<String, Object>) context.getBean("setAuthProviders");
 		}
 		
 		// Load context beans here!...
+		// context.getBean("setAppSettings");
 		
-		MessageProcessor flow = lookupFlowConstruct("get-app-settings");
+		MessageProcessor flow = lookupFlowConstruct("set-auth-providers");
 		
 		try {			
 			MuleEvent response = flow.process(getTestEvent(testObjects));
-			@SuppressWarnings("unchecked")
-			Map<String, String> payload = (Map<String, String>) response.getMessage().getPayload();
+			Boolean payload = (Boolean) response.getMessage().getPayload();
 			
-			String statKey = "stat";
-			
-			Assert.assertNotNull(payload);
-			Assert.assertTrue(payload.size() > 0);
-			Assert.assertTrue(payload.containsKey(statKey));
-			Assert.assertEquals("ok", payload.get(statKey));
+			Assert.assertTrue(payload);
 			
 		} catch (Throwable e) {
 			e.printStackTrace();

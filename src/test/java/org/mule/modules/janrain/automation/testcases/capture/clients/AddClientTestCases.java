@@ -7,9 +7,8 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases;
+package org.mule.modules.janrain.automation.testcases.capture.clients;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.After;
@@ -19,44 +18,40 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mule.api.MuleEvent;
 import org.mule.api.processor.MessageProcessor;
+import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
+import org.mule.modules.janrain.automation.testcases.RegressionTests;
+import org.mule.modules.janrain.automation.testcases.SmokeTests;
+import org.mule.modules.janrain.capture.ClientInfo;
 
-public class GetAppSettingsTestCase extends JanrainTestParent {
+public class AddClientTestCases extends JanrainTestParent {
 	
 	@Before
 	public void setUp() {
 		
 	}
 	
-	@Category({RegressionTests.class})
+	@SuppressWarnings("unchecked")
+	@Category({SmokeTests.class, RegressionTests.class})
 	@Test
-	public void testGetAppSettings() {
+	public void testAddClient() {
 		
 		// Prevent deletion if it was initialized in the @Before
 		if (testObjects == null) {
-			testObjects =  new HashMap<String,Object>();
+			testObjects = (Map<String,Object>) context.getBean("addClient_Client");
 		}
 		
-		// Load context beans here!...
+		MessageProcessor flow = lookupFlowConstruct("add-client");
 		
-		MessageProcessor flow = lookupFlowConstruct("get-app-settings");
-		
-		try {			
+		try {
 			MuleEvent response = flow.process(getTestEvent(testObjects));
-			@SuppressWarnings("unchecked")
-			Map<String, String> payload = (Map<String, String>) response.getMessage().getPayload();
-			
-			String statKey = "stat";
-			
-			Assert.assertNotNull(payload);
-			Assert.assertTrue(payload.size() > 0);
-			Assert.assertTrue(payload.containsKey(statKey));
-			Assert.assertEquals("ok", payload.get(statKey));
+			ClientInfo payload = (ClientInfo) response.getMessage().getPayload();
+			int i = 0;
+			// Assertions here!...
 			
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Assert.fail();
 		}
-		
 	}
 	
 	@After

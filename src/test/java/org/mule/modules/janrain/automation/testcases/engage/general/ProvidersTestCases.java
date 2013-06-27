@@ -7,7 +7,7 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases;
+package org.mule.modules.janrain.automation.testcases.engage.general;
 
 import java.util.HashMap;
 
@@ -18,9 +18,12 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mule.api.MuleEvent;
 import org.mule.api.processor.MessageProcessor;
+import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
+import org.mule.modules.janrain.automation.testcases.RegressionTests;
 import org.mule.modules.janrain.engage.WidgetProviders;
 
-public class ProvidersTestCase extends JanrainTestParent {
+public class ProvidersTestCases extends JanrainTestParent {
+
 	@Before
 	public void setUp() {
 		
@@ -49,7 +52,7 @@ public class ProvidersTestCase extends JanrainTestParent {
 			
 		} catch (Throwable e) {
 			e.printStackTrace();
-			Assert.fail(e.toString());
+			Assert.fail();
 		}
 		
 	}

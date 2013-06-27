@@ -13,18 +13,34 @@ import org.junit.experimental.categories.Categories;
 import org.junit.experimental.categories.Categories.IncludeCategory;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite.SuiteClasses;
-import org.mule.modules.janrain.automation.testcases.AddClientTestCase;
-import org.mule.modules.janrain.automation.testcases.AnalyticsAccessTestCase;
-import org.mule.modules.janrain.automation.testcases.GetAppSettingsTestCase;
 import org.mule.modules.janrain.automation.testcases.RegressionTests;
+import org.mule.modules.janrain.automation.testcases.engage.general.AnalyticsAccessTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.general.GetAppSettingsTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.general.GetAvailableProvidersTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.general.GetContactsTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.general.ProvidersTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.general.SetAppSettingsTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.general.SetAuthProvidersTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.mapping.AllMappingsTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.mapping.MappingsTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.sharing.GetShareProvidersTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.sharing.SetSharingProvidersTestCases;
 
 @RunWith(Categories.class)
 @IncludeCategory(RegressionTests.class)
 
 @SuiteClasses({
-	GetAppSettingsTestCase.class,
-	AddClientTestCase.class,
-	AnalyticsAccessTestCase.class
+	GetAppSettingsTestCases.class,
+	AnalyticsAccessTestCases.class,
+	GetContactsTestCases.class,
+	GetAvailableProvidersTestCases.class,
+	ProvidersTestCases.class,
+	SetAppSettingsTestCases.class,
+	SetAuthProvidersTestCases.class,
+	AllMappingsTestCases.class,
+	GetShareProvidersTestCases.class,
+	SetSharingProvidersTestCases.class,
+	MappingsTestCases.class
 		})
 
 public class RegressionTestSuite {
