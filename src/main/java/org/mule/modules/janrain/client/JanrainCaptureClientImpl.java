@@ -19,6 +19,7 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.mule.modules.janrain.capture.BulkResponse;
 import org.mule.modules.janrain.capture.ClientInfo;
+import org.mule.modules.janrain.capture.ClientListInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
@@ -37,8 +38,8 @@ public class JanrainCaptureClientImpl extends JanrainClientImpl implements Janra
         params.add("client_secret", client_secret);
         params.add("description", description);
         if (features != null) params.add("features", features);
-        
-        return getGson().fromJson(execute("clients/add", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), ClientInfo.class);
+        String result=execute("clients/add", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class);
+        return getGson().fromJson(result, ClientInfo.class);
     }
     
     public boolean clearWhitelist(String client_id, String client_secret, String for_client_id) {
@@ -63,13 +64,13 @@ public class JanrainCaptureClientImpl extends JanrainClientImpl implements Janra
         return true;
     }
     
-    public ClientInfo listClients(String client_id, String client_secret, String has_features) {
+    public ClientListInfo listClients(String client_id, String client_secret, String has_features) {
         MultivaluedMap<String, String> params = new MultivaluedMapImpl();
         params.add("client_id", client_id);
         params.add("client_secret", client_secret);
         if (has_features != null) params.add("has_features", has_features);
         
-        return getGson().fromJson(execute("clients/list", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), ClientInfo.class);
+        return getGson().fromJson(execute("clients/list", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), ClientListInfo.class);
     }
     
     public boolean setDescription(String client_id, String client_secret, String for_client_id, String description) {

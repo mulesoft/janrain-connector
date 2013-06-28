@@ -26,6 +26,7 @@ import org.mule.api.annotations.param.Default;
 import org.mule.api.annotations.param.Optional;
 import org.mule.modules.janrain.capture.BulkResponse;
 import org.mule.modules.janrain.capture.ClientInfo;
+import org.mule.modules.janrain.capture.ClientListInfo;
 import org.mule.modules.janrain.client.JanrainCaptureClient;
 import org.mule.modules.janrain.client.JanrainCaptureClientImpl;
 import org.mule.modules.janrain.client.JanrainEngageClient;
@@ -910,7 +911,7 @@ public class JanrainConnector {
      * @return the clients
      */
     @Processor
-    public ClientInfo listClients(String client_id, String client_secret, @Optional String has_features) {
+    public ClientListInfo listClients(String client_id, String client_secret, @Optional String has_features) {
         return getJanrainCaptureClient().listClients(client_id, client_secret, has_features);
     }
     

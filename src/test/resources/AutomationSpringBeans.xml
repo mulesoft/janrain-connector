@@ -15,8 +15,8 @@
 	</bean>
 	
 	<util:map id="addClient_Client" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
-		<entry key="client_id" value="123456789" />
-		<entry key="client_secret" value="AAABBB111222" />
+		<entry key="client_id" value="${janrain.client_id}" />
+		<entry key="client_secret" value="${janrain.client_secret}" />
 		<entry key="description" value="Im an added client" />
 		<entry key="features" value="[&quot;direct_access&quot;]" />
 	</util:map>

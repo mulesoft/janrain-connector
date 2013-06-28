@@ -15,6 +15,7 @@ package org.mule.modules.janrain.client;
 import java.util.Map;
 import org.mule.modules.janrain.capture.BulkResponse;
 import org.mule.modules.janrain.capture.ClientInfo;
+import org.mule.modules.janrain.capture.ClientListInfo;
 
 public interface JanrainCaptureClient {
     
@@ -24,7 +25,7 @@ public interface JanrainCaptureClient {
     
     public boolean deleteClient(String client_id, String client_secret, String client_id_for_deletion);
     
-    public ClientInfo listClients(String client_id, String client_secret, String has_features);
+    public ClientListInfo listClients(String client_id, String client_secret, String has_features);
     
     public boolean setDescription(String client_id, String client_secret, String for_client_id, String description);
     

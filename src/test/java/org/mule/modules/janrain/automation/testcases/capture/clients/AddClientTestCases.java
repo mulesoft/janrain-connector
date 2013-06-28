@@ -9,6 +9,8 @@
 
 package org.mule.modules.janrain.automation.testcases.capture.clients;
 
+import static org.junit.Assert.fail;
+
 import java.util.Map;
 
 import org.junit.After;
@@ -45,8 +47,12 @@ public class AddClientTestCases extends JanrainTestParent {
 		try {
 			MuleEvent response = flow.process(getTestEvent(testObjects));
 			ClientInfo payload = (ClientInfo) response.getMessage().getPayload();
-			int i = 0;
-			// Assertions here!...
+			
+			if(payload == null || payload.getClient_id().isEmpty() )
+				fail();
+			
+			
+			testObjects.put("client_id_for_deletion", payload.getClient_id());
 			
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -56,6 +62,22 @@ public class AddClientTestCases extends JanrainTestParent {
 	
 	@After
 	public void tearDown() {
+		
+		MessageProcessor flow = lookupFlowConstruct("delete-client");
+		
+		try {		
+			
+			if (testObjects.containsKey("client_id_for_deletion")) {
+				
+				MuleEvent response = flow.process(getTestEvent(testObjects));
+				
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+				e.printStackTrace();
+				fail();
+		}
 		
 	}
 }
