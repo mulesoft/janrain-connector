@@ -19,6 +19,9 @@
 		<janrain:add-client config-ref="janrain_config"  doc:name="Janrain" client_id="#[payload.client_id]" client_secret="#[payload.client_secret]" description="#[payload.description]"  features="#[payload.features]"/>
 	</flow>
 	
+	<flow name="delete-client">
+		<janrain:delete-client config-ref="janrain_config"  doc:name="Janrain" client_id="#[payload.client_id]" client_secret="#[payload.client_secret]" client_id_for_deletion="#[payload.client_id_for_deletion]"/>
+	</flow>
 	<!-- Engage - Common -->
 	
 	<flow name="get-app-settings">
