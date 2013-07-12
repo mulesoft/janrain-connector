@@ -7,10 +7,9 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases.engage.general;
+package org.mule.modules.janrain.automation.testcases.engage.configurerp;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -21,9 +20,10 @@ import org.mule.api.MuleEvent;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
 import org.mule.modules.janrain.automation.testcases.RegressionTests;
+import org.mule.modules.janrain.engage.Plugin;
 
-public class GetAppSettingsTestCases extends JanrainTestParent {
-	
+public class LookupRpTestCases extends JanrainTestParent {
+
 	@Before
 	public void setUp() {
 		
@@ -31,7 +31,7 @@ public class GetAppSettingsTestCases extends JanrainTestParent {
 	
 	@Category({RegressionTests.class})
 	@Test
-	public void testGetAppSettings() {
+	public void testLookupRp() {
 		
 		// Prevent deletion if it was initialized in the @Before
 		if (testObjects == null) {
@@ -40,19 +40,13 @@ public class GetAppSettingsTestCases extends JanrainTestParent {
 		
 		// Load context beans here!...
 		
-		MessageProcessor flow = lookupFlowConstruct("get-app-settings");
+		MessageProcessor flow = lookupFlowConstruct("lookup-rp");
 		
 		try {			
 			MuleEvent response = flow.process(getTestEvent(testObjects));
-			@SuppressWarnings("unchecked")
-			Map<String, String> payload = (Map<String, String>) response.getMessage().getPayload();
+			Plugin payload = (Plugin) response.getMessage().getPayload();
 			
-			String statKey = "stat";
-			
-			Assert.assertNotNull(payload);
-			Assert.assertTrue(payload.size() > 0);
-			Assert.assertTrue(payload.containsKey(statKey));
-			Assert.assertEquals("ok", payload.get(statKey));
+			Assert.assertNotNull(payload);			
 			
 		} catch (AssertionError ae) { 
 			throw ae;
@@ -67,4 +61,5 @@ public class GetAppSettingsTestCases extends JanrainTestParent {
 	public void tearDown() {
 		
 	}
+
 }

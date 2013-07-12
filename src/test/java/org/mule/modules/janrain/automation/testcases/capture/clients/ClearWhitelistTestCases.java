@@ -7,9 +7,8 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases.engage.general;
+package org.mule.modules.janrain.automation.testcases.capture.clients;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.After;
@@ -22,49 +21,56 @@ import org.mule.api.processor.MessageProcessor;
 import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
 import org.mule.modules.janrain.automation.testcases.RegressionTests;
 
-public class GetAppSettingsTestCases extends JanrainTestParent {
-	
+public class ClearWhitelistTestCases extends JanrainTestParent {
+
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
-		
-	}
-	
-	@Category({RegressionTests.class})
-	@Test
-	public void testGetAppSettings() {
-		
 		// Prevent deletion if it was initialized in the @Before
 		if (testObjects == null) {
-			testObjects =  new HashMap<String,Object>();
+			testObjects = (Map<String, Object>) context.getBean("setWhitelist");
 		}
 		
 		// Load context beans here!...
 		
-		MessageProcessor flow = lookupFlowConstruct("get-app-settings");
+		MessageProcessor flow = lookupFlowConstruct("set-whitelist");
 		
 		try {			
 			MuleEvent response = flow.process(getTestEvent(testObjects));
-			@SuppressWarnings("unchecked")
-			Map<String, String> payload = (Map<String, String>) response.getMessage().getPayload();
+			Boolean payload = (Boolean) response.getMessage().getPayload();
 			
-			String statKey = "stat";
-			
-			Assert.assertNotNull(payload);
-			Assert.assertTrue(payload.size() > 0);
-			Assert.assertTrue(payload.containsKey(statKey));
-			Assert.assertEquals("ok", payload.get(statKey));
-			
+			Assert.assertTrue(payload);
+		
 		} catch (AssertionError ae) { 
 			throw ae;
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
+	}
+	
+	
+	@Category({RegressionTests.class})
+	@Test
+	public void testClearWhitelist() {
 		
+		MessageProcessor flow = lookupFlowConstruct("clear-whitelist");
+		
+		try {			
+			MuleEvent response = flow.process(getTestEvent(testObjects));
+			Boolean payload = (Boolean) response.getMessage().getPayload();
+			
+			Assert.assertTrue(payload);
+		
+		} catch (AssertionError ae) { 
+			throw ae;
+		} catch (Throwable e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
 	}
 	
 	@After
 	public void tearDown() {
-		
 	}
 }

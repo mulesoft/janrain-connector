@@ -7,11 +7,11 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases.engage.general;
+package org.mule.modules.janrain.automation.testcases.capture.entity;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,37 +22,33 @@ import org.mule.api.processor.MessageProcessor;
 import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
 import org.mule.modules.janrain.automation.testcases.RegressionTests;
 
-public class GetAppSettingsTestCases extends JanrainTestParent {
-	
+public class EntityCountTestCases extends JanrainTestParent {
+
 	@Before
 	public void setUp() {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Category({RegressionTests.class})
 	@Test
-	public void testGetAppSettings() {
+	public void testEntityCount() {
 		
 		// Prevent deletion if it was initialized in the @Before
 		if (testObjects == null) {
-			testObjects =  new HashMap<String,Object>();
+			testObjects = (Map<String, Object>) context.getBean("entityCount");
 		}
 		
-		// Load context beans here!...
-		
-		MessageProcessor flow = lookupFlowConstruct("get-app-settings");
+		MessageProcessor flow = lookupFlowConstruct("entity-count");
 		
 		try {			
 			MuleEvent response = flow.process(getTestEvent(testObjects));
-			@SuppressWarnings("unchecked")
-			Map<String, String> payload = (Map<String, String>) response.getMessage().getPayload();
+			String payload = (String) response.getMessage().getPayload();
 			
-			String statKey = "stat";
-			
-			Assert.assertNotNull(payload);
-			Assert.assertTrue(payload.size() > 0);
-			Assert.assertTrue(payload.containsKey(statKey));
-			Assert.assertEquals("ok", payload.get(statKey));
+			Assert.assertNotNull(payload);			
+			Assert.assertFalse(StringUtils.isEmpty(payload));
+			Assert.assertTrue(payload.contains("\"stat\":\"ok\""));
+			Assert.assertTrue(payload.contains("\"total_count\""));
 			
 		} catch (AssertionError ae) { 
 			throw ae;
@@ -60,11 +56,11 @@ public class GetAppSettingsTestCases extends JanrainTestParent {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
-		
 	}
 	
 	@After
 	public void tearDown() {
 		
 	}
+
 }

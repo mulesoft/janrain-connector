@@ -24,22 +24,13 @@ import org.mule.modules.janrain.automation.testcases.RegressionTests;
 import org.mule.modules.janrain.automation.testcases.SmokeTests;
 import org.mule.modules.janrain.capture.ClientInfo;
 
-public class AddClientTestCases extends JanrainTestParent {
-	
+public class DeleteClientTestCases extends JanrainTestParent {
+
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
-		
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Category({SmokeTests.class, RegressionTests.class})
-	@Test
-	public void testAddClient() {
-		
 		// Prevent deletion if it was initialized in the @Before
-		if (testObjects == null) {
-			testObjects = (Map<String,Object>) context.getBean("addClient_Client");
-		}
+		testObjects = (Map<String,Object>) context.getBean("addClient_Client");
 		
 		MessageProcessor flow = lookupFlowConstruct("add-client");
 		
@@ -60,9 +51,9 @@ public class AddClientTestCases extends JanrainTestParent {
 		}
 	}
 	
-	@After
-	public void tearDown() {
-		
+	@Category({SmokeTests.class, RegressionTests.class})
+	@Test
+	public void testDeleteClient() {
 		MessageProcessor flow = lookupFlowConstruct("delete-client");
 		
 		try {		
@@ -70,7 +61,7 @@ public class AddClientTestCases extends JanrainTestParent {
 				MuleEvent response = flow.process(getTestEvent(testObjects));
 				Boolean payload = (Boolean) response.getMessage().getPayload();
 				
-				Assert.assertTrue(payload);				
+				Assert.assertTrue(payload);
 			}
 			
 		} catch (AssertionError ae) { 
@@ -79,6 +70,9 @@ public class AddClientTestCases extends JanrainTestParent {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
-		
+	}
+	
+	@After
+	public void tearDown() {
 	}
 }

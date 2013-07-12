@@ -50,9 +50,11 @@ public class AnalyticsAccessTestCases extends JanrainTestParent {
 			Assert.assertTrue(payload.containsKey(urlKey));
 			Assert.assertFalse(StringUtils.isEmpty(payload.get(urlKey)));
 			
+		} catch (AssertionError ae) { 
+			throw ae;
 		} catch (Throwable e) {
 			e.printStackTrace();
-			Assert.fail(e.toString());
+			Assert.fail(e.getMessage());
 		}
 		
 	}

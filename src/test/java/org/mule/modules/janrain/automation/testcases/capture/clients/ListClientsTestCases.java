@@ -21,21 +21,14 @@ import org.mule.api.MuleEvent;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
 import org.mule.modules.janrain.automation.testcases.RegressionTests;
-import org.mule.modules.janrain.automation.testcases.SmokeTests;
 import org.mule.modules.janrain.capture.ClientInfo;
+import org.mule.modules.janrain.capture.ClientListInfo;
 
-public class AddClientTestCases extends JanrainTestParent {
-	
+public class ListClientsTestCases extends JanrainTestParent {
+
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
-		
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Category({SmokeTests.class, RegressionTests.class})
-	@Test
-	public void testAddClient() {
-		
 		// Prevent deletion if it was initialized in the @Before
 		if (testObjects == null) {
 			testObjects = (Map<String,Object>) context.getBean("addClient_Client");
@@ -60,9 +53,30 @@ public class AddClientTestCases extends JanrainTestParent {
 		}
 	}
 	
+	@Category({RegressionTests.class})
+	@Test
+	public void testListClients() {
+		MessageProcessor flow = lookupFlowConstruct("list-clients");
+		
+		try {
+			MuleEvent response = flow.process(getTestEvent(testObjects));
+			ClientListInfo payload = (ClientListInfo) response.getMessage().getPayload();
+			
+			Assert.assertNotNull(payload);
+			Assert.assertEquals("ok", payload.getStat());
+			Assert.assertNotNull(payload.getResults());
+			Assert.assertTrue(payload.getResults().size() > 0);
+			
+		} catch (AssertionError ae) { 
+			throw ae;
+		} catch (Throwable e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+	}
+	
 	@After
 	public void tearDown() {
-		
 		MessageProcessor flow = lookupFlowConstruct("delete-client");
 		
 		try {		
@@ -70,7 +84,7 @@ public class AddClientTestCases extends JanrainTestParent {
 				MuleEvent response = flow.process(getTestEvent(testObjects));
 				Boolean payload = (Boolean) response.getMessage().getPayload();
 				
-				Assert.assertTrue(payload);				
+				Assert.assertTrue(payload);
 			}
 			
 		} catch (AssertionError ae) { 
@@ -79,6 +93,5 @@ public class AddClientTestCases extends JanrainTestParent {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
-		
 	}
 }

@@ -15,8 +15,6 @@
 	</bean>
 	
 	<util:map id="addClient_Client" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
-		<entry key="client_id" value="${janrain.client_id}" />
-		<entry key="client_secret" value="${janrain.client_secret}" />
 		<entry key="description" value="Im an added client" />
 		<entry key="features" value="[&quot;direct_access&quot;]" />
 	</util:map>
@@ -32,5 +30,70 @@
 	
 	<util:map id="mappings" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
 		<entry key="primarykey" value="Im the key" />
+	</util:map>
+	
+	<util:map id="GetShareCount" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="url" value="https://myurl.com" />
+	</util:map>
+	
+	<util:map id="addDomainPatterns" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="domains" value="mydomain.com" />
+	</util:map>
+	
+	<util:map id="setDomainPatterns" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="domains" value="mydomain.com" />
+	</util:map>
+	
+	<util:map id="adminData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="email" value="" />
+		<entry key="partnerkey" value="" />
+	</util:map>
+	
+	<util:map id="retrieveEntity" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="typename" value="user" />		
+	</util:map>
+	
+	<util:map id="setWhitelist" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="whitelist" value="[&quot;192.168.0.0/16&quot;, &quot;65.65.65.65/32&quot;]" />
+	</util:map>
+	
+	<util:map id="setDescription" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="features" value="[&quot;direct_access&quot;]" />
+		<entry key="description" value="I'm the new description" />
+	</util:map>
+	
+	<util:map id="setFeatures" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="features" value="[&quot;direct_access&quot;]" />
+	</util:map>
+	
+	<util:map id="entityCreate" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="attributes" value="{&quot;familyName&quot;:&quot;MuleSoft&quot;,&quot;email&quot;:&quot;imthemule@mulesoft.com&quot;}" />
+		<entry key="typename" value="user" />
+	</util:map>
+	
+	<util:map id="entityCount" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="typename" value="user" />
+	</util:map>
+	
+	<util:map id="entityFind" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="typename" value="user" />
+		<entry key="attributes" value="[&quot;id&quot;]" />
+		<entry key="max_results" value="1" />
+		<entry key="show_total_count" value="true" />
+	</util:map>
+	
+	<util:map id="entityPurge" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="typename" value="user" />
+		<entry key="commit" value="true" />
+	</util:map>
+	
+	<util:map id="entityUpdate" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="value" value="{&quot;familyName&quot;:&quot;MuleSoftNewName&quot;,&quot;email&quot;:&quot;imthemule@mulesoft.com&quot;}" />
+		<entry key="typename" value="user" />
+	</util:map>
+	
+	<util:map id="entityReplace" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.String" scope="prototype">
+		<entry key="value" value="{&quot;familyName&quot;:&quot;MuleSoftNewName&quot;}" />
+		<entry key="typename" value="user" />
 	</util:map>
 </beans>

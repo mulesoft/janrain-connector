@@ -50,9 +50,11 @@ public class ProvidersTestCases extends JanrainTestParent {
 			Assert.assertEquals("ok", payload.getStat());
 			Assert.assertTrue(payload.getSignin().size() > 0);
 			
+		} catch (AssertionError ae) { 
+			throw ae;
 		} catch (Throwable e) {
 			e.printStackTrace();
-			Assert.fail();
+			Assert.fail(e.getMessage());
 		}
 		
 	}

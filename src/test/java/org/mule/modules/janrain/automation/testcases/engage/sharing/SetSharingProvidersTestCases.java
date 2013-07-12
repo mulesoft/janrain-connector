@@ -1,3 +1,12 @@
+/**
+ *
+ * (c) 2003-2012 MuleSoft, Inc. This software is protected under international
+ * copyright law. All use of this software is subject to MuleSoft's Master
+ * Subscription Agreement (or other Terms of Service) separately entered
+ * into between you and MuleSoft. If such an agreement is not in
+ * place, you may not use the software.
+ */
+
 package org.mule.modules.janrain.automation.testcases.engage.sharing;
 
 import java.util.HashMap;
@@ -30,6 +39,8 @@ public class SetSharingProvidersTestCases extends JanrainTestParent {
 				share = payload.getShare().get(0);
 			}
 
+		} catch (AssertionError ae) { 
+			throw ae;
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -57,6 +68,8 @@ public class SetSharingProvidersTestCases extends JanrainTestParent {
 				Assert.assertNotNull(payload);
 				Assert.assertTrue(payload);
 
+			} catch (AssertionError ae) { 
+				throw ae;
 			} catch (Throwable e) {
 				e.printStackTrace();
 				Assert.fail();

@@ -7,9 +7,8 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases.engage.general;
+package org.mule.modules.janrain.automation.testcases.capture.entity;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.After;
@@ -22,37 +21,40 @@ import org.mule.api.processor.MessageProcessor;
 import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
 import org.mule.modules.janrain.automation.testcases.RegressionTests;
 
-public class GetAppSettingsTestCases extends JanrainTestParent {
+
+public class EntityCreateTestCases extends JanrainTestParent {
+
+	private final String STAT 	= "stat";
+	private final String ID 	= "id";
 	
 	@Before
 	public void setUp() {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Category({RegressionTests.class})
 	@Test
-	public void testGetAppSettings() {
+	public void testEntityCreate() {
 		
 		// Prevent deletion if it was initialized in the @Before
 		if (testObjects == null) {
-			testObjects =  new HashMap<String,Object>();
+			testObjects = (Map<String, Object>) context.getBean("entityCreate");
 		}
 		
-		// Load context beans here!...
-		
-		MessageProcessor flow = lookupFlowConstruct("get-app-settings");
+		MessageProcessor flow = lookupFlowConstruct("entity-create");
 		
 		try {			
 			MuleEvent response = flow.process(getTestEvent(testObjects));
-			@SuppressWarnings("unchecked")
 			Map<String, String> payload = (Map<String, String>) response.getMessage().getPayload();
 			
-			String statKey = "stat";
+			Assert.assertNotNull(payload);			
+			Assert.assertTrue(payload.containsKey(STAT));
+			Assert.assertEquals("ok", payload.get(STAT));			
+			Assert.assertTrue(payload.containsKey(ID));
 			
-			Assert.assertNotNull(payload);
-			Assert.assertTrue(payload.size() > 0);
-			Assert.assertTrue(payload.containsKey(statKey));
-			Assert.assertEquals("ok", payload.get(statKey));
+			
+			testObjects.put(ID, payload.get(ID));
 			
 		} catch (AssertionError ae) { 
 			throw ae;
@@ -60,11 +62,24 @@ public class GetAppSettingsTestCases extends JanrainTestParent {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
-		
 	}
 	
 	@After
 	public void tearDown() {
+		MessageProcessor flow = lookupFlowConstruct("entity-delete");
 		
+		try {			
+			MuleEvent response = flow.process(getTestEvent(testObjects));
+			Boolean payload = (Boolean) response.getMessage().getPayload();
+			
+			Assert.assertTrue(payload);
+			
+		} catch (AssertionError ae) { 
+			throw ae;
+		} catch (Throwable e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
 	}
+
 }

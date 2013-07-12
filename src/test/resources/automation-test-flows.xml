@@ -11,19 +11,11 @@
 	
 	<context:property-placeholder location="automation-credentials.properties" />
 	
-	<janrain:config name="janrain_config" apiKey="${janrain.apikey}" appName="${janrain.appname}" appId="${janrain.appid}" engageHost="${janrain.engagehost}">
+	<janrain:config name="janrain_config" apiKey="${janrain.apikey}" appName="${janrain.appname}" appId="${janrain.appid}" captureHost="${janrain.capturehost}">
 		<janrain:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
 	</janrain:config>
 	
-	<flow name="add-client">
-		<janrain:add-client config-ref="janrain_config"  doc:name="Janrain" client_id="#[payload.client_id]" client_secret="#[payload.client_secret]" description="#[payload.description]"  features="#[payload.features]"/>
-	</flow>
-	
-	<flow name="delete-client">
-		<janrain:delete-client config-ref="janrain_config"  doc:name="Janrain" client_id="#[payload.client_id]" client_secret="#[payload.client_secret]" client_id_for_deletion="#[payload.client_id_for_deletion]"/>
-	</flow>
-	<!-- Engage - Common -->
-	
+	<!-- Engage - Common -->	
 	<flow name="get-app-settings">
 		<janrain:get-app-settings config-ref="janrain_config"  doc:name="Janrain"/>
 	</flow>
@@ -46,17 +38,105 @@
 	<!--  Engage - Mapping -->
 	<flow name="all-mappings">
 		<janrain:all-mappings config-ref="janrain_config" doc:name="Janrain"  />
-	</flow>	
-	
-	<!-- Engage - Share -->
-	<flow name="get-share-providers">
-		<janrain:get-share-providers config-ref="janrain_config" doc:name="Janrain"  />
-	</flow>
-	
-	<flow name="set-share-providers">
-		<janrain:set-share-providers config-ref="janrain_config" doc:name="Janrain" share="#[payload.share]"/>
 	</flow>
 	<flow name="mappings">
 		<janrain:mappings config-ref="janrain_config" doc:name="Janrain" primaryKey="#[payload.primarykey]"/>
 	</flow>
+	
+	<!-- Engage - Share -->
+	<flow name="get-share-providers">
+		<janrain:get-share-providers config-ref="janrain_config" doc:name="Janrain"  />
+	</flow>	
+	<flow name="set-share-providers">
+		<janrain:set-share-providers config-ref="janrain_config" doc:name="Janrain" share="#[payload.share]"/>
+	</flow>	
+	<flow name="get-share-count">
+		<janrain:get-share-count config-ref="janrain_config" doc:name="Janrain" url="#[payload.url]"/>
+	</flow>
+	
+	<!-- Engage - Configure RP -->
+	<flow name="add-domain-patterns">
+		<janrain:add-domain-patterns config-ref="janrain_config" doc:name="Janrain" domains="#[payload.domains]"/>
+	</flow>
+	<flow name="get-backplane-properties">
+		<janrain:get-backplane-properties config-ref="janrain_config" doc:name="Janrain" />
+	</flow>
+	<flow name="get-domain-patterns">
+		<janrain:get-domain-patterns config-ref="janrain_config" doc:name="Janrain" />
+	</flow>
+	<flow name="lookup-rp">
+		<janrain:lookup-rp config-ref="janrain_config" doc:name="Janrain" />
+	</flow>
+	<flow name="set-domain-patterns">
+		<janrain:set-domain-patterns config-ref="janrain_config" doc:name="Janrain" domains="#[payload.domains]"/>
+	</flow>
+	
+	<!-- Partner - Admin -->
+	<flow name="add-admin">
+		<janrain:add-admin config-ref="janrain_config" doc:name="Janrain" email="#[payload.email]" partnerKey="#[payload.partnerkey]"/>
+	</flow>
+	<flow name="delete-admin">
+		<janrain:delete-admin config-ref="janrain_config" doc:name="Janrain" email="#[payload.email]" partnerKey="#[payload.partnerkey]"/>
+	</flow>
+	<flow name="get-admins">
+		<janrain:get-admins config-ref="janrain_config" doc:name="Janrain"  partnerKey="#[payload.partnerkey]"/>
+	</flow>
+	
+	<!-- Capture - Client -->
+	<flow name="add-client">
+		<janrain:add-client config-ref="janrain_config"  doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" description="#[payload.description]"  features="#[payload.features]"/>
+	</flow>
+	<flow name="delete-client">
+		<janrain:delete-client config-ref="janrain_config"  doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" client_id_for_deletion="#[payload.client_id_for_deletion]"/>
+	</flow>
+	<flow name="set-whitelist">
+        <janrain:set-whitelist config-ref="janrain_config" doc:name="Janrain"  client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" whitelist="#[payload.whitelist]"/>
+    </flow>
+    <flow name="clear-whitelist">
+        <janrain:clear-whitelist config-ref="janrain_config" doc:name="Janrain"  client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" />
+    </flow>
+    <flow name="set-description">
+        <janrain:set-description config-ref="janrain_config" doc:name="Janrain"  client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" description="#[payload.description]" for_client_id="#[payload.client_id_for_deletion]"/>
+    </flow>
+    <flow name="set-features" doc:name="JanrainFlow1">
+        <janrain:set-features config-ref="janrain_config" doc:name="Janrain"  client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" for_client_id="#[payload.client_id_for_deletion]" features="#[payload.features]" />
+    </flow>
+    <flow name="list-clients">
+    	<janrain:list-clients config-ref="janrain_config" doc:name="Janrain"  client_id="${janrain.client_id}" client_secret="${janrain.client_secret}"  />
+    </flow>
+	
+	
+	<!-- Capture - Entity -->
+	<flow name="entity-create" doc:name="JanrainFlow1">
+        <janrain:entity-create config-ref="janrain_config" doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" type_name="#[payload.typename]" attributes="#[payload.attributes]" />
+    </flow>
+    <flow name="entity-delete" doc:name="JanrainFlow1">
+        <janrain:entity-delete config-ref="janrain_config" doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}"  type_name="#[payload.typename]" id="#[payload.id]" />
+    </flow>
+    <flow name="entity-count" doc:name="JanrainFlow1">
+        <janrain:entity-count config-ref="janrain_config" doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" type_name="#[payload.typename]"/>
+    </flow>
+	<flow name="retrieve-entity">
+		<janrain:retrieve-entity config-ref="janrain_config" doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" type_name="#[payload.typename]" id="#[payload.id]" />
+	</flow>
+	<flow name="entity-find" doc:name="JanrainFlow1">
+        <janrain:entity-find config-ref="janrain_config" doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" type_name="#[payload.typename]" attributes="#[payload.attributes]" max_results="#[payload.max_results]" show_total_count="#[payload.show_total_count]" />
+    </flow>
+    <flow name="entity-purge" doc:name="JanrainFlow1">
+        <janrain:entity-purge config-ref="janrain_config" doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" type_name="#[payload.typename]" commit="#[payload.commit]" />
+    </flow>
+    <flow name="entity-update" doc:name="JanrainFlow1">
+        <janrain:entity-update config-ref="janrain_config" doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" type_name="#[payload.typename]" value="#[payload.value]" id="#[payload.id]" />
+    </flow>
+    <flow name="entity-replace" doc:name="JanrainFlow1">
+        <janrain:entity-replace config-ref="janrain_config" doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" type_name="#[payload.typename]" value="#[payload.value]" id="#[payload.id]" />
+    </flow>
+    
+    <!-- Caputre - Settings -->
+    <flow name="get-keys" doc:name="JanrainFlow1">
+        <janrain:get-keys config-ref="janrain_config" doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" for_client_id="${janrain.client_id}"/>
+    </flow>
+    <flow name="get-settings" doc:name="JanrainFlow1">
+        <janrain:get-settings config-ref="janrain_config" doc:name="Janrain" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" for_client_id="${janrain.client_id}" key="#[payload.key]"/>
+    </flow>
 </mule>

@@ -14,6 +14,27 @@ import org.junit.experimental.categories.Categories.IncludeCategory;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite.SuiteClasses;
 import org.mule.modules.janrain.automation.testcases.RegressionTests;
+import org.mule.modules.janrain.automation.testcases.capture.clients.AddClientTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.clients.ClearWhitelistTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.clients.DeleteClientTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.clients.ListClientsTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.clients.SetDescriptionTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.clients.SetFeaturesTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.clients.SetWhitelistTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.entity.EntityCountTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.entity.EntityCreateTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.entity.EntityDeleteTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.entity.EntityFindTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.entity.EntityPurgeTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.entity.EntityReplaceTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.entity.EntityUpdateTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.entity.RetrieveEntityTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.settings.GetKeysTestCases;
+import org.mule.modules.janrain.automation.testcases.capture.settings.GetSettingsTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.configurerp.AddDomainPatternsTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.configurerp.GetBackplanePropertiesTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.configurerp.GetDomainPatternsTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.configurerp.SetDomainPatternsTestCases;
 import org.mule.modules.janrain.automation.testcases.engage.general.AnalyticsAccessTestCases;
 import org.mule.modules.janrain.automation.testcases.engage.general.GetAppSettingsTestCases;
 import org.mule.modules.janrain.automation.testcases.engage.general.GetAvailableProvidersTestCases;
@@ -23,8 +44,12 @@ import org.mule.modules.janrain.automation.testcases.engage.general.SetAppSettin
 import org.mule.modules.janrain.automation.testcases.engage.general.SetAuthProvidersTestCases;
 import org.mule.modules.janrain.automation.testcases.engage.mapping.AllMappingsTestCases;
 import org.mule.modules.janrain.automation.testcases.engage.mapping.MappingsTestCases;
+import org.mule.modules.janrain.automation.testcases.engage.sharing.GetShareCountTestCases;
 import org.mule.modules.janrain.automation.testcases.engage.sharing.GetShareProvidersTestCases;
 import org.mule.modules.janrain.automation.testcases.engage.sharing.SetSharingProvidersTestCases;
+import org.mule.modules.janrain.automation.testcases.partner.admin.AddAdminTestCases;
+import org.mule.modules.janrain.automation.testcases.partner.admin.DeleteAdminTestCases;
+import org.mule.modules.janrain.automation.testcases.partner.admin.GetAdminsTestCases;
 
 @RunWith(Categories.class)
 @IncludeCategory(RegressionTests.class)
@@ -40,7 +65,33 @@ import org.mule.modules.janrain.automation.testcases.engage.sharing.SetSharingPr
 	AllMappingsTestCases.class,
 	GetShareProvidersTestCases.class,
 	SetSharingProvidersTestCases.class,
-	MappingsTestCases.class
+	MappingsTestCases.class,
+	GetShareCountTestCases.class,
+	AddDomainPatternsTestCases.class,
+	GetBackplanePropertiesTestCases.class,
+	GetDomainPatternsTestCases.class,
+	SetDomainPatternsTestCases.class,
+	AddAdminTestCases.class,
+	DeleteAdminTestCases.class,
+	GetAdminsTestCases.class,
+	RetrieveEntityTestCases.class,
+	AddClientTestCases.class,
+	DeleteClientTestCases.class,
+	SetWhitelistTestCases.class,
+	ClearWhitelistTestCases.class,
+	SetDescriptionTestCases.class,
+	SetFeaturesTestCases.class,
+	ListClientsTestCases.class,
+	EntityCreateTestCases.class,
+	EntityDeleteTestCases.class,
+	EntityCountTestCases.class,
+	EntityFindTestCases.class,
+	RetrieveEntityTestCases.class,
+	EntityPurgeTestCases.class,
+	EntityUpdateTestCases.class,
+	EntityReplaceTestCases.class,
+	GetKeysTestCases.class,
+	GetSettingsTestCases.class
 		})
 
 public class RegressionTestSuite {

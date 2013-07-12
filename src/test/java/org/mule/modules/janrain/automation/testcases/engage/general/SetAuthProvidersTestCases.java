@@ -49,9 +49,11 @@ public class SetAuthProvidersTestCases extends JanrainTestParent {
 			
 			Assert.assertTrue(payload);
 			
+		} catch (AssertionError ae) { 
+			throw ae;
 		} catch (Throwable e) {
 			e.printStackTrace();
-			Assert.fail();
+			Assert.fail(e.getMessage());
 		}
 		
 	}

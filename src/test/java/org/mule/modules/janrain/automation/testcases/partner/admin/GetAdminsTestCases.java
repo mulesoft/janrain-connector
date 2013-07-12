@@ -7,9 +7,8 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases.engage.general;
+package org.mule.modules.janrain.automation.testcases.partner.admin;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.After;
@@ -21,44 +20,41 @@ import org.mule.api.MuleEvent;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
 import org.mule.modules.janrain.automation.testcases.RegressionTests;
+import org.mule.modules.janrain.partner.Admins;
 
-public class GetAppSettingsTestCases extends JanrainTestParent {
+public class GetAdminsTestCases extends JanrainTestParent {
 	
 	@Before
 	public void setUp() {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Category({RegressionTests.class})
 	@Test
-	public void testGetAppSettings() {
+	public void testGetAdmins() {
 		
 		// Prevent deletion if it was initialized in the @Before
 		if (testObjects == null) {
-			testObjects =  new HashMap<String,Object>();
+			testObjects =  (Map<String, Object>) context.getBean("adminData");
 		}
 		
 		// Load context beans here!...
 		
-		MessageProcessor flow = lookupFlowConstruct("get-app-settings");
+		MessageProcessor flow = lookupFlowConstruct("get-admins");
 		
 		try {			
 			MuleEvent response = flow.process(getTestEvent(testObjects));
-			@SuppressWarnings("unchecked")
-			Map<String, String> payload = (Map<String, String>) response.getMessage().getPayload();
-			
-			String statKey = "stat";
+			Admins payload = (Admins) response.getMessage().getPayload();
 			
 			Assert.assertNotNull(payload);
-			Assert.assertTrue(payload.size() > 0);
-			Assert.assertTrue(payload.containsKey(statKey));
-			Assert.assertEquals("ok", payload.get(statKey));
+			Assert.assertEquals("ok", payload.getStat());
 			
 		} catch (AssertionError ae) { 
 			throw ae;
 		} catch (Throwable e) {
 			e.printStackTrace();
-			Assert.fail(e.getMessage());
+			Assert.fail();
 		}
 		
 	}

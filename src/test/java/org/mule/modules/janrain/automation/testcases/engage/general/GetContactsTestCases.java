@@ -54,9 +54,11 @@ public class GetContactsTestCases extends JanrainTestParent {
 			Assert.assertTrue(payload.containsKey(statKey));
 			Assert.assertEquals("ok", payload.get(statKey));
 			
+		} catch (AssertionError ae) { 
+			throw ae;
 		} catch (Throwable e) {
 			e.printStackTrace();
-			Assert.fail();
+			Assert.fail(e.getMessage());
 		}
 		
 	}

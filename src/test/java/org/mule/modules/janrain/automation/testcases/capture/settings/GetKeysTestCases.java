@@ -7,11 +7,11 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases.engage.general;
+package org.mule.modules.janrain.automation.testcases.capture.settings;
 
 import java.util.HashMap;
-import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,37 +22,30 @@ import org.mule.api.processor.MessageProcessor;
 import org.mule.modules.janrain.automation.testcases.JanrainTestParent;
 import org.mule.modules.janrain.automation.testcases.RegressionTests;
 
-public class GetAppSettingsTestCases extends JanrainTestParent {
+public class GetKeysTestCases extends JanrainTestParent {
 	
 	@Before
 	public void setUp() {
 		
 	}
 	
+	
 	@Category({RegressionTests.class})
 	@Test
-	public void testGetAppSettings() {
-		
+	public void testGetKeys() {
 		// Prevent deletion if it was initialized in the @Before
 		if (testObjects == null) {
-			testObjects =  new HashMap<String,Object>();
+			testObjects = new HashMap<String, Object>();
 		}
 		
-		// Load context beans here!...
-		
-		MessageProcessor flow = lookupFlowConstruct("get-app-settings");
+		MessageProcessor flow = lookupFlowConstruct("get-keys");
 		
 		try {			
 			MuleEvent response = flow.process(getTestEvent(testObjects));
-			@SuppressWarnings("unchecked")
-			Map<String, String> payload = (Map<String, String>) response.getMessage().getPayload();
+			String payload = (String) response.getMessage().getPayload();
 			
-			String statKey = "stat";
-			
-			Assert.assertNotNull(payload);
-			Assert.assertTrue(payload.size() > 0);
-			Assert.assertTrue(payload.containsKey(statKey));
-			Assert.assertEquals("ok", payload.get(statKey));
+			Assert.assertFalse(StringUtils.isEmpty(payload));
+			Assert.assertTrue(payload.contains("\"stat\":\"ok\""));
 			
 		} catch (AssertionError ae) { 
 			throw ae;
@@ -60,11 +53,10 @@ public class GetAppSettingsTestCases extends JanrainTestParent {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
-		
 	}
 	
 	@After
-	public void tearDown() {
-		
+	public void tearDown() {		
 	}
+
 }

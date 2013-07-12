@@ -51,9 +51,11 @@ public class GetUserDataTestCases extends JanrainTestParent {
 			Assert.assertEquals("ok", payload.getStat());
 			Assert.assertFalse(StringUtils.isEmpty(payload.getProfile().getEmail()));
 			
+		} catch (AssertionError ae) { 
+			throw ae;
 		} catch (Throwable e) {
 			e.printStackTrace();
-			Assert.fail();
+			Assert.fail(e.getMessage());
 		}
 		
 	}
