@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="Janrain Demo">
+    <global-element type="http://www.mulesoft.org/schema/mule/janrain/config" name="Janrain" entity-id="Janrain#1">
+        <properties>
+            <property value="${janrain.appname}" name="appName"/>
+            <property value="${janrain.appid}" name="appId"/>
+            <property value="janrain_config" name="name"/>
+            <property value="${janrain.capturehost}" name="captureHost"/>
+            <property value="1" name="auxiliary;index"/>
+            <property value="${janrain.apikey}" name="apiKey"/>
+            <property-collection name="@http://www.mulesoft.org/schema/mule/janrain/connection-pooling-profile;0">
+                <property value="WHEN_EXHAUSTED_GROW" name="exhaustedAction"/>
+                <property value="2" name="auxiliary;wrapIn"/>
+                <property value="2" name="auxiliary;index"/>
+                <property value="INITIALISE_ONE" name="initialisationPolicy"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <flow SubFlow="false" name="Get_App_Settings_Flow" entity-id="55466f73-4373-411b-889e-f91b6103e68e">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property value="3" name="auxiliary;index"/>
+            <property name="tracking:enable-default-events"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#1">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="8090" name="port"/>
+                    <property value="localhost" name="host"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="followRedirects"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="keep-alive"/>
+                    <property name="contentType"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="password"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="ref"/>
+                    <property name="httpLabel"/>
+                    <property name="transformer-refs"/>
+                    <property name="address"/>
+                    <property name="encoding"/>
+                    <property value="getappsettings" name="path"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="method"/>
+                    <property name="user"/>
+                    <property value="4" name="auxiliary;index"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property name="connector-ref"/>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/janrain/janrain-connector" name="Get App Settings" entity-id="Janrain#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name=""/>
+                    <property name="appName"/>
+                    <property name="appId"/>
+                    <property name="captureHost"/>
+                    <property value="http://www.mulesoft.org/schema/mule/janrain/get-app-settings" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="janrain_config" name="config-ref"/>
+                    <property value="5" name="auxiliary;index"/>
+                    <property name="apiKey"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name="sourceClass"/>
+                    <property name="returnClass"/>
+                    <property name="ignoreBadInput"/>
+                    <property name="encoding"/>
+                    <property name="mapper-ref"/>
+                    <property value="6" name="auxiliary;index"/>
+                    <property name="mimeType"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="Mappings_Flow" entity-id="55040ad2-2307-4923-9f77-2385b602e552">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property value="7" name="auxiliary;index"/>
+            <property name="tracking:enable-default-events"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#2">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="8090" name="port"/>
+                    <property value="localhost" name="host"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="followRedirects"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="keep-alive"/>
+                    <property name="contentType"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="password"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="ref"/>
+                    <property name="httpLabel"/>
+                    <property name="transformer-refs"/>
+                    <property name="address"/>
+                    <property name="encoding"/>
+                    <property value="mappings" name="path"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="method"/>
+                    <property name="user"/>
+                    <property value="8" name="auxiliary;index"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property name="connector-ref"/>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/janrain/janrain-connector" name="All mappings" entity-id="Janrain#3">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name=""/>
+                    <property name="appName"/>
+                    <property name="appId"/>
+                    <property name="captureHost"/>
+                    <property value="http://www.mulesoft.org/schema/mule/janrain/all-mappings" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="janrain_config" name="config-ref"/>
+                    <property value="9" name="auxiliary;index"/>
+                    <property name="apiKey"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name="sourceClass"/>
+                    <property name="returnClass"/>
+                    <property name="ignoreBadInput"/>
+                    <property name="encoding"/>
+                    <property name="mapper-ref"/>
+                    <property value="10" name="auxiliary;index"/>
+                    <property name="mimeType"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="Entity_Flow" entity-id="61e7f715-baaf-4432-8909-160553d6e1fc">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property value="11" name="auxiliary;index"/>
+            <property name="tracking:enable-default-events"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#3">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#3">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="8090" name="port"/>
+                    <property value="localhost" name="host"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="followRedirects"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="keep-alive"/>
+                    <property name="contentType"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="password"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="ref"/>
+                    <property name="httpLabel"/>
+                    <property name="transformer-refs"/>
+                    <property name="address"/>
+                    <property name="encoding"/>
+                    <property value="entity" name="path"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="method"/>
+                    <property name="user"/>
+                    <property value="12" name="auxiliary;index"/>
+                    <property name="mimeType"/>
+                    <property name="responseTimeout"/>
+                    <property name="connector-ref"/>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/janrain/janrain-connector" name="Entity Create" entity-id="Janrain#4">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name=""/>
+                    <property name="appId"/>
+                    <property name="include_record"/>
+                    <property value="http://www.mulesoft.org/schema/mule/janrain/entity-create" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="apiKey"/>
+                    <property name="appName"/>
+                    <property value="${janrain.client_secret}" name="client_secret"/>
+                    <property name="captureHost"/>
+                    <property value="user" name="type_name"/>
+                    <property value="{&quot;familyName&quot;:&quot;MuleSoft&quot;,&quot;email&quot;:&quot;imthemule@mulesoft.com&quot;}" name="attributes"/>
+                    <property value="${janrain.client_id}" name="client_id"/>
+                    <property value="janrain_config" name="config-ref"/>
+                    <property value="13" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/variable-transformer" name="Save ID" entity-id="Variable#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="entityId" name="variableName"/>
+                    <property value="http://www.mulesoft.org/schema/mule/core/set-variable" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="#[payload['id']]" name="value"/>
+                    <property value="14" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/logger" name="Log ID" entity-id="Logger#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="Created ID is: #[payload['id']]" name="message"/>
+                    <property name="category"/>
+                    <property value="INFO" name="level"/>
+                    <property value="15" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/janrain/janrain-connector" name="Entity Find" entity-id="Janrain#5">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name=""/>
+                    <property value="true" name="show_total_count"/>
+                    <property name="appId"/>
+                    <property value="http://www.mulesoft.org/schema/mule/janrain/entity-find" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="1" name="max_results"/>
+                    <property name="sort_on"/>
+                    <property name="first_result"/>
+                    <property name="apiKey"/>
+                    <property name="appName"/>
+                    <property value="${janrain.client_secret}" name="client_secret"/>
+                    <property name="captureHost"/>
+                    <property value="user" name="type_name"/>
+                    <property value="${janrain.client_id}" name="client_id"/>
+                    <property name="attributes"/>
+                    <property value="janrain_config" name="config-ref"/>
+                    <property name="filter"/>
+                    <property value="16" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/logger" name="Log Find result" entity-id="Logger#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="Find entity returned: #[payload]" name="message"/>
+                    <property name="category"/>
+                    <property value="INFO" name="level"/>
+                    <property value="17" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/janrain/janrain-connector" name="Entity Delete" entity-id="Janrain#6">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name=""/>
+                    <property name="appId"/>
+                    <property value="http://www.mulesoft.org/schema/mule/janrain/entity-delete" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="apiKey"/>
+                    <property name="attribute_name"/>
+                    <property name="appName"/>
+                    <property value="#[entityId]" name="id"/>
+                    <property value="${janrain.client_secret}" name="client_secret"/>
+                    <property name="created"/>
+                    <property name="key_attribute"/>
+                    <property name="captureHost"/>
+                    <property name="key_value"/>
+                    <property value="user" name="type_name"/>
+                    <property name="last_updated"/>
+                    <property value="${janrain.client_id}" name="client_id"/>
+                    <property name="uuid"/>
+                    <property value="janrain_config" name="config-ref"/>
+                    <property name="access_token"/>
+                    <property value="18" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/core/set-payload" name="OK Message" entity-id="Set Payload#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="Flow executed OK" name="value"/>
+                    <property value="19" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="Get_Available_Providers_Flow" entity-id="c6cfad0d-7188-441a-bca6-e1e28e116426">
+        <properties>
+            <property name="updated"/>
+            <property value="" name="processingStrategy2"/>
+            <property value="" name="bussinessEventsLabel"/>
+            <property value="20" name="auxiliary;index"/>
+            <property value="true" name="auxiliary;erased;processingStrategy2"/>
+            <property value="false" name="tracking:enable-default-events"/>
+            <property-collection name="@http://www.mulesoft.org/schema/mule/ee/tracking/transaction;1574233606"/>
+        </properties>
+        <description></description>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#4">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#4">
+                <graphicalData height="169" width="68" y="769" x="19"/>
+                <properties>
+                    <property value="true" name="auxiliary;erased;mimeType"/>
+                    <property value="8090" name="port"/>
+                    <property value="" name="contentType"/>
+                    <property value="" name="password"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property value="false" name="tracking:enable-default-events"/>
+                    <property name="updated"/>
+                    <property value="true" name="auxiliary;erased;encoding"/>
+                    <property value="" name="encoding"/>
+                    <property value="providers" name="path"/>
+                    <property value="" name="responseTransformer-refs"/>
+                    <property value="10000" name="responseTimeout"/>
+                    <property value="" name="mimeType"/>
+                    <property value="21" name="auxiliary;index"/>
+                    <property value="true" name="auxiliary;erased;contentType"/>
+                    <property value="localhost" name="host"/>
+                    <property value="" name="businessEventsLabel"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="false" name="keep-alive"/>
+                    <property value="false" name="disableTransportTransformer"/>
+                    <property value="" name="ref"/>
+                    <property value="" name="transformer-refs"/>
+                    <property value="" name="httpLabel"/>
+                    <property value="" name="address"/>
+                    <property value="" name="user"/>
+                    <property value="" name="connector-ref"/>
+                </properties>
+                <description></description>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/janrain/janrain-connector" name="Get Available Providers" entity-id="Janrain#7">
+                <graphicalData height="67" width="137" y="769" x="147"/>
+                <properties>
+                    <property value="" name="appName"/>
+                    <property value="" name=""/>
+                    <property value="" name="appId"/>
+                    <property name="updated"/>
+                    <property value="" name="captureHost"/>
+                    <property value="http://www.mulesoft.org/schema/mule/janrain/get-available-providers" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="janrain_config" name="config-ref"/>
+                    <property value="" name="apiKey"/>
+                    <property value="22" name="auxiliary;index"/>
+                </properties>
+                <description></description>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="8f3d0838-b6ce-40a6-bd13-ff19a578c09e">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+            </pattern>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>

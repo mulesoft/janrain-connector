@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:janrain="http://www.mulesoft.org/schema/mule/janrain"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/janrain http://www.mulesoft.org/schema/mule/janrain/current/mule-janrain.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+	
+	<janrain:config name="janrain_config" apiKey="${janrain.apikey}" appName="${janrain.appname}" appId="${janrain.appid}" captureHost="${janrain.capturehost}" doc:name="Janrain">
+		<janrain:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
+	</janrain:config>
+    <flow name="Get_App_Settings_Flow" doc:name="Get_App_Settings_Flow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" path="getappsettings" doc:name="HTTP"/>
+        <janrain:get-app-settings config-ref="janrain_config"  doc:name="Get App Settings"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="Mappings_Flow" doc:name="Mappings_Flow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" path="mappings" doc:name="HTTP"/>
+        <janrain:all-mappings config-ref="janrain_config" doc:name="All mappings"  />
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="Entity_Flow" doc:name="Entity_Flow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" path="entity" doc:name="HTTP"/>
+        <janrain:entity-create config-ref="janrain_config" doc:name="Entity Create" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" type_name="user" attributes="{&quot;familyName&quot;:&quot;MuleSoft&quot;,&quot;email&quot;:&quot;imthemule@mulesoft.com&quot;}" />
+        <set-variable variableName="entityId" value="#[payload['id']]" doc:name="Save ID"/>
+        <logger message="Created ID is: #[payload['id']]" level="INFO" doc:name="Log ID"/>
+        <janrain:entity-find config-ref="janrain_config" doc:name="Entity Find" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}" type_name="user"  max_results="1" show_total_count="true" />
+        <logger message="Find entity returned: #[payload]" level="INFO" doc:name="Log Find result"/>
+        <janrain:entity-delete config-ref="janrain_config" doc:name="Entity Delete" client_id="${janrain.client_id}" client_secret="${janrain.client_secret}"  type_name="user" id="#[entityId]" />
+        <set-payload value="Flow executed OK" doc:name="OK Message"/>
+    </flow>
+    <flow name="Get_Available_Providers_Flow" doc:name="Get_Available_Providers_Flow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8090" path="providers" doc:name="HTTP"/>
+        <janrain:get-available-providers config-ref="janrain_config" doc:name="Get Available Providers"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+	
+	
+</mule>
