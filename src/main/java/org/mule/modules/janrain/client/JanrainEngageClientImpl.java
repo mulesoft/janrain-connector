@@ -23,6 +23,7 @@ import org.mule.modules.janrain.engage.Backplane;
 import org.mule.modules.janrain.engage.Broadcast;
 import org.mule.modules.janrain.engage.Contacts;
 import org.mule.modules.janrain.engage.Direct;
+import org.mule.modules.janrain.engage.DomainPatterns;
 import org.mule.modules.janrain.engage.Identifiers;
 import org.mule.modules.janrain.engage.Plugin;
 import org.mule.modules.janrain.engage.ShareProviders;
@@ -258,11 +259,11 @@ public class JanrainEngageClientImpl extends JanrainClientImpl implements Janrai
         return getGson().fromJson(execute("get_backplane_properties", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), Backplane.class);
     }
     
-    public String getDomainPatterns() {
+    public DomainPatterns getDomainPatterns() {
         MultivaluedMap<String, String> params = new MultivaluedMapImpl();
         params.add("apiKey", getApiKey());
         
-        return execute("get_domain_patterns", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class);
+        return getGson().fromJson(execute("get_domain_patterns", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class), DomainPatterns.class);
     }
     
     public Plugin lookupRp(String pluginName, String pluginVersion) {

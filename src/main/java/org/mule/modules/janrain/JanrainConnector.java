@@ -39,6 +39,7 @@ import org.mule.modules.janrain.engage.Backplane;
 import org.mule.modules.janrain.engage.Broadcast;
 import org.mule.modules.janrain.engage.Contacts;
 import org.mule.modules.janrain.engage.Direct;
+import org.mule.modules.janrain.engage.DomainPatterns;
 import org.mule.modules.janrain.engage.Identifiers;
 import org.mule.modules.janrain.engage.Plugin;
 import org.mule.modules.janrain.engage.ShareProviders;
@@ -82,9 +83,9 @@ public class JanrainConnector {
     private String appId;
     
     /**
-     * The engage host
+     * The capture host
      */
-    private String engageHost;
+    private String captureHost;
     
     /**
      * The Api Key
@@ -122,11 +123,11 @@ public class JanrainConnector {
      * @param apiKey The "API key (secret)" provided in the "Application Info"
      * @param appName The name of your application. In "Application Domain" -> https://[appName].rpxnow.com/
      * @param appId The "App ID" provided in the "Application Info"
-     * @param engageHost The host that you will using for your engage API. It might be the same as "Application Domain" or you can personalize this one
+     * @param captureHost The host that you will using for your capture API. It might be the same as "Application Domain" or you can personalize this one
      * @throws ConnectionException
      */
     @Connect
-    public void connect(@ConnectionKey String apiKey, String appName, String appId, String engageHost) throws ConnectionException {
+    public void connect(@ConnectionKey String apiKey, String appName, String appId, String captureHost) throws ConnectionException {
         ClientConfig clientConfig = new DefaultClientConfig();
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         clientConfig.getClasses().add(MultiPartWriter.class);
@@ -138,7 +139,7 @@ public class JanrainConnector {
         this.setAppId(appId);
         this.setApiKey(apiKey);
         this.setAppName(appName);
-        this.setEngageHost(engageHost);
+        this.setCaptureHost(captureHost);
         this.gson = new GsonBuilder().create();
         this.setJerseyClient(Client.create(clientConfig));
     }
@@ -498,7 +499,7 @@ public class JanrainConnector {
      * @return the domain patterns.
      */
     @Processor
-    public String getDomainPatterns() {
+    public DomainPatterns getDomainPatterns() {
         return getJanrainEngageClient().getDomainPatterns();
     }
     
@@ -1168,16 +1169,15 @@ public class JanrainConnector {
      * @param created Timestamps are generated when an entity is created.
      * @param last_updated Timestamps are generated when an entity is updated.
      * @param include_record When true, a result field is added to the response, containing the data of the newly updated entity record.
-     * @param attributes A value paramete
      * @return true if the operation is successful
      */
     @Processor
     public boolean entityUpdate(@Optional String client_secret, @Optional String client_id, @Optional String access_token,
             @Optional String uuid, @Optional String id, @Optional String key_attribute, @Optional String key_value,
             String type_name, String value, @Optional String attribute_name, @Optional String created, @Optional String last_updated,
-            @Optional Boolean include_record, String attributes) {
+            @Optional Boolean include_record) {
         return getJanrainCaptureClient().entityUpdate(client_secret, client_id, access_token, uuid, id, key_attribute, key_value, 
-                type_name, value, attribute_name, created, last_updated, include_record, attributes);
+                type_name, value, attribute_name, created, last_updated, include_record);
     }
     
     /**
@@ -1761,7 +1761,7 @@ public class JanrainConnector {
         if (janrainCaptureClient != null) {
             return janrainCaptureClient;
         }
-        janrainCaptureClient = new JanrainCaptureClientImpl(engageHost, appId, apiKey, jerseyClient, gson);
+        janrainCaptureClient = new JanrainCaptureClientImpl(captureHost, appId, apiKey, jerseyClient, gson);
         return janrainCaptureClient;
     }
     
@@ -1797,13 +1797,14 @@ public class JanrainConnector {
         this.appId = appId;
     }
 
-	public String getEngageHost() {
-		return engageHost;
+	public String getCaptureHost() {
+		return captureHost;
 	}
 
-	public void setEngageHost(String engageHost) {
-		this.engageHost = engageHost;
+	public void setCaptureHost(String captureHost) {
+		this.captureHost = captureHost;
 	}
-
+    
+    
     
 }

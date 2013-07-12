@@ -20,6 +20,7 @@ import org.mule.modules.janrain.engage.Backplane;
 import org.mule.modules.janrain.engage.Broadcast;
 import org.mule.modules.janrain.engage.Contacts;
 import org.mule.modules.janrain.engage.Direct;
+import org.mule.modules.janrain.engage.DomainPatterns;
 import org.mule.modules.janrain.engage.Identifiers;
 import org.mule.modules.janrain.engage.Plugin;
 import org.mule.modules.janrain.engage.ShareProviders;
@@ -70,7 +71,7 @@ public interface JanrainEngageClient {
     
     public Backplane getBackplaneProperties();
     
-    public String getDomainPatterns();
+    public DomainPatterns getDomainPatterns();
     
     public Plugin lookupRp(String pluginName, String pluginVersion);
     

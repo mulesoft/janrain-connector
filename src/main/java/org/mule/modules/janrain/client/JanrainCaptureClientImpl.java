@@ -20,6 +20,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import org.mule.modules.janrain.capture.BulkResponse;
 import org.mule.modules.janrain.capture.ClientInfo;
 import org.mule.modules.janrain.capture.ClientListInfo;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
@@ -27,9 +28,9 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class JanrainCaptureClientImpl extends JanrainClientImpl implements JanrainCaptureClient {
     
-    public JanrainCaptureClientImpl(String engageHost, String appId, String apiKey, Client jerseyClient, Gson gson) {
-        super(engageHost, appId, apiKey, gson);
-        setApiResource(jerseyClient.resource(engageHost));
+    public JanrainCaptureClientImpl(String captureHost, String appId, String apiKey, Client jerseyClient, Gson gson) {
+        super(captureHost, appId, apiKey, gson);
+        setApiResource(jerseyClient.resource(captureHost));
     }
     
     public ClientInfo addClient(String client_id, String client_secret, String description, String features) {
@@ -212,7 +213,7 @@ public class JanrainCaptureClientImpl extends JanrainClientImpl implements Janra
         params.add("type_name", type_name);
         params.add("commit", commit.toString());
         
-        return execute("entity.bulkDelete", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class);
+        return execute("entity.purge", params, MediaType.APPLICATION_JSON_TYPE, "POST").getEntity(String.class);
     }
     
     public boolean entityReplace(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String value, String attribute_name, String created, String last_updated, Boolean include_record) {
@@ -236,11 +237,10 @@ public class JanrainCaptureClientImpl extends JanrainClientImpl implements Janra
         return true;
     }
     
-    public boolean entityUpdate(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String value, String attribute_name, String created, String last_updated, Boolean include_record, String attributes) {
+    public boolean entityUpdate(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String value, String attribute_name, String created, String last_updated, Boolean include_record) {
         MultivaluedMap<String, String> params = new MultivaluedMapImpl();
         params.add("type_name", type_name);
         params.add("value", value);
-        params.add("attributes", attributes);
         if (client_secret != null) params.add("client_secret", client_secret);
         if (client_id != null) params.add("client_id", client_id);
         if (access_token != null) params.add("access_token", access_token);

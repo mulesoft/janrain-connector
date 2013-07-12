@@ -13,6 +13,7 @@
 package org.mule.modules.janrain.client;
 
 import java.util.Map;
+
 import org.mule.modules.janrain.capture.BulkResponse;
 import org.mule.modules.janrain.capture.ClientInfo;
 import org.mule.modules.janrain.capture.ClientListInfo;
@@ -51,7 +52,7 @@ public interface JanrainCaptureClient {
     
     public boolean entityReplace(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String value, String attribute_name, String created, String last_updated, Boolean include_record);
     
-    public boolean entityUpdate(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String value, String attribute_name, String created, String last_updated, Boolean include_record, String attributes);
+    public boolean entityUpdate(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String value, String attribute_name, String created, String last_updated, Boolean include_record);
     
     public String entityFind(String client_secret, String client_id, String type_name, String filter, String max_results, String first_result, Boolean show_total_count, String sort_on, String attributes);
     
