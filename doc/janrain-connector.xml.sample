@@ -239,7 +239,7 @@
 <!-- END_INCLUDE(janrain:entity-replace) -->
 
 <!-- BEGIN_INCLUDE(janrain:entity-update) -->
-    <janrain:entity-update access_token="access_token" uuid="uuid" type_name="type_name" value="value" attributes="attributes"/>
+    <janrain:entity-update access_token="access_token" uuid="uuid" type_name="type_name" value="value" />
 <!-- END_INCLUDE(janrain:entity-update) -->
 
 <!-- BEGIN_INCLUDE(janrain:entity-find) -->
