@@ -21,6 +21,7 @@ import org.mule.api.annotations.Connector;
 import org.mule.api.annotations.Disconnect;
 import org.mule.api.annotations.Processor;
 import org.mule.api.annotations.ValidateConnection;
+import org.mule.api.annotations.licensing.RequiresEnterpriseLicense;
 import org.mule.api.annotations.param.ConnectionKey;
 import org.mule.api.annotations.param.Default;
 import org.mule.api.annotations.param.Optional;
@@ -70,6 +71,7 @@ import com.sun.jersey.multipart.impl.MultiPartWriter;
  */
 
 @Connector(name="janrain", schemaVersion="2.0", friendlyName="Janrain", minMuleVersion="3.4")
+@RequiresEnterpriseLicense
 public class JanrainConnector {
         
     /**
