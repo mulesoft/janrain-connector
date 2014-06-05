@@ -7,9 +7,9 @@
  * place, you may not use the software.
  */
 
-package org.mule.modules.janrain.automation.testcases;
+package org.mule.modules.janrain.automation;
 
-public interface SmokeTests {
+public interface RegressionTests {
 	
 	/* category marker */ 
 
