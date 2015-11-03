@@ -10,7 +10,7 @@
     <parent>
         <groupId>org.mule.tools.devkit</groupId>
         <artifactId>mule-devkit-parent</artifactId>
-        <version>3.4.0</version>
+        <version>3.4.5</version>
     </parent>
 
     <properties>
@@ -19,7 +19,7 @@
         <junit.version>4.9</junit.version>
         <mockito.version>1.8.2</mockito.version>
         <jdk.version>1.6</jdk.version>
-        <category>Standard</category>
+        <category>Community</category>
         <licensePath>LICENSE.md</licensePath>
         <devkit.studio.package.skip>false</devkit.studio.package.skip>
         <licm.version>1.1.2</licm.version>
