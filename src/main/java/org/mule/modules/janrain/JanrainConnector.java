@@ -10,46 +10,6 @@
 
 package org.mule.modules.janrain;
 
-import java.util.Map;
-
-import org.mule.api.ConnectionException;
-import org.mule.api.annotations.Connect;
-import org.mule.api.annotations.ConnectionIdentifier;
-import org.mule.api.annotations.Connector;
-import org.mule.api.annotations.Disconnect;
-import org.mule.api.annotations.Processor;
-import org.mule.api.annotations.ValidateConnection;
-import org.mule.api.annotations.licensing.RequiresEnterpriseLicense;
-import org.mule.api.annotations.param.ConnectionKey;
-import org.mule.api.annotations.param.Default;
-import org.mule.api.annotations.param.Optional;
-import org.mule.modules.janrain.capture.BulkResponse;
-import org.mule.modules.janrain.capture.ClientInfo;
-import org.mule.modules.janrain.capture.ClientListInfo;
-import org.mule.modules.janrain.client.JanrainCaptureClient;
-import org.mule.modules.janrain.client.JanrainCaptureClientImpl;
-import org.mule.modules.janrain.client.JanrainEngageClient;
-import org.mule.modules.janrain.client.JanrainEngageClientImpl;
-import org.mule.modules.janrain.client.JanrainPartnerClient;
-import org.mule.modules.janrain.client.JanrainPartnerClientImpl;
-import org.mule.modules.janrain.engage.AuthInfos;
-import org.mule.modules.janrain.engage.AvailableProviders;
-import org.mule.modules.janrain.engage.Backplane;
-import org.mule.modules.janrain.engage.Broadcast;
-import org.mule.modules.janrain.engage.Contacts;
-import org.mule.modules.janrain.engage.Direct;
-import org.mule.modules.janrain.engage.DomainPatterns;
-import org.mule.modules.janrain.engage.Identifiers;
-import org.mule.modules.janrain.engage.Plugin;
-import org.mule.modules.janrain.engage.ShareProviders;
-import org.mule.modules.janrain.engage.UserInfo;
-import org.mule.modules.janrain.engage.WidgetProviders;
-import org.mule.modules.janrain.partner.Admins;
-import org.mule.modules.janrain.partner.AppInfo;
-import org.mule.modules.janrain.partner.Apps;
-import org.mule.modules.janrain.partner.Invites;
-import org.mule.modules.janrain.partner.Permissions;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.Client;
@@ -61,6 +21,19 @@ import com.sun.jersey.core.impl.provider.entity.FormProvider;
 import com.sun.jersey.core.impl.provider.entity.InputStreamProvider;
 import com.sun.jersey.core.impl.provider.entity.MimeMultipartProvider;
 import com.sun.jersey.multipart.impl.MultiPartWriter;
+import org.mule.api.ConnectionException;
+import org.mule.api.annotations.*;
+import org.mule.api.annotations.param.ConnectionKey;
+import org.mule.api.annotations.param.Default;
+import org.mule.api.annotations.param.Optional;
+import org.mule.modules.janrain.capture.BulkResponse;
+import org.mule.modules.janrain.capture.ClientInfo;
+import org.mule.modules.janrain.capture.ClientListInfo;
+import org.mule.modules.janrain.client.*;
+import org.mule.modules.janrain.engage.*;
+import org.mule.modules.janrain.partner.*;
+
+import java.util.Map;
 
 /**
  * Janrain Cloud Connector for API V2.
@@ -69,7 +42,6 @@ import com.sun.jersey.multipart.impl.MultiPartWriter;
  */
 
 @Connector(name="janrain", schemaVersion="2.0", friendlyName="Janrain", minMuleVersion="3.4")
-@RequiresEnterpriseLicense
 public class JanrainConnector {
         
     /**
