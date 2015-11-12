@@ -1,0 +1,4150 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <meta name="description" content="Documentation for Mule Janrain Cloud Connector." />
+
+<link rel="shortcut icon" type="image/x-icon" href="../../../../../../favicon.ico" />
+<title>
+
+  JanrainCaptureClient
+
+
+| Mule Janrain Cloud Connector
+
+</title>
+<link href="../../../../../../assets/mule-developer-docs.css" rel="stylesheet" type="text/css" />
+<link href="../../../../../../assets/mule-developer-prettify.css" rel="stylesheet" type="text/css" />
+<link href="../../../../../../assets/customizations.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:300' rel='stylesheet' type='text/css'>
+<script src="../../../../../../assets/search_autocomplete.js" type="text/javascript"></script>
+<script src="../../../../../../assets/jquery-resizable.min.js" type="text/javascript"></script>
+<script src="../../../../../../assets/jquery-toc.js" type="text/javascript"></script>
+<script src="../../../../../../assets/mule-developer-docs.js" type="text/javascript"></script>
+<script src="../../../../../../assets/prettify.js" type="text/javascript"></script>
+<script type="text/javascript">
+  setToRoot("../../../../../../", "../../../../../../assets/");
+</script>
+<script src="../../../../../../assets/mule-developer-reference.js" type="text/javascript"></script>
+<script src="../../../../../../assets/navtree_data.js" type="text/javascript"></script>
+<script src="../../../../../../assets/customizations.js" type="text/javascript"></script>
+<noscript>
+  <style type="text/css">
+    html,body{overflow:auto;}
+    #body-content{position:relative; top:0;}
+    #doc-content{overflow:visible;border-left:3px solid #666;}
+    #side-nav{padding:0;}
+    #side-nav .toggle-list ul {display:block;}
+    #resize-packages-nav{border-bottom:3px solid #666;}
+  </style>
+</noscript>
+<script type="text/javascript" charset="utf-8">
+  var is_ssl = ("https:" == document.location.protocol);
+  var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
+  document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  var feedback_widget_options = {};
+
+  feedback_widget_options.display = "overlay";
+  feedback_widget_options.company = "mulesoft";
+  feedback_widget_options.placement = "right";
+  feedback_widget_options.color = "#2F74AE";
+  feedback_widget_options.style = "question";
+
+  feedback_widget_options.tag = "Mule Janrain Cloud Connector";
+
+  feedback_widget_options.limit = "3";
+
+  var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
+</script>
+</head>
+
+<body class="">
+
+<div id="header">
+    <div id="headerLeft">
+    
+      <span id="masthead-title">Mule Janrain Cloud Connector</span>
+    
+    <ul id="header-tabs" class="">
+    
+    	<li id="guide"><a href="../../../../../../guide/install.html">
+	    	<span class="en">Install Guide</span>
+    	</a></li>
+    
+    	<li id="java"><a href="../../../../../../java/packages.html">
+	    	<span class="en">Java API Reference</span>
+    	</a></li>
+    
+    	<li id="mule"><a href="../../../../../../mule/modules.html">
+	    	<span class="en">Mule API Reference</span>
+    	</a></li>
+    
+    </ul>
+    </div>
+    <div id="headerRight">
+      <a href="http://www.mulesoft.com" tabindex="-1">
+      <img src="../../../../../../assets//images/mulesoft-logo-final.gif" alt="MuleSoft" border="0" id="mulesoftlogo"></a><br/>
+      
+  <div id="search" >
+      <div id="searchForm">
+          <form accept-charset="utf-8" class="gsc-search-box" 
+                onsubmit="return submit_search()">
+            <table class="gsc-search-box" cellpadding="0" cellspacing="0"><tbody>
+                <tr>
+                  <td class="gsc-input">
+                    <input id="search_autocomplete" class="gsc-input" type="text" size="33" autocomplete="off"
+                      title="search developer docs" name="q"
+                      value="search developer docs"
+                      onFocus="search_focus_changed(this, true)"
+                      onBlur="search_focus_changed(this, false)"
+                      onkeydown="return search_changed(event, true, '../../../../../../')"
+                      onkeyup="return search_changed(event, false, '../../../../../../')" />
+                  <div id="search_filtered_div" class="no-display">
+                      <table id="search_filtered" cellspacing=0>
+                      </table>
+                  </div>
+                  </td>
+                  <td class="gsc-search-button">
+                    <input type="submit" value="Search" title="search" id="search-button" class="gsc-search-button" />
+                  </td>
+                  <td class="gsc-clear-button">
+                    <div title="clear results" class="gsc-clear-button">&nbsp;</div>
+                  </td>
+                </tr></tbody>
+              </table>
+          </form>
+      </div><!-- searchForm -->
+  </div><!-- search -->
+      
+    </div>
+</div><!-- header -->
+
+
+  <div class="g-section g-tpl-240" id="body-content">
+    <div class="g-unit g-first side-nav-resizable" id="side-nav">
+      <div id="swapper">
+        <div id="nav-panels">
+          <div id="resize-packages-nav">
+            <div id="packages-nav">
+              <div id="index-links">
+                <a href="../../../../../../java/packages.html"  >Package Index</a> |
+                <a href="../../../../../../java/classes.html" >Class Index</a>
+              </div>
+              <ul>
+                
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/package-summary.html">org.mule.modules.janrain</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/adapter/package-summary.html">org.mule.modules.janrain.adapter</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/adapters/package-summary.html">org.mule.modules.janrain.adapters</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/agents/package-summary.html">org.mule.modules.janrain.agents</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/basic/package-summary.html">org.mule.modules.janrain.basic</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/callback/package-summary.html">org.mule.modules.janrain.callback</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/capture/package-summary.html">org.mule.modules.janrain.capture</a></li>
+    <li class="selected api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/client/package-summary.html">org.mule.modules.janrain.client</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/config/package-summary.html">org.mule.modules.janrain.config</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/connection/package-summary.html">org.mule.modules.janrain.connection</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/connectivity/package-summary.html">org.mule.modules.janrain.connectivity</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/devkit/package-summary.html">org.mule.modules.janrain.devkit</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/engage/package-summary.html">org.mule.modules.janrain.engage</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/exception/package-summary.html">org.mule.modules.janrain.exception</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/oauth/package-summary.html">org.mule.modules.janrain.oauth</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/partner/package-summary.html">org.mule.modules.janrain.partner</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/process/package-summary.html">org.mule.modules.janrain.process</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../../../java/org/mule/modules/janrain/processors/package-summary.html">org.mule.modules.janrain.processors</a></li>
+              </ul><br/>
+            </div> <!-- end packages -->
+          </div> <!-- end resize-packages -->
+          <div id="classes-nav">
+            <ul>
+              
+    <li><h2>Interfaces</h2>
+      <ul>
+          <li class="selected api apilevel-"><a href="../../../../../../java/org/mule/modules/janrain/client/JanrainCaptureClient.html">JanrainCaptureClient</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/janrain/client/JanrainEngageClient.html">JanrainEngageClient</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/janrain/client/JanrainPartnerClient.html">JanrainPartnerClient</a></li>
+      </ul>
+    </li>
+              
+    <li><h2>Classes</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/janrain/client/JanrainCaptureClientImpl.html">JanrainCaptureClientImpl</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/janrain/client/JanrainClientImpl.html">JanrainClientImpl</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/janrain/client/JanrainEngageClientImpl.html">JanrainEngageClientImpl</a></li>
+          <li class="api apilevel-"><a href="../../../../../../java/org/mule/modules/janrain/client/JanrainPartnerClientImpl.html">JanrainPartnerClientImpl</a></li>
+      </ul>
+    </li>
+              
+              
+              
+              
+            </ul><br/>
+          </div><!-- end classes -->
+        </div><!-- end nav-panels -->
+        <div id="nav-tree" style="display:none">
+          <div id="index-links">
+            <a href="../../../../../../packages.html"  >Package Index</a> | 
+            <a href="../../../../../../classes.html" >Class Index</a>
+          </div>
+        </div><!-- end nav-tree -->
+      </div><!-- end swapper -->
+    </div> <!-- end side-nav -->
+    <script>
+      if (!isMobile) {
+        $("<a href='#' id='nav-swap' onclick='swapNav();return false;' style='font-size:10px;line-height:9px;margin-left:1em;text-decoration:none;'><span id='tree-link'>Use Tree Navigation</span><span id='panel-link' style='display:none'>Use Panel Navigation</span></a>").appendTo("#side-nav");
+        chooseDefaultNav();
+        if ($("#nav-tree").is(':visible')) {
+          init_default_navtree("../../../../../../");
+        } else {
+          addLoadEvent(function() {
+            scrollIntoView("packages-nav");
+            scrollIntoView("classes-nav");
+          });
+        }
+        $("#swapper").css({borderBottom:"2px solid #aaa"});
+      } else {
+        swapNav(); // tree view should be used on mobile
+      }
+    </script>
+
+
+
+<div class="g-unit" id="doc-content">
+
+<div id="api-info-block">
+
+
+
+
+<div class="sum-details-links">
+
+
+Summary:
+
+
+
+
+
+
+
+
+
+
+
+  <a href="#pubmethods">Methods</a>
+  
+
+
+
+&#124; <a href="#" onclick="return toggleAllClassInherited()" id="toggleAllClassInherited">[Expand All]</a>
+
+</div><!-- end sum-details-links -->
+<div class="api-level">
+  
+
+
+  
+  
+
+</div>
+</div><!-- end api-info-block -->
+
+
+<!-- ======== START OF CLASS DATA ======== -->
+
+<div id="jd-header">
+    public
+     
+     
+    
+    interface
+<h1>JanrainCaptureClient</h1>
+
+
+
+  
+  
+  
+
+
+</div><!-- end header -->
+
+<div id="naMessage"></div>
+
+<div id="jd-content" class="api apilevel-">
+<table class="jd-inheritance-table">
+
+
+    <tr>
+        
+        <td colspan="1" class="jd-inheritance-class-cell">org.mule.modules.janrain.client.JanrainCaptureClient</td>
+    </tr>
+    
+
+</table>
+
+
+
+
+
+
+<table class="jd-sumtable jd-sumtable-subclasses"><tr><td colspan="12" style="border:none;margin:0;padding:0;">
+
+  <a href="#" onclick="return toggleInherited(this, null)" id="subclasses-indirect" class="jd-expando-trigger closed"
+          ><img id="subclasses-indirect-trigger"
+          src="../../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>Known Indirect Subclasses
+
+  <div id="subclasses-indirect">
+      <div id="subclasses-indirect-list"
+              class="jd-inheritedlinks"
+              
+              >
+          
+            
+              <a href="../../../../../../java/org/mule/modules/janrain/client/JanrainCaptureClientImpl.html">JanrainCaptureClientImpl</a>
+            
+          
+      </div>
+      <div id="subclasses-indirect-summary"
+              style="display: none;"
+              >
+  <table class="jd-sumtable-expando">
+        <tr class="alt-color api apilevel-" >
+              <td class="jd-linkcol"><a href="../../../../../../java/org/mule/modules/janrain/client/JanrainCaptureClientImpl.html">JanrainCaptureClientImpl</a></td>
+              <td class="jd-descrcol" width="100%">&nbsp;</td>
+          </tr>
+  </table>
+      </div>
+  </div>
+</td></tr></table>
+
+
+<div class="jd-descr">
+
+
+
+
+
+
+</div><!-- jd-descr -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="jd-descr">
+
+
+<h2>Summary</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+<table id="pubmethods" class="jd-sumtable"><tr><th colspan="12">Public Methods</th></tr>
+
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            <a href="../../../../../../java/org/mule/modules/janrain/capture/ClientInfo.html">ClientInfo</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#addClient(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">addClient</a></span>(String client_id, String client_secret, String description, String features)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#authNative(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">authNative</a></span>(String client_id, String locale, String response_type, String redirect_uri, String token, String thin_registration, String merge_token, String flow_name, String flow_version)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#authNativeTraditional(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">authNativeTraditional</a></span>(String client_id, String locale, String response_type, String redirect_uri, String email, String password, String form, String flow_name, String flow_version)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#clearWhitelist(java.lang.String, java.lang.String, java.lang.String)">clearWhitelist</a></span>(String client_id, String client_secret, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#deleteClient(java.lang.String, java.lang.String, java.lang.String)">deleteClient</a></span>(String client_id, String client_secret, String client_id_for_deletion)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#deleteDefault(java.lang.String, java.lang.String, java.lang.String)">deleteDefault</a></span>(String client_id, String client_secret, String key)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#deleteSettings(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">deleteSettings</a></span>(String client_id, String client_secret, String key, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityAdopt(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">entityAdopt</a></span>(String client_secret, String client_id, String type_name, String id, String access_token, String attribute_name, String child_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            <a href="../../../../../../java/org/mule/modules/janrain/capture/BulkResponse.html">BulkResponse</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityBulkCreate(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">entityBulkCreate</a></span>(String client_id, String client_secret, String type_name, String all_attributes)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityBulkDelete(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)">entityBulkDelete</a></span>(String client_id, String client_secret, String type_name, String filter, Boolean commit)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityCount(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">entityCount</a></span>(String client_id, String client_secret, String type_name, String filter)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            Map&lt;String,&nbsp;String&gt;</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityCreate(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)">entityCreate</a></span>(String client_id, String client_secret, String type_name, String attributes, Boolean include_record)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityDelete(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">entityDelete</a></span>(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String attribute_name, String created, String last_updated)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityFind(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.String, java.lang.String)">entityFind</a></span>(String client_secret, String client_id, String type_name, String filter, String max_results, String first_result, Boolean show_total_count, String sort_on, String attributes)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityPurge(java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)">entityPurge</a></span>(String client_id, String client_secret, String type_name, Boolean commit)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityReplace(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)">entityReplace</a></span>(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String value, String attribute_name, String created, String last_updated, Boolean include_record)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityUpdate(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)">entityUpdate</a></span>(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String value, String attribute_name, String created, String last_updated, Boolean include_record)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#entityVersions(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">entityVersions</a></span>(String type_name, String id, String timestamp, String client_id, String client_secret)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#forgotPasswordNative(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">forgotPasswordNative</a></span>(String client_id, String locale, String response_type, String redirect_uri, String form, String email, String flow_name, String flow_version)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getAccessToken(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">getAccessToken</a></span>(String uuid, String id, String key_attribute, String key_value, String client_id, String client_secret, String type_name, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getAuthorizationCode(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">getAuthorizationCode</a></span>(String uuid, String id, String key_attribute, String key_value, String client_id, String client_secret, String redirect_uri, String type_name, String transaction_state, String lifetime, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getCreationToken(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">getCreationToken</a></span>(String client_id, String client_secret, String type_name, String lifetime, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getDefault(java.lang.String, java.lang.String, java.lang.String)">getDefault</a></span>(String client_id, String client_secret, String key)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getEntityType(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">getEntityType</a></span>(String type_name, String timestamp, String client_id, String client_secret)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getItems(java.lang.String, java.lang.String, java.lang.String)">getItems</a></span>(String client_id, String client_secret, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getKeys(java.lang.String, java.lang.String, java.lang.String)">getKeys</a></span>(String client_id, String client_secret, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getMultisettings(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">getMultisettings</a></span>(String client_id, String client_secret, String key, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getSettings(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">getSettings</a></span>(String client_id, String client_secret, String key, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getToken(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">getToken</a></span>(String client_id, String client_secret, String grant_type, String code, String redirect_uri, String refresh_token)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#getVerificationCode(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">getVerificationCode</a></span>(String uuid, String id, String key_attribute, String key_value, String client_id, String client_secret, String type_name, String attribute_name, String lifetime)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#linkAccountNative(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">linkAccountNative</a></span>(String client_id, String locale, String response_type, String redirect_uri, String token, String flow_name, String flow_version)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            <a href="../../../../../../java/org/mule/modules/janrain/capture/ClientListInfo.html">ClientListInfo</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#listClients(java.lang.String, java.lang.String, java.lang.String)">listClients</a></span>(String client_id, String client_secret, String has_features)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#registerNative(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">registerNative</a></span>(String client_id, String locale, String response_type, String redirect_uri, String token, String flow_name, String flow_version)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#registerNativeTraditional(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">registerNativeTraditional</a></span>(String client_id, String locale, String response_type, String redirect_uri, String password, String password_confirm, String email, String flow_name, String flow_version)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#retrieveEntity(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">retrieveEntity</a></span>(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String password_attribute, String password_value, String type_name, String attribute_name, String attributes, String created, String last_updated)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#setDefault(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">setDefault</a></span>(String client_id, String client_secret, String key, String value)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#setDescription(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">setDescription</a></span>(String client_id, String client_secret, String for_client_id, String description)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#setFeatures(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">setFeatures</a></span>(String client_id, String client_secret, String for_client_id, String features)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#setMultisettings(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">setMultisettings</a></span>(String client_id, String client_secret, String items, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#setSettings(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">setSettings</a></span>(String client_id, String client_secret, String key, String value, String for_client_id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#setWhitelist(java.lang.String, java.lang.String, java.lang.String, java.lang.String)">setWhitelist</a></span>(String client_id, String client_secret, String for_client_id, String whitelist)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#useVerificationCode(java.lang.String)">useVerificationCode</a></span>(String verification_code)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#verifyEmailNative(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">verifyEmailNative</a></span>(String client_id, String locale, String response_type, String redirect_uri, String form, String email, String flow_name, String flow_version)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#webhooksAdd(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">webhooksAdd</a></span>(String client_id, String client_secret, String attributes, String callback, String event_type, String entity_type)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#webhooksDelete(java.lang.String, java.lang.String, java.lang.String)">webhooksDelete</a></span>(String client_id, String client_secret, String uuid)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#webhooksFind(java.lang.String, java.lang.String, java.lang.String)">webhooksFind</a></span>(String client_id, String client_secret, String uuid)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#webhooksList(java.lang.String, java.lang.String)">webhooksList</a></span>(String client_id, String client_secret)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../../../org/mule/modules/janrain/client/JanrainCaptureClient.html#webhooksUpdate(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">webhooksUpdate</a></span>(String client_id, String client_secret, String callback, String event_type, String entity_type, String attributes, String uuid)</nobr>
+        
+  </td></tr>
+
+
+
+</table>
+
+
+
+
+
+
+
+</div><!-- jd-descr (summary) -->
+
+<!-- Details -->
+
+
+
+
+
+
+
+
+<!-- XML Attributes -->
+
+
+<!-- Enum Values -->
+
+
+<!-- Constants -->
+
+
+<!-- Fields -->
+
+
+<!-- Public ctors -->
+
+
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<!-- Protected ctors -->
+
+
+
+<!-- ========= METHOD DETAIL ======== -->
+<!-- Public methdos -->
+
+<h2>Public Methods</h2>
+
+
+
+<A NAME="addClient(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        <a href="../../../../../../java/org/mule/modules/janrain/capture/ClientInfo.html">ClientInfo</a>
+      </span>
+      <span class="sympad">addClient</span>
+      <span class="normal">(String client_id, String client_secret, String description, String features)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>description</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>features</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="authNative(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">authNative</span>
+      <span class="normal">(String client_id, String locale, String response_type, String redirect_uri, String token, String thin_registration, String merge_token, String flow_name, String flow_version)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>locale</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>response_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>redirect_uri</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>thin_registration</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>merge_token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_version</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="authNativeTraditional(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">authNativeTraditional</span>
+      <span class="normal">(String client_id, String locale, String response_type, String redirect_uri, String email, String password, String form, String flow_name, String flow_version)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>locale</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>response_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>redirect_uri</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>email</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>password</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_version</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="clearWhitelist(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">clearWhitelist</span>
+      <span class="normal">(String client_id, String client_secret, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="deleteClient(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">deleteClient</span>
+      <span class="normal">(String client_id, String client_secret, String client_id_for_deletion)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id_for_deletion</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="deleteDefault(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">deleteDefault</span>
+      <span class="normal">(String client_id, String client_secret, String key)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="deleteSettings(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">deleteSettings</span>
+      <span class="normal">(String client_id, String client_secret, String key, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityAdopt(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">entityAdopt</span>
+      <span class="normal">(String client_secret, String client_id, String type_name, String id, String access_token, String attribute_name, String child_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>access_token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attribute_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>child_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityBulkCreate(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        <a href="../../../../../../java/org/mule/modules/janrain/capture/BulkResponse.html">BulkResponse</a>
+      </span>
+      <span class="sympad">entityBulkCreate</span>
+      <span class="normal">(String client_id, String client_secret, String type_name, String all_attributes)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>all_attributes</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityBulkDelete(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">entityBulkDelete</span>
+      <span class="normal">(String client_id, String client_secret, String type_name, String filter, Boolean commit)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>filter</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>commit</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityCount(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">entityCount</span>
+      <span class="normal">(String client_id, String client_secret, String type_name, String filter)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>filter</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityCreate(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        Map&lt;String,&nbsp;String&gt;
+      </span>
+      <span class="sympad">entityCreate</span>
+      <span class="normal">(String client_id, String client_secret, String type_name, String attributes, Boolean include_record)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attributes</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>include_record</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityDelete(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">entityDelete</span>
+      <span class="normal">(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String attribute_name, String created, String last_updated)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>access_token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>uuid</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_attribute</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attribute_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>created</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>last_updated</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityFind(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">entityFind</span>
+      <span class="normal">(String client_secret, String client_id, String type_name, String filter, String max_results, String first_result, Boolean show_total_count, String sort_on, String attributes)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>filter</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>max_results</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>first_result</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>show_total_count</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>sort_on</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attributes</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityPurge(java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">entityPurge</span>
+      <span class="normal">(String client_id, String client_secret, String type_name, Boolean commit)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>commit</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityReplace(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">entityReplace</span>
+      <span class="normal">(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String value, String attribute_name, String created, String last_updated, Boolean include_record)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>access_token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>uuid</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_attribute</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attribute_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>created</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>last_updated</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>include_record</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityUpdate(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Boolean)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">entityUpdate</span>
+      <span class="normal">(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String type_name, String value, String attribute_name, String created, String last_updated, Boolean include_record)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>access_token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>uuid</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_attribute</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attribute_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>created</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>last_updated</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>include_record</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="entityVersions(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">entityVersions</span>
+      <span class="normal">(String type_name, String id, String timestamp, String client_id, String client_secret)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>timestamp</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="forgotPasswordNative(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">forgotPasswordNative</span>
+      <span class="normal">(String client_id, String locale, String response_type, String redirect_uri, String form, String email, String flow_name, String flow_version)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>locale</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>response_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>redirect_uri</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>email</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_version</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getAccessToken(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getAccessToken</span>
+      <span class="normal">(String uuid, String id, String key_attribute, String key_value, String client_id, String client_secret, String type_name, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>uuid</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_attribute</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getAuthorizationCode(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getAuthorizationCode</span>
+      <span class="normal">(String uuid, String id, String key_attribute, String key_value, String client_id, String client_secret, String redirect_uri, String type_name, String transaction_state, String lifetime, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>uuid</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_attribute</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>redirect_uri</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>transaction_state</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>lifetime</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getCreationToken(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getCreationToken</span>
+      <span class="normal">(String client_id, String client_secret, String type_name, String lifetime, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>lifetime</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getDefault(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getDefault</span>
+      <span class="normal">(String client_id, String client_secret, String key)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getEntityType(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getEntityType</span>
+      <span class="normal">(String type_name, String timestamp, String client_id, String client_secret)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>timestamp</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getItems(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getItems</span>
+      <span class="normal">(String client_id, String client_secret, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getKeys(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getKeys</span>
+      <span class="normal">(String client_id, String client_secret, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getMultisettings(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getMultisettings</span>
+      <span class="normal">(String client_id, String client_secret, String key, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getSettings(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getSettings</span>
+      <span class="normal">(String client_id, String client_secret, String key, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getToken(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getToken</span>
+      <span class="normal">(String client_id, String client_secret, String grant_type, String code, String redirect_uri, String refresh_token)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>grant_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>code</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>redirect_uri</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>refresh_token</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getVerificationCode(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">getVerificationCode</span>
+      <span class="normal">(String uuid, String id, String key_attribute, String key_value, String client_id, String client_secret, String type_name, String attribute_name, String lifetime)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>uuid</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_attribute</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attribute_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>lifetime</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="linkAccountNative(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">linkAccountNative</span>
+      <span class="normal">(String client_id, String locale, String response_type, String redirect_uri, String token, String flow_name, String flow_version)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>locale</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>response_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>redirect_uri</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_version</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="listClients(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        <a href="../../../../../../java/org/mule/modules/janrain/capture/ClientListInfo.html">ClientListInfo</a>
+      </span>
+      <span class="sympad">listClients</span>
+      <span class="normal">(String client_id, String client_secret, String has_features)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>has_features</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="registerNative(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">registerNative</span>
+      <span class="normal">(String client_id, String locale, String response_type, String redirect_uri, String token, String flow_name, String flow_version)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>locale</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>response_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>redirect_uri</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_version</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="registerNativeTraditional(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">registerNativeTraditional</span>
+      <span class="normal">(String client_id, String locale, String response_type, String redirect_uri, String password, String password_confirm, String email, String flow_name, String flow_version)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>locale</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>response_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>redirect_uri</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>password</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>password_confirm</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>email</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_version</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="retrieveEntity(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">retrieveEntity</span>
+      <span class="normal">(String client_secret, String client_id, String access_token, String uuid, String id, String key_attribute, String key_value, String password_attribute, String password_value, String type_name, String attribute_name, String attributes, String created, String last_updated)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>access_token</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>uuid</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_attribute</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key_value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>password_attribute</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>password_value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>type_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attribute_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attributes</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>created</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>last_updated</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setDefault(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">setDefault</span>
+      <span class="normal">(String client_id, String client_secret, String key, String value)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>value</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setDescription(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">setDescription</span>
+      <span class="normal">(String client_id, String client_secret, String for_client_id, String description)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>description</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setFeatures(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">setFeatures</span>
+      <span class="normal">(String client_id, String client_secret, String for_client_id, String features)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>features</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setMultisettings(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">setMultisettings</span>
+      <span class="normal">(String client_id, String client_secret, String items, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>items</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setSettings(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">setSettings</span>
+      <span class="normal">(String client_id, String client_secret, String key, String value, String for_client_id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>key</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>value</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setWhitelist(java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">setWhitelist</span>
+      <span class="normal">(String client_id, String client_secret, String for_client_id, String whitelist)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>for_client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>whitelist</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="useVerificationCode(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        boolean
+      </span>
+      <span class="sympad">useVerificationCode</span>
+      <span class="normal">(String verification_code)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>verification_code</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="verifyEmailNative(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">verifyEmailNative</span>
+      <span class="normal">(String client_id, String locale, String response_type, String redirect_uri, String form, String email, String flow_name, String flow_version)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>locale</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>response_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>redirect_uri</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>form</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>email</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_name</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>flow_version</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="webhooksAdd(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">webhooksAdd</span>
+      <span class="normal">(String client_id, String client_secret, String attributes, String callback, String event_type, String entity_type)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attributes</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>callback</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>event_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>entity_type</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="webhooksDelete(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">webhooksDelete</span>
+      <span class="normal">(String client_id, String client_secret, String uuid)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>uuid</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="webhooksFind(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">webhooksFind</span>
+      <span class="normal">(String client_id, String client_secret, String uuid)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>uuid</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="webhooksList(java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">webhooksList</span>
+      <span class="normal">(String client_id, String client_secret)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="webhooksUpdate(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        String
+      </span>
+      <span class="sympad">webhooksUpdate</span>
+      <span class="normal">(String client_id, String client_secret, String callback, String event_type, String entity_type, String attributes, String uuid)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>client_id</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>client_secret</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>callback</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>event_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>entity_type</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>attributes</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>uuid</td>
+          <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- ========= METHOD DETAIL ======== -->
+
+
+
+<!-- ========= END OF CLASS DATA ========= -->
+<A NAME="navbar_top"></A>
+
+<div id="footer">
+Generated by <a href="http://www.mulesoft.com/devkit">Mule DevKit</a>. Document generation technology based on <a href="http://code.google.com/p/doclava/">Google's Doclava</a>.
+</div> <!-- end footer -->
+
+</div> <!-- jd-content -->
+
+</div><!-- end doc-content -->
+
+</div> <!-- end body-content --> 
+
+<script type="text/javascript">
+init(); /* initialize mule-developer-docs.js */
+</script>
+
+</body>
+</html>
